@@ -46,7 +46,7 @@ public class TrabajadorDao {
             trabajador.setNombre(rs.getString("nombre"));
             trabajador.setApellidos(rs.getString("apellidos"));
             trabajador.setDni(rs.getString("dni"));
-            trabajador.setSemestreInicioEstancia(rs.getInt("semestre_inicio_estancia"));
+            trabajador.setTelefono(rs.getInt("semestre_inicio_estancia"));
             trabajador.setIdItinerario(rs.getInt("itinerario"));
             trabajador.setItinerario(rs.getString(6));
             return trabajador;

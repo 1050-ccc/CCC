@@ -2,7 +2,7 @@ package es.uji.ei1050.ccc.model;
 
 public class Empresa {
 
-    String CIF; // PK varchar 10
+    String CIF; // PK varchar 10 PK
     String nombre; // varchar 50
     String nombreComercial; // varchar 50
     String domicilioFiscal; // varchar 100

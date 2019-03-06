@@ -1,10 +1,14 @@
 package es.uji.ei1050.ccc.daos;
 
+import es.uji.ei1050.ccc.model.ETurnos;
+import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Trabajador;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -46,9 +50,12 @@ public class TrabajadorDao {
             trabajador.setNombre(rs.getString("nombre"));
             trabajador.setApellidos(rs.getString("apellidos"));
             trabajador.setDni(rs.getString("dni"));
-            trabajador.setTelefono(rs.getInt("semestre_inicio_estancia"));
-            trabajador.setIdItinerario(rs.getInt("itinerario"));
-            trabajador.setItinerario(rs.getString(6));
+            trabajador.setTelefono(rs.getInt("telefono"));
+            trabajador.setDomicilio(rs.getString("domicilio"));
+            trabajador.setEmail(rs.getString("email"));
+            trabajador.setCuentaBancaria(rs.getString("cuentaBancaria"));
+            trabajador.setPuestoTrabajo(rs.getString("puestoTrabajo"));
+            trabajador.setTurno(ETurnos.getEstado(rs.getString("turno")));
             return trabajador;
         }
     }
@@ -57,11 +64,11 @@ public class TrabajadorDao {
      * Method that lists all <code>Alumno</code>s.
      * @return An <code>ArrayList</code> of <code>Alumno</code>s or <code>null</code> if an error occurs while accessing database.
      */
-    public List<Trabajador> getTrabajadores() {
+    public List<Trabajador> getTrabajadoresEmpresa(String cif) {
         try {
             return this.jdbcTemplate.query(
-                    "select a.dni, a.nombre, a.username, a.semestre_inicio_estancia, a.itinerario, i.nombre " +
-                            "from alumno a join itinerario i on (a.itinerario = i.id);", new TrabajadorMapper());
+                    "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
+                            "from persone p join trabajador t on (p.dni = t.Persone_dni)  where upper(p.Empresa_cif)=?",new Object[]{cif}, new TrabajadorMapper());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -73,69 +80,52 @@ public class TrabajadorDao {
      * @param dni <code>String</code> that indicates the <code>Alumno</code>'s <b>DNI</b>.
      * @return An <code>Alumno</code> or <code>null</code> if an error occurs while accessing database.
      */
-    public Alumno getAlumno(String dni) {
+    public Trabajador getTrabajador(String dni) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select a.dni, a.nombre, a.username, a.semestre_inicio_estancia, i.nombre " +
-                            "from alumno a join itinerario i on (a.itinerario = i.id) where upper(dni)=?",
-                    new Object[]{dni.toUpperCase()}, new AlumnoMapper());
+                    "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
+                            "from persone p join trabajador t on (p.dni = t.Persone_dni) where upper(dni)=?",
+                    new Object[]{dni.toUpperCase()}, new TrabajadorMapper());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public Alumno getInfoAlumno(String dni) {
-        return this.jdbcTemplate.queryForObject(
-                "select dni, nombre, semestre_inicio_estancia, itinerario, username from alumno where upper(dni)=?",
-                new Object[]{dni.toUpperCase()}, new AlumnoMapper());
-    }
 
-    /**
-     * Method that list an <code>Alumno</code> by its <b>username</b>.
-     * @param username <code>String</code> that indicates the <code>Alumno</code>'s <b>username</b>.
-     * @return An <code>Alumno</code> or <code>null</code> if an error occurs while accessing database.
-     */
-    public Alumno getAlumnoByUsername(String username) {
-        try {
-            return this.jdbcTemplate.queryForObject(
-                    "select a.dni, a.nombre, a.username, a.semestre_inicio_estancia, a.itinerario, i.nombre " +
-                            "from alumno a join itinerario i on (a.itinerario = i.id) where upper(username)=?",
-                    new Object[]{username.toUpperCase()}, new AlumnoMapper());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     /**
      * Method that adds an <code>Alumno</code> to the database.
-     * @param alumno <code>Alumno</code> object to be added.
+     * @param trabajador <code>Alumno</code> object to be added.
      * @return A <code>boolean</code> value indicating if the operation was successful or not.
      */
-    public boolean addAlumno(Alumno alumno) {
+    public boolean addTrabajador(Trabajador trabajador) {
         try {
             BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-            String pass = passwordEncryptor.encryptPassword(alumno.getPasswd());
-            if (this.jdbcTemplate.update("insert into user_login(username, passwd, tipo) values(?, ?, ?)",
-                    alumno.getDni(), pass, Tipo.ALUMNO.getDescription()) == 1)
+            String pass = passwordEncryptor.encryptPassword(trabajador.getPasswd());
+            if (this.jdbcTemplate.update("insert into usuarios(username, passwd, tipo) values(?, ?, ?)",
+                    trabajador.getEmail(), trabajador.getPasswd(), Perfiles.TR.getDescripcion()) == 1)
                 if(this.jdbcTemplate.update(
-                        "insert into alumno(dni, nombre, username, semestre_inicio_estancia, itinerario) values(?, ?, ?, ?, ?)",
-                        alumno.getDni(), alumno.getNombre(), alumno.getUsername(), alumno.getSemestreInicioEstancia(), alumno.getItinerario()) == 1)
-                    return true;
+                        "insert into persone(nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria) values(?, ?, ?, ?, ?, ?, ?)",
+                        trabajador.getNombre(), trabajador.getApellidos(), trabajador.getDni(), trabajador.getTelefono(), trabajador.getDomicilio(), trabajador.getEmail(), trabajador.getCuentaBancaria()) == 1)
+
+                    if (this.jdbcTemplate.update("insert into trabajador(Persone_dni, puestoTrabajo, turno) values(?, ?, ?)",
+                            trabajador.getDni(), trabajador.getPuestoTrabajo(), trabajador.getTurno()) == 1)
+                        return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
         return false;
     }
-
+    //HACER ESTE DAO
     /**
      * Method the updates an <code>Alumno</code> object in database.
-     * @param alumno <code>Alumno</code> object that will be updated.
+     * @param trabajador <code>Alumno</code> object that will be updated.
      * @return A <code>boolean</code> value indicating either the operation was successful or not.
      */
-    public boolean updateAlumno(Alumno alumno) {
+
+    public boolean updateTrabajador(Trabajador trabajador) {
         try {
             if (this.jdbcTemplate.update(
                     "update alumno set semestre_inicio_estancia=? where upper(dni) = ?",
@@ -150,18 +140,16 @@ public class TrabajadorDao {
         return false;
     }
 
-
-
     /**
      * Method that removes <code>Alumno</code>s in a database.
      * @param dni <code>String</code> that indicates what <code>Alumno</code>s to remove from database.
      * @return A <code>boolean</code> value indicating either the operation was successful or not.
      */
-    public boolean deleteAlumno(String dni) {
+    public boolean deleteTrabajador(String dni) {
         try {
-            Alumno a = getAlumno(dni);
-            if(this.jdbcTemplate.update("delete from alumno where upper(dni) = ?", dni.toUpperCase()) > 0)
-                if(this.jdbcTemplate.update("delete from user_login where upper(username) = ?", a.getUsername().toUpperCase()) > 0)
+            Trabajador a = getTrabajador(dni);
+            if(this.jdbcTemplate.update("delete from trabajador where upper(dni) = ?", dni.toUpperCase()) > 0)
+                if(this.jdbcTemplate.update("delete from usuarios where upper(username) = ?", a.getEmail()) > 0)
                     return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -169,5 +157,49 @@ public class TrabajadorDao {
         }
         return false;
     }
+
+    //REVISAR ESTE DAO
+    /**
+     * Method that list an <code>Alumno</code> by its <b>username</b>.
+     * @param username <code>String</code> that indicates the <code>Alumno</code>'s <b>username</b>.
+     * @return An <code>Alumno</code> or <code>null</code> if an error occurs while accessing database.
+     */
+
+    public Trabajador getTrabajadorByUsername(String username) {
+        try {
+            return this.jdbcTemplate.queryForObject(
+                    "select a.dni, a.nombre, a.username, a.semestre_inicio_estancia, a.itinerario, i.nombre " +
+                            "from persone p join trabajador t on (a.itinerario = i.id) where upper(email)=?",
+                    new Object[]{username}, new TrabajadorMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Trabajador getDisponibilidadTrabajador(String dni){
+        try {
+            return this.jdbcTemplate.queryForObject(
+                    "select  p.nombre, p.apellidos, t.turno " +
+                            "from persone p join trabajador t on (p.dni = t.Persone_dni) where upper(dni)=?",
+                    new Object[]{dni.toUpperCase()}, new TrabajadorMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Trabajador> getDisponibilidadTrabajadores(String cif) {
+        try {
+            return this.jdbcTemplate.query(
+                    "select  p.nombre, p.apellidos, t.turno " +
+                            "from persone p join trabajador t on (p.dni = t.Persone_dni)  where upper(p.Empresa_cif)=?",new Object[]{cif}, new TrabajadorMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }
-}
+

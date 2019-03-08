@@ -97,27 +97,25 @@ public class JefeDao {
         }
         return false;
     }
-    //HACER ESTE DAO
+
     /**
      * Method the updates an <code>Alumno</code> object in database.
      * @param jefe <code>Alumno</code> object that will be updated.
      * @return A <code>boolean</code> value indicating either the operation was successful or not.
      */
 
-    //HACER DAO
-    public boolean updateJefe(Jefe jefe) {
+    //REVISAR DAO
+    public boolean updateTrabajador(Jefe jefe) {
         try {
-            if (this.jdbcTemplate.update(
-                    "update alumno set semestre_inicio_estancia=? where upper(dni) = ?",
-                    alumno.getSemestreInicioEstancia(),     alumno.getDni().toUpperCase()) > 0){
-                System.out.println("\n\nFunciona\n\n");
-                return true;
-            }
+            if(this.jdbcTemplate.update(
+                    "update persone set telefono=?, domicilio=?, cuentaBancaria=?, telefono=? where upper(cif) = ?",
+                    jefe.getTelefono(), jefe.getDomicilio(), jefe.getCuentaBancaria(), jefe.getTelefono(), jefe.getDni() ) > 0);
+            return true;
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return false;
     }
 
     /**

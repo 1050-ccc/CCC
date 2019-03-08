@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/trabajador")
@@ -23,8 +22,6 @@ public class TrabajadorController {
     public void setTrabajdoroDao(TrabajadorDao trabajadorDao) {
         this.trabajadorDao = trabajadorDao;
     }
-
-
 
 
     /**
@@ -142,7 +139,7 @@ public class TrabajadorController {
     }
 
     /**
-     * Método que actualiza los datos del alumno.
+     * Método que actualiza los datos del trabajador.
      * @param session
 
      * @param trabajador
@@ -167,6 +164,142 @@ public class TrabajadorController {
             trabajadorDao.updateTrabajador(trabajador);
             return "trabajador/informacion";
         } else {
+            return "redirect:" + session.getAttribute("url");
+        }
+    }
+
+    /**
+     * Lista trabajadores.
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/list")
+    public String listTrabajadoresEmpresa(HttpSession session, Model model) {
+        if (session.getAttribute("user") == null)
+        {
+            model.addAttribute("user", new Usuario());
+            return "login";
+        }
+
+        Usuario user = (Usuario) session.getAttribute("user");
+        Perfiles tipo = user.getTipo();
+        String cif = user.getCif();
+        if(tipo.equals(Perfiles.JF.getDescripcion())) {
+            model.addAttribute("alumnos", trabajadorDao.getTrabajadoresEmpresa(cif));
+            return "trabajador/list";
+
+        } else {
+            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
+            return "redirect:/trabajador";
+        }
+    }
+
+    /**
+     * Lista disponibilidad trabajadores.
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/listDisponibilidad")
+    public String listDisponibilidadTrabajadoresEmpresa(HttpSession session, Model model) {
+        if (session.getAttribute("user") == null)
+        {
+            model.addAttribute("user", new Usuario());
+            return "login";
+        }
+
+        Usuario user = (Usuario) session.getAttribute("user");
+        Perfiles tipo = user.getTipo();
+        String cif = user.getCif();
+        if(tipo.equals(Perfiles.JF.getDescripcion())) {
+            model.addAttribute("alumnos", trabajadorDao.getDisponibilidadTrabajadores(cif));
+            return "trabajador/listDisponibilidad";
+
+        } else {
+            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
+            return "redirect:/trabajador";
+        }
+    }
+
+    /**
+     * Lista disponibilidad trabajadores.
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/listDisponibilidad")
+    public String listDisponibilidadTrabajadoresEmpresa(HttpSession session, Model model) {
+        if (session.getAttribute("user") == null)
+        {
+            model.addAttribute("user", new Usuario());
+            return "login";
+        }
+
+        Usuario user = (Usuario) session.getAttribute("user");
+        Perfiles tipo = user.getTipo();
+        String cif = user.getCif();
+
+        if(tipo.equals(Perfiles.JF.getDescripcion())) {
+            model.addAttribute("alumnos", trabajadorDao.getDisponibilidadTrabajadores(cif));
+            return "trabajador/listDisponibilidad";
+
+        } else {
+            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
+            return "redirect:/trabajador";
+        }
+    }
+
+    /**
+     * Lista emails trabajadores.
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/listEmails")
+    public String listDisponibilidadTrabajadoresEmpresa(HttpSession session, Model model) {
+        if (session.getAttribute("user") == null)
+        {
+            model.addAttribute("user", new Usuario());
+            return "login";
+        }
+
+        Usuario user = (Usuario) session.getAttribute("user");
+        Perfiles tipo = user.getTipo();
+        String cif = user.getCif();
+
+        if(tipo.equals(Perfiles.JF.getDescripcion())) {
+            model.addAttribute("alumnos", trabajadorDao.getEmailTrabajadores(cif));
+            return "trabajador/listDisponibilidad";
+
+        } else {
+            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
+            return "redirect:/trabajador";
+        }
+    }
+
+    /**
+     * Vista para ver los datos de un trabajador.
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public String verDisponibilidadTrabajador(HttpSession session, Model model) {
+        if (session.getAttribute("user") == null)
+        {
+            model.addAttribute("user", new Usuario());
+            return "login";
+        }
+
+        Usuario user = (Usuario) session.getAttribute("user");
+        Perfiles tipo = user.getTipo();
+        if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
+            String username = user.getUsuario();
+            model.addAttribute("trabajador", trabajadorDao.getDisponibilidadTrabajador(username));
+            return "trabajador/disponibilidadTrabajador";
+        } else {
+            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:" + session.getAttribute("url");
         }
     }

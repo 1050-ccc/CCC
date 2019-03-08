@@ -118,7 +118,8 @@ public class TrabajadorDao {
         }
         return false;
     }
-    //HACER ESTE DAO
+
+    //REVISAR ESTE DAO
     /**
      * Method the updates an <code>Alumno</code> object in database.
      * @param trabajador <code>Alumno</code> object that will be updated.
@@ -127,17 +128,15 @@ public class TrabajadorDao {
 
     public boolean updateTrabajador(Trabajador trabajador) {
         try {
-            if (this.jdbcTemplate.update(
-                    "update alumno set semestre_inicio_estancia=? where upper(dni) = ?",
-                    alumno.getSemestreInicioEstancia(),     alumno.getDni().toUpperCase()) > 0){
-                System.out.println("\n\nFunciona\n\n");
+            if(this.jdbcTemplate.update(
+                    "update persone set telefono=?, domicilio=?, cuentaBancaria=?, telefono=? where upper(cif) = ?",
+                    trabajador.getTelefono(), trabajador.getDomicilio(), trabajador.getCuentaBancaria(), trabajador.getTelefono(), trabajador.getDni() ) > 0);
                 return true;
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return false;
     }
 
     /**
@@ -200,6 +199,16 @@ public class TrabajadorDao {
         }
     }
 
+    public List<Trabajador> getEmailTrabajadores(String cif) {
+        try {
+            return this.jdbcTemplate.query(
+                    "select  nombre, apellidos, email " +
+                            "from persone where upper(Empresa_cif)=?",new Object[]{cif}, new TrabajadorMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
 

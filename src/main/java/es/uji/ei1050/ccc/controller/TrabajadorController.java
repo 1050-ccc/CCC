@@ -1,6 +1,6 @@
 package es.uji.ei1050.ccc.controller;
 
-import es.uji.ei1050.ccc.daos.TrabajadorDao;
+import es.uji.ei1050.ccc.daos.TrabajadorDAO;
 import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Trabajador;
 import es.uji.ei1050.ccc.model.Usuario;
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/trabajador")
+@RequestMapping("/templates/trabajador")
 public class TrabajadorController {
 
-    private TrabajadorDao trabajadorDao;
+    private TrabajadorDAO trabajadorDao;
 
     @Autowired
-    public void setTrabajdoroDao(TrabajadorDao trabajadorDao) {
+    public void setTrabajdoroDao(TrabajadorDAO trabajadorDao) {
         this.trabajadorDao = trabajadorDao;
     }
 
@@ -42,7 +42,7 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
             String username = user.getUsuario();
-            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByUsername(username));
+            model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(username));
             return "trabajador/informacion :: list";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -70,7 +70,7 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
 
         if(tipo.equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("trabajador", new Trabajador());
+            model.addAttribute("templates/trabajador", new Trabajador());
             return "trabajador/add";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -85,7 +85,7 @@ public class TrabajadorController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("trabajador") Trabajador trabajador,
+    public String processAddSubmit(@ModelAttribute("templates/trabajador") Trabajador trabajador,
                                    BindingResult bindingResult) {
 
         //AlumnoValidator alumnoValidator = new AlumnoValidator();
@@ -130,7 +130,7 @@ public class TrabajadorController {
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
             String dni = user.getUsuario();
             System.out.println(dni);
-            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByUsername(dni));
+            model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(dni));
             return "trabajador/update";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -148,7 +148,7 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String processUpdateSubmit(@RequestBody String data, HttpSession session,
-                                      @ModelAttribute("trabajador") Trabajador trabajador,
+                                      @ModelAttribute("templates/trabajador") Trabajador trabajador,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "trabajador/update";
@@ -296,7 +296,7 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
             String username = user.getUsuario();
-            model.addAttribute("trabajador", trabajadorDao.getDisponibilidadTrabajador(username));
+            model.addAttribute("templates/trabajador", trabajadorDao.getDisponibilidadTrabajador(username));
             return "trabajador/disponibilidadTrabajador";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");

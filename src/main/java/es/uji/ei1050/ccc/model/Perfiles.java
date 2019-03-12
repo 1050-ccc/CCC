@@ -6,7 +6,8 @@ package es.uji.ei1050.ccc.model;
  */
 public enum Perfiles {
     JF("Jefe"),
-    TR("Trabajador");
+    TR("Trabajador"),
+    ADMIN("Administrador sistema");
 
     private final String descripcion;
 

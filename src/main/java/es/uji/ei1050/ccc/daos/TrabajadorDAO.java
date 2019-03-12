@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @Repository("tabajadorDao")
-public class TrabajadorDao {
+public class TrabajadorDAO {
 
     /**
      * <code>SpringFramework</code> object used to access databases.

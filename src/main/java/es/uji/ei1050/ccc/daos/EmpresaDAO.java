@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository("empresaDao")
-public class EmpresaDao {
+public class EmpresaDAO {
 
     /**
      * <code>SpringFramework</code> object used to access databases.
@@ -52,6 +53,14 @@ public class EmpresaDao {
             empresa.setTelefono(rs.getInt("telefono"));
             return empresa;
         }
+    }
+
+    /**
+     * @return lista de todas las empresas
+     */
+    public List<Empresa> getEmpresas() {
+        String sql = "SELECT * " + "FROM empresa ORDER BY cif;";
+        return this.jdbcTemplate.query(sql, new EmpresaMapper());
     }
 
 

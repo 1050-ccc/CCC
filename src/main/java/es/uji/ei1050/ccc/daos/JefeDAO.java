@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Repository("jefeDao")
-public class JefeDao {
+public class JefeDAO {
 
     /**
      * <code>SpringFramework</code> object used to access databases.

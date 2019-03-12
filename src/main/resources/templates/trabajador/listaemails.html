@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Lista trabajadores</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
 <body>
-
+<h1>Lista emails de trabajadores</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre </th>
+        <th>Apellidos </th>
+        <th>Email </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="trabajador: ${trabajadores}">
+        <td th:text="${trabajador.nombre}"></td>
+        <td th:text="${trabajador.apellidos}"></td>
+        <td th:text="${trabajador.email}"></td>
+    </tr>
+    </tbody>
+</table>
+<a href="jefe/index.html">Atrás</a>
 </body>
 </html>

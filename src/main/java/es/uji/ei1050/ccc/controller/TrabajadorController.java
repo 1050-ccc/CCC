@@ -102,7 +102,7 @@ public class TrabajadorController {
      * @param dni
      * @return
      */
-    @RequestMapping(value = "/delete/{dni}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/borrar/{dni}", method = RequestMethod.DELETE)
     public String processDelete(@PathVariable String dni) {
         // TODO - Comprobar quien puede borrar un alumno
         trabajadorDao.deleteTrabajador(dni);
@@ -117,7 +117,7 @@ public class TrabajadorController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/update/{dni}", method = RequestMethod.GET)
+    @RequestMapping(value = "/editar/{dni}", method = RequestMethod.GET)
     public String updateTrabajador(HttpSession session, Model model) {
         if (session.getAttribute("user") == null)
         {
@@ -146,7 +146,7 @@ public class TrabajadorController {
      * @param bindingResult
      * @return
      */
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/editar", method = RequestMethod.POST)
     public String processUpdateSubmit(@RequestBody String data, HttpSession session,
                                       @ModelAttribute("templates/trabajador") Trabajador trabajador,
                                       BindingResult bindingResult) {
@@ -174,7 +174,7 @@ public class TrabajadorController {
      * @param model
      * @return
      */
-    @RequestMapping("/list")
+    @RequestMapping("/lista")
     public String listTrabajadoresEmpresa(HttpSession session, Model model) {
         if (session.getAttribute("user") == null)
         {
@@ -184,10 +184,10 @@ public class TrabajadorController {
 
         Usuario user = (Usuario) session.getAttribute("user");
         Perfiles tipo = user.getTipo();
-        String cif = user.getCif();
+        String cif = session.getAttribute("cif");
         if(tipo.equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("alumnos", trabajadorDao.getTrabajadoresEmpresa(cif));
-            return "trabajador/list";
+            model.addAttribute("trabajadores", trabajadorDao.getTrabajadoresEmpresa(cif));
+            return "trabajador/lista";
 
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -222,33 +222,7 @@ public class TrabajadorController {
         }
     }
 
-    /**
-     * Lista disponibilidad trabajadores.
-     * @param session
-     * @param model
-     * @return
-     */
-    @RequestMapping("/listDisponibilidad")
-    public String listDisponibilidadTrabajadoresEmpresa(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null)
-        {
-            model.addAttribute("user", new Usuario());
-            return "login";
-        }
 
-        Usuario user = (Usuario) session.getAttribute("user");
-        Perfiles tipo = user.getTipo();
-        String cif = user.getCif();
-
-        if(tipo.equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("alumnos", trabajadorDao.getDisponibilidadTrabajadores(cif));
-            return "trabajador/listDisponibilidad";
-
-        } else {
-            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
-            return "redirect:/trabajador";
-        }
-    }
 
     /**
      * Lista emails trabajadores.
@@ -270,7 +244,7 @@ public class TrabajadorController {
 
         if(tipo.equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("alumnos", trabajadorDao.getEmailTrabajadores(cif));
-            return "trabajador/listDisponibilidad";
+            return "trabajador/listaemails";
 
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");

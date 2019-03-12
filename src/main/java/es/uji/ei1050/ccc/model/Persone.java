@@ -12,7 +12,9 @@ public class Persone {
 
     String cuentaBancaria; // varchar 25
 
-    String passwd;
+    String Empresa_cif; // varchar 50
+
+    //String passwd;
 
     // --------------------------//
 
@@ -21,7 +23,7 @@ public class Persone {
         super();
     }
 
-    public Persone(String nombre, String apellidos, String dni, String domicilio, int telefono, String email, String cuentaBancaria, String passwd) {
+    public Persone(String nombre, String apellidos, String dni, String domicilio, int telefono, String email, String cuentaBancaria, String Empresa_cif) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.dni = dni;
@@ -29,7 +31,7 @@ public class Persone {
         this.telefono = telefono;
         this.email = email;
         this.cuentaBancaria = cuentaBancaria;
-        this.passwd = passwd;
+        this.Empresa_cif = Empresa_cif;
     }
 
     public String getNombre() {
@@ -88,9 +90,9 @@ public class Persone {
         this.cuentaBancaria = cuentaBancaria;
     }
 
-    public String getPasswd(){ return this.passwd; }
+    public String getEmpresa_cif(){ return this.Empresa_cif; }
 
-    public void setPasswd(String passwd){ this.passwd = passwd; }
+    public void setEmpresa_cif(String Empresa_cif){ this.Empresa_cif = Empresa_cif; }
 
     @Override
     public String toString() {

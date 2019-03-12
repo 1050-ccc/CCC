@@ -33,7 +33,7 @@ public class UsuarioDAO {
         @Override
         public Usuario mapRow(ResultSet rs, int rowNum) throws SQLException {
             Usuario usuarios = new Usuario();
-            usuarios.setUsuario(rs.getString("usuario"));
+            usuarios.setEmail(rs.getString("usuario"));
             usuarios.setPassword(rs.getString("password"));
             usuarios.setTipo(Perfiles.getEstado(rs.getString("tipo")));
 
@@ -72,7 +72,7 @@ public class UsuarioDAO {
      */
     public void addUsuario(Usuario usuario) {
         String sql = "INSERT INTO usuarios(usuario, password, tipo) " + "VALUES(?,?,?);";
-        this.jdbcTemplate.update(sql, usuario.getUsuario(), usuario.getPassword(), usuario.getTipo().toString());
+        this.jdbcTemplate.update(sql, usuario.getEmail(), usuario.getPassword(), usuario.getTipo().toString());
     }
 
     /**
@@ -82,7 +82,7 @@ public class UsuarioDAO {
      */
     public void updateUsuarios(Usuario usuario) {
         String sql = "UPDATE usuarios SET password=?" + "WHERE usuario=?;";
-        this.jdbcTemplate.update(sql, usuario.getPassword(), usuario.getUsuario());
+        this.jdbcTemplate.update(sql, usuario.getPassword(), usuario.getEmail());
     }
 
     /**

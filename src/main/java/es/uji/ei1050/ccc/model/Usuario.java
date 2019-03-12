@@ -1,12 +1,12 @@
 package es.uji.ei1050.ccc.model;
 
 /**
- * Clase usuario para guardar la información de login en la base
- *         de datos
+ * Clase email para guardar la información de login en la base
+ * de datos
  */
 public class Usuario {
 
-    String usuario; // varchar 20
+    String email; // varchar 20 EMAIL
     String password; // varchar 256
     Perfiles tipo;
 
@@ -20,30 +20,29 @@ public class Usuario {
     }
 
     /**
-     * @param usuario
+     * @param email
      * @param password
      * @param tipo
      */
-    public Usuario(String usuario, String password, Perfiles tipo) {
+    public Usuario(String email, String password, Perfiles tipo) {
         super();
-        this.usuario = usuario;
+        this.email = email;
         this.password = password;
         this.tipo = tipo;
     }
 
     /**
-     * @return the usuario
+     * @return the email
      */
-    public String getUsuario() {
-        return usuario;
+    public String getEmail() {
+        return email;
     }
 
     /**
-     * @param usuario
-     *            the usuario to set
+     * @param email the email to set
      */
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**
@@ -54,8 +53,7 @@ public class Usuario {
     }
 
     /**
-     * @param password
-     *            the password to set
+     * @param password the password to set
      */
     public void setPassword(String password) {
         this.password = password;
@@ -69,8 +67,7 @@ public class Usuario {
     }
 
     /**
-     * @param tipo
-     *            the tipo to set
+     * @param tipo the tipo to set
      */
     public void setTipo(Perfiles tipo) {
         this.tipo = tipo;
@@ -83,7 +80,7 @@ public class Usuario {
      */
     @Override
     public String toString() {
-        return "Usuario [usuario=" + usuario + ", password=" + password + ", tipo=" + tipo + "]";
+        return "Usuario [email=" + email + ", password=" + password + ", tipo=" + tipo + "]";
     }
 
 }

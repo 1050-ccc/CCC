@@ -44,7 +44,7 @@ public class EmpresaController {
         Usuario user = (Usuario) session.getAttribute("user");
         Perfiles tipo = user.getTipo();
         if (tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
-            String username = user.getUsuario();
+            String username = user.getEmail();
             String cif = user.getCIF();
             model.addAttribute("templates/empresa", empresaDao.getEmpresa(cif));
             return "empresa/informacion";

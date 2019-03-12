@@ -75,12 +75,24 @@ public class TrabajadorDAO {
         }
     }
 
+    public Trabajador getTrabajadorByEmail(String email) {
+        try {
+            return this.jdbcTemplate.queryForObject(
+                    "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
+                            "from persone p join trabajador t on (p.dni = t.Persone_dni) where upper(email)=?",
+                    new Object[]{email.toUpperCase()}, new TrabajadorMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * Method that list an <code>Alumno</code> by its <b>DNI</b>.
      * @param dni <code>String</code> that indicates the <code>Alumno</code>'s <b>DNI</b>.
      * @return An <code>Alumno</code> or <code>null</code> if an error occurs while accessing database.
      */
-    public Trabajador getTrabajador(String dni) {
+    public Trabajador getTrabajadorByDNI(String dni) {
         try {
             return this.jdbcTemplate.queryForObject(
                     "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
@@ -146,7 +158,7 @@ public class TrabajadorDAO {
      */
     public boolean deleteTrabajador(String dni) {
         try {
-            Trabajador a = getTrabajador(dni);
+            Trabajador a = getTrabajadorByDNI(dni);
             if(this.jdbcTemplate.update("delete from trabajador where upper(dni) = ?", dni.toUpperCase()) > 0)
                 if(this.jdbcTemplate.update("delete from usuarios where upper(username) = ?", a.getEmail()) > 0)
                     return true;

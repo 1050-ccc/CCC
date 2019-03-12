@@ -30,7 +30,7 @@ public class IndexController {
         }
 
         //Redirigir si eres admin
-        if (((Usuario) session.getAttribute("usuario")).getUsuario().equals("admin"))
+        if (((Usuario) session.getAttribute("usuario")).getEmail().equals("admin"))
             return "index.html";
 
 

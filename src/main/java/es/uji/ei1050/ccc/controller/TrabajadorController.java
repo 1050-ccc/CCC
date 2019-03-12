@@ -41,7 +41,7 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("user");
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
-            String username = user.getUsuario();
+            String username = user.getEmail();
             model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(username));
             return "trabajador/informacion :: list";
         } else {
@@ -128,7 +128,7 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("user");
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
-            String dni = user.getUsuario();
+            String dni = user.getEmail();
             System.out.println(dni);
             model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(dni));
             return "trabajador/update";
@@ -155,7 +155,7 @@ public class TrabajadorController {
 
 
         Usuario user = (Usuario) session.getAttribute("user");
-        trabajador = trabajadorDao.getTrabajadorByUsername(user.getUsuario());
+        trabajador = trabajadorDao.getTrabajadorByUsername(user.getEmail());
         Perfiles tipo = user.getTipo();
         String dni = trabajador.getDni();
 
@@ -269,7 +269,7 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("user");
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
-            String username = user.getUsuario();
+            String username = user.getEmail();
             model.addAttribute("templates/trabajador", trabajadorDao.getDisponibilidadTrabajador(username));
             return "trabajador/disponibilidadTrabajador";
         } else {

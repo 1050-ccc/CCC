@@ -53,14 +53,23 @@ public class JefeDAO {
         }
     }
 
-
-
+    public Jefe getJefeByEmail(String email) {
+        try {
+            return this.jdbcTemplate.queryForObject(
+                    "select  nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria, puestoTrabajo, turno " +
+                            "from persone where upper(email)=?",
+                    new Object[]{email}, new JefeMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     /**
      * Method that list an <code>Alumno</code> by its <b>DNI</b>.
      * @param dni <code>String</code> that indicates the <code>Alumno</code>'s <b>DNI</b>.
      * @return An <code>Alumno</code> or <code>null</code> if an error occurs while accessing database.
      */
-    public Jefe getJefe(String dni) {
+    public Jefe getJefeByDNI(String dni) {
         try {
             return this.jdbcTemplate.queryForObject(
                     "select  nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria, puestoTrabajo, turno " +
@@ -127,7 +136,7 @@ public class JefeDAO {
     //REVISAR DAO
     public boolean deleteJefe(String dni) {
         try {
-            Jefe a = getJefe(dni);
+            Jefe a = getJefeByDNI(dni);
             if(this.jdbcTemplate.update("delete from jefe where upper(dni) = ?", dni) > 0)
                 if(this.jdbcTemplate.update("delete from usuarios where upper(username) = ?", a.getEmail()) > 0)
                     return true;

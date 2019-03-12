@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpSession;
 
 import es.uji.ei1050.ccc.daos.EmpresaDAO;
+import es.uji.ei1050.ccc.daos.JefeDAO;
 import es.uji.ei1050.ccc.daos.TrabajadorDAO;
 import es.uji.ei1050.ccc.daos.UsuarioDAO;
 import es.uji.ei1050.ccc.model.Perfiles;
@@ -29,8 +30,8 @@ class UserValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
         Usuario user = (Usuario) obj;
-        if (user.getUsuario().trim().equals(""))
-            errors.rejectValue("usuario", "obligatorio", "No se ha introducido un nombre de usuario");
+        if (user.getEmail().trim().equals(""))
+            errors.rejectValue("usuario", "obligatorio", "No se ha introducido un email de usuario");
         if (user.getPassword().trim().equals(""))
             errors.rejectValue("password", "obligatorio", "No se ha introducido una contraseña");
 
@@ -47,6 +48,7 @@ public class LoginController {
     private UsuarioDAO usuarioDAO;
     private EmpresaDAO empresaDAO;
     private TrabajadorDAO trabajadorDAO;
+    private JefeDAO jefeDAO;
 
     /**
      * @param usuarioDAO
@@ -72,6 +74,13 @@ public class LoginController {
         this.trabajadorDAO = trabajadorDAO;
     }
 
+    /**
+     * @param jefeDAO
+     */
+    @Autowired
+    public void setJefeDAO(JefeDAO jefeDAO) {
+        this.jefeDAO = jefeDAO;
+    }
     //
 
     /**
@@ -111,26 +120,30 @@ public class LoginController {
         }
         // Comprova que el login siga correcte
         // intentant carregar les dades de l'usuari
-        usuario = usuarioDAO.loadUserByUsername(usuario.getUsuario(), usuario.getPassword());
+        usuario = usuarioDAO.loadUserByUsername(usuario.getEmail(), usuario.getPassword());
         if (usuario == null) {
             bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
             return "usuario/login";
         }
         // Autenticats correctament.
-        String nombre = usuario.getUsuario();
+        String email = usuario.getEmail();
+        String empresaCIF = empresaDAO.getEmpresaByUsername(email).getCIF();
+        String personeDNI = "0";
 
         if (usuario.getTipo().equals(Perfiles.JF)) {
-            nombre = empresaDAO.getEmpresa(usuario.getUsuario()).getNombre();
+            personeDNI = jefeDAO.getJefeByEmail(email).getDni();
         }
 
         if (usuario.getTipo().equals(Perfiles.TR)) {
-            nombre = trabajadorDAO.getTrabajador(usuario.getUsuario()).getNombre();
+            personeDNI = trabajadorDAO.getTrabajadorByEmail(email).getDni();
         }
+
 
         // Guardem les dades de l'usuari autenticat a la sessió
         usuario.setPassword(null);
         session.setAttribute("usuario", usuario);
-        session.setAttribute("nombre", nombre);
+        session.setAttribute("CIF", empresaCIF);
+        session.setAttribute("DNI", personeDNI);
 
         // Torna a la pàgina principal
         return "redirect:/";
@@ -161,7 +174,7 @@ public class LoginController {
             model.addAttribute("usuario", new Usuario());
             return "usuario/login";
         }
-        if (((Usuario) session.getAttribute("usuario")).getUsuario().equals("admin")) {
+        if (((Usuario) session.getAttribute("usuario")).getEmail().equals("admin")) {
             model.addAttribute("usuario", new Usuario());
             return "usuario/add";
         }
@@ -195,7 +208,7 @@ public class LoginController {
 
     // @RequestMapping(value = "/update/{usuario}/", method = RequestMethod.GET)
     // public String editEmpresa(Model model, @PathVariable String usuario) {
-    // model.addAttribute("usuario", usuariosDAO.getUsuario(usuario));
+    // model.addAttribute("usuario", usuariosDAO.getEmail(usuario));
     // return "usuario/update";
     // }
     //
@@ -207,7 +220,7 @@ public class LoginController {
     // if (bindingResult.hasErrors())
     // return "usuario/update";
     // //
-    // Usuario user = usuariosDAO.getUsuario(usuario.getUsuario());
+    // Usuario user = usuariosDAO.getEmail(usuario.getEmail());
     //
     // if (user == null) {
     // bindingResult.rejectValue("usuario", "notFound", "Usuario no

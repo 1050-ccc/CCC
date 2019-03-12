@@ -90,9 +90,13 @@ public class Persone {
         this.cuentaBancaria = cuentaBancaria;
     }
 
-    public String getEmpresa_cif(){ return this.Empresa_cif; }
+    public String getEmpresa_cif() {
+        return this.Empresa_cif;
+    }
 
-    public void setEmpresa_cif(String Empresa_cif){ this.Empresa_cif = Empresa_cif; }
+    public void setEmpresa_cif(String Empresa_cif) {
+        this.Empresa_cif = Empresa_cif;
+    }
 
     @Override
     public String toString() {

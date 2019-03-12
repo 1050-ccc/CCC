@@ -32,13 +32,13 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String verInformacionTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null)
+        if (session.getAttribute("usuario") == null)
         {
-            model.addAttribute("user", new Usuario());
+            model.addAttribute("usuario", new Usuario());
             return "login";
         }
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
@@ -60,13 +60,13 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/add")
     public String añadirTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null)
+        if (session.getAttribute("usuario") == null)
         {
-            model.addAttribute("user", new Usuario());
+            model.addAttribute("usuario", new Usuario());
             return "login";
         }
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
 
         if(tipo.equals(Perfiles.JF.getDescripcion())) {
@@ -104,7 +104,6 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/borrar/{dni}", method = RequestMethod.DELETE)
     public String processDelete(@PathVariable String dni) {
-        // TODO - Comprobar quien puede borrar un alumno
         trabajadorDao.deleteTrabajador(dni);
         return "redirect:../list";
     }
@@ -119,13 +118,13 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/editar/{dni}", method = RequestMethod.GET)
     public String updateTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null)
+        if (session.getAttribute("usuario") == null)
         {
-            model.addAttribute("user", new Usuario());
+            model.addAttribute("usuario", new Usuario());
             return "login";
         }
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
             String dni = user.getEmail();
@@ -154,7 +153,7 @@ public class TrabajadorController {
             return "trabajador/update";
 
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         trabajador = trabajadorDao.getTrabajadorByUsername(user.getEmail());
         Perfiles tipo = user.getTipo();
         String dni = trabajador.getDni();
@@ -176,15 +175,15 @@ public class TrabajadorController {
      */
     @RequestMapping("/lista")
     public String listTrabajadoresEmpresa(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null)
+        if (session.getAttribute("usuario") == null)
         {
-            model.addAttribute("user", new Usuario());
+            model.addAttribute("usuario", new Usuario());
             return "login";
         }
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        String cif = session.getAttribute("cif");
+        String cif = (String) session.getAttribute("CIF");
         if(tipo.equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("trabajadores", trabajadorDao.getTrabajadoresEmpresa(cif));
             return "trabajador/lista";
@@ -203,17 +202,17 @@ public class TrabajadorController {
      */
     @RequestMapping("/listDisponibilidad")
     public String listDisponibilidadTrabajadoresEmpresa(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null)
+        if (session.getAttribute("usuario") == null)
         {
-            model.addAttribute("user", new Usuario());
+            model.addAttribute("usuario", new Usuario());
             return "login";
         }
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        String cif = user.getCif();
+        String cif = (String) session.getAttribute("CIF");
         if(tipo.equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("alumnos", trabajadorDao.getDisponibilidadTrabajadores(cif));
+            model.addAttribute("trabajadores", trabajadorDao.getDisponibilidadTrabajadores(cif));
             return "trabajador/listDisponibilidad";
 
         } else {
@@ -230,20 +229,20 @@ public class TrabajadorController {
      * @param model
      * @return
      */
-    @RequestMapping("/listEmails")
-    public String listDisponibilidadTrabajadoresEmpresa(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null)
+    @RequestMapping("/listaemails")
+    public String listEmailsdTrabajadoresEmpresa(HttpSession session, Model model) {
+        if (session.getAttribute("usuario") == null)
         {
-            model.addAttribute("user", new Usuario());
+            model.addAttribute("usuario", new Usuario());
             return "login";
         }
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        String cif = user.getCif();
+        String cif = (String) session.getAttribute("CIF");
 
         if(tipo.equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("alumnos", trabajadorDao.getEmailTrabajadores(cif));
+            model.addAttribute("trabajadores", trabajadorDao.getEmailTrabajadores(cif));
             return "trabajador/listaemails";
 
         } else {
@@ -260,13 +259,13 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String verDisponibilidadTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null)
+        if (session.getAttribute("usuario") == null)
         {
-            model.addAttribute("user", new Usuario());
+            model.addAttribute("usuario", new Usuario());
             return "login";
         }
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();

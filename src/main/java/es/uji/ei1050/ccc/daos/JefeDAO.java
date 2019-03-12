@@ -92,7 +92,7 @@ public class JefeDAO {
             BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
             String pass = passwordEncryptor.encryptPassword(jefe.getPasswd());
             if (this.jdbcTemplate.update("insert into usuarios(username, passwd, tipo) values(?, ?, ?)",
-                    jefe.getEmail(), jefe.getPasswd(), Perfiles.JF.getDescripcion()) == 1)
+                    jefe.getEmail(), pass, Perfiles.JF.getDescripcion()) == 1)
                 if(this.jdbcTemplate.update(
                         "insert into persone(nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria) values(?, ?, ?, ?, ?, ?, ?)",
                         jefe.getNombre(), jefe.getApellidos(), jefe.getDni(), jefe.getTelefono(), jefe.getDomicilio(), jefe.getEmail(), jefe.getCuentaBancaria()) == 1)

@@ -45,7 +45,7 @@ public class EmpresaController {
         Perfiles tipo = user.getTipo();
         if (tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
-            String cif = user.getCIF();
+            String cif = (String) session.getAttribute("CIF");
             model.addAttribute("templates/empresa", empresaDao.getEmpresa(cif));
             return "empresa/informacion";
         } else {
@@ -73,7 +73,7 @@ public class EmpresaController {
         Usuario user = (Usuario) session.getAttribute("user");
         Perfiles tipo = user.getTipo();
         if (tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
-            String cif = user.getCIF();
+            String cif = (String) session.getAttribute("CIF");
             model.addAttribute("templates/empresa", empresaDao.getEmpresa(cif));
             return "trabajador/update";
         } else {
@@ -99,7 +99,8 @@ public class EmpresaController {
 
 
         Usuario user = (Usuario) session.getAttribute("user");
-        empresa = empresaDao.getEmpresa(user.getCIF());
+        String cif = (String) session.getAttribute("CIF");
+        empresa = empresaDao.getEmpresa(cif);
         Perfiles tipo = user.getTipo();
 
 

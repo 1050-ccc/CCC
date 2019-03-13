@@ -90,7 +90,7 @@ public class JefeDAO {
     public boolean addJefe(Jefe jefe) {
         try {
             BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-            String pass = passwordEncryptor.encryptPassword(jefe.getPasswd());
+            String pass = passwordEncryptor.encryptPassword(jefe.getDni());
             if (this.jdbcTemplate.update("insert into usuarios(username, passwd, tipo) values(?, ?, ?)",
                     jefe.getEmail(), pass, Perfiles.JF.getDescripcion()) == 1)
                 if(this.jdbcTemplate.update(

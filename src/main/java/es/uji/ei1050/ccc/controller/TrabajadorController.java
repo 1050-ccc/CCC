@@ -30,7 +30,7 @@ public class TrabajadorController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/informacion", method = RequestMethod.GET)
     public String verInformacionTrabajador(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null)
         {

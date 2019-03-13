@@ -114,7 +114,7 @@ public class TrabajadorDAO {
     public boolean addTrabajador(Trabajador trabajador) {
         try {
             BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-            String pass = passwordEncryptor.encryptPassword(trabajador.getPasswd());
+            String pass = passwordEncryptor.encryptPassword(trabajador.getDni());
             if (this.jdbcTemplate.update("insert into usuarios(username, passwd, tipo) values(?, ?, ?)",
                     trabajador.getEmail(), pass, Perfiles.TR.getDescripcion()) == 1)
                 if(this.jdbcTemplate.update(

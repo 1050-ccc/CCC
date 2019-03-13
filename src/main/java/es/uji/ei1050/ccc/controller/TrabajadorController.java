@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/templates/trabajador")
+@RequestMapping("/trabajador")
 public class TrabajadorController {
 
     private TrabajadorDAO trabajadorDao;

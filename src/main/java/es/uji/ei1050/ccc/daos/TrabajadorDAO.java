@@ -5,6 +5,7 @@ import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Trabajador;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -65,10 +66,11 @@ public class TrabajadorDAO {
      * @return An <code>ArrayList</code> of <code>Alumno</code>s or <code>null</code> if an error occurs while accessing database.
      */
     public List<Trabajador> getTrabajadoresEmpresa(String cif) {
+        String sql = "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
+                "from persone p join trabajador t on (p.dni = t.Persone_dni)  where upper(p.Empresa_cif)=?";
+
         try {
-            return this.jdbcTemplate.query(
-                    "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
-                            "from persone p join trabajador t on (p.dni = t.Persone_dni)  where upper(p.Empresa_cif)=?",new Object[]{cif}, new TrabajadorMapper());
+            return this.jdbcTemplate.query(sql, new Object[]{cif}, new TrabajadorMapper());
         } catch (Exception e) {
             e.printStackTrace();
             return null;

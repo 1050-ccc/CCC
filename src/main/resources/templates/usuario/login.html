@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous" />
+
+    <link rel="stylesheet" type="text/css" href="/css/util.css"
+          th:href="@{/css/util.css}" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css"
+          th:href="@{/css/main.css}" />
+
+    <title>LOGIN SAPE</title>
+
+</head>
+<body>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-50 p-b-90">
+            <form class="login100-form validate-form flex-sb flex-w" action="#"
+                  th:action="@{/usuario/login}" th:object="${usuario}" method="post">
+                <span class="login100-form-title p-b-51"> Login </span>
+
+
+                <div class="wrap-input100 validate-input m-b-16"
+                     data-validate="Usuario requerido">
+                    <input class="input100" type="text" name="username"
+                           placeholder="Usuario" th:field="*{usuario}" th:required="required" /> <span
+                        class="focus-input100"></span>
+                    <div class="error" th:if="${#fields.hasErrors('usuario')}"
+                         th:errors="*{usuario}"></div>
+                </div>
+
+
+                <div class="wrap-input100 validate-input m-b-16"
+                     data-validate="Contraseña requerida">
+                    <input class="input100" type="password" name="password"
+                           placeholder="Contraseña" th:field="*{password}" th:required="required"  /> <span
+                        class="focus-input100"></span>
+                    <div class="error" th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}"></div>
+                </div>
+                <div class="container-login100-form-btn m-t-17">
+                    <button type="submit" class="login100-form-btn">Login</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="dropDownSelect1"></div>
+
+</body>
+</html>

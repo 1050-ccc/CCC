@@ -26,22 +26,21 @@ public class IndexController {
     public String login(HttpSession session, Model model) {
         //COMPROBACION DE USUARIO LOGEADO
         if (session.getAttribute("usuario") == null) {
-            return "redirect:/usuario/login";
+            return "redirect:/usuario/login.html";
         }
 
         //Redirigir si eres admin
-        if (((Usuario) session.getAttribute("usuario")).getEmail().equals("admin"))
-            return "index.html";
+        if (((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.ADMIN))
+            return "redirect:/admin/index.html";
 
-
-        //Redirigir si eres Jefe a tu menú correspondiente
+        //Redirigir si eres JEFE a tu menú correspondiente
         if (((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF))
-            return "jefe/index.html";
-        //Redirigir si eres Trabajador a tu menú correspondiente
+            return "redirect:/jefe/index";
+        //Redirigir si eres TRABAJADOR a tu menú correspondiente
         if (((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.TR))
             return "redirect:/trabajador/index";
-
         //
+
         return "index.html";
     }
 

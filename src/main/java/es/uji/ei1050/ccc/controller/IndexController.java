@@ -25,6 +25,7 @@ public class IndexController {
     @RequestMapping("/")
     public String login(HttpSession session, Model model) {
         //COMPROBACION DE USUARIO LOGEADO
+        return "index.html";/*
         if (session.getAttribute("usuario") == null) {
             return "redirect:/usuario/login";
         }
@@ -42,7 +43,7 @@ public class IndexController {
             return "redirect:/trabajador/index";
 
         //
-        return "index.html";
+        return "index.html";*/
     }
 
 }

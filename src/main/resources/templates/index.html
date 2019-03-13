@@ -1,79 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>CCC</title>
-
-    <link rel="stylesheet" type="text/css" href="/css/student.css"
-          th:href="@{/css/student.css}"/>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css"
-          th:href="@{/css/styles.css}"/>
-    <meta charset="UTF-8"/>
-    <title>LOGIN</title>
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous"/>
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
-          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-          crossorigin="anonymous"/>
-
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-            crossorigin="anonymous"></script>
-
-    <link rel="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.css"
-          crossorigin="anonymous"/>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.js"
-            crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.min.js"
-            crossorigin="anonymous"></script>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.extensions.min.js"
-            crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/vendors/jquery.easings.min.js"
-            crossorigin="anonymous"></script>
-
+    <meta charset="UTF-8">
+    <title>Indice</title>
 </head>
+<body>
 
-<body style="background-color: black; padding: 0; margin: 0;">
-<div th:replace="main/main_template"></div>
+    <h1>CCC</h1>
+
+    <a href="jefe/index.html">Perfil jefe</a><br>
+    <a href="trabajador/index.html">Perfil trabajador</a><br>
+
 </body>
-
-<script>
-    $("document").ready(function() {
-        $('#fullpage').fullpage();
-    });
-
-    (function() {
-        'use strict';
-        var btnScrollDown = document.querySelector('#scroll_down');
-
-        function scrollDown() {
-            var windowCoords = document.documentElement.clientHeight;
-            (function scroll() {
-                if (window.pageYOffset < windowCoords) {
-                    window.scrollBy(0, 10);
-                    setTimeout(scroll, 0);
-                }
-                if (window.pageYOffset > windowCoords) {
-                    window.scrollTo(0, windowCoords);
-                }
-            })();
-        }
-        btnScrollDown.addEventListener('click', scrollDown);
-    })();
-</script>
 </html>

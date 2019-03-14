@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+    <title>Editar Trabajador</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
 <body>
+<h2>Editar Trabajador</h2>
+<form action="#" th:action="@{/trabajador/editar/{dni}(dni=${trabajador.dni})}"
+      th:object="${trabajador}" method="post">
+    <table>
+        <tr>
+            <td><label>Nombre</label></td>
+            <td><input type="text" th:field="*{nombre}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td><label>Apellidos</label></td>
+            <td><input type="text" th:field="*{apellidos}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td><label>DNI</label></td>
+            <td><input type="text" th:field="*{dni}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td><label>Domicilio</label></td>
+            <td><input type="text" th:field="*{domicilio}"/></td>
+        </tr>
+        <tr>
+            <td><label>Teléfono</label></td>
+            <td><input type="number" th:field="*{telefono}"/></td>
+        </tr>
+        <tr>
+            <td><label>Email</label></td>
+            <td><input type="text" th:field="*{email}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td><label>Cuenta bancaria</label></td>
+            <td><input type="text" th:field="*{cuentaBancaria}"/></td>
+        </tr>
+        <tr>
+            <td><label>Disponibilidad</label></td>
+            <td><select id="disponibilidad_trabjador" class="form_control" type="text"  >
+                <option value="" th:text="*{turno}"></option>
+                <option value="Mañana" th:if="*{turno} != Mañana" >Mañana</option>
+                <option value="Tarde" th:if="*{turno} != Tarde" >Tarde</option>
+                <option value="Noche" th:if="*{turno} != Noche" >Noche</option>
+                <option value="Madrugada" th:if="*{turno} != Madrugada" >Madrugada</option>
+            </select>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Guardar" colspan="2"/></td>
+        </tr>
+    </table>
+
+</form>
 
 </body>
 </html>

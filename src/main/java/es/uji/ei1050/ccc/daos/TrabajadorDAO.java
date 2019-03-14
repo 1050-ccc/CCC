@@ -120,8 +120,8 @@ public class TrabajadorDAO {
             if (this.jdbcTemplate.update("insert into usuarios(username, passwd, tipo) values(?, ?, ?)",
                     trabajador.getEmail(), pass, Perfiles.TR.getDescripcion()) == 1)
                 if(this.jdbcTemplate.update(
-                        "insert into persone(nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria) values(?, ?, ?, ?, ?, ?, ?)",
-                        trabajador.getNombre(), trabajador.getApellidos(), trabajador.getDni(), trabajador.getTelefono(), trabajador.getDomicilio(), trabajador.getEmail(), trabajador.getCuentaBancaria()) == 1)
+                        "insert into persone(nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria, Empresa_cif) values(?, ?, ?, ?, ?, ?, ?, ?)",
+                        trabajador.getNombre(), trabajador.getApellidos(), trabajador.getDni(), trabajador.getTelefono(), trabajador.getDomicilio(), trabajador.getEmail(), trabajador.getCuentaBancaria(), trabajador.getEmpresa_cif()) == 1)
 
                     if (this.jdbcTemplate.update("insert into trabajador(Persone_dni, puestoTrabajo, turno) values(?, ?, ?)",
                             trabajador.getDni(), trabajador.getPuestoTrabajo(), trabajador.getTurno()) == 1)
@@ -143,7 +143,7 @@ public class TrabajadorDAO {
     public boolean updateTrabajador(Trabajador trabajador) {
         try {
             if(this.jdbcTemplate.update(
-                    "update persone set telefono=?, domicilio=?, cuentaBancaria=?, telefono=? where upper(cif) = ?",
+                    "update persone set telefono=?, domicilio=?, cuentaBancaria=?, telefono=? where upper(dni) = ?",
                     trabajador.getTelefono(), trabajador.getDomicilio(), trabajador.getCuentaBancaria(), trabajador.getTelefono(), trabajador.getDni() ) > 0);
                 return true;
 

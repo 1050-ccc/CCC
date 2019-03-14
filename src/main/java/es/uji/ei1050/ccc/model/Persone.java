@@ -14,8 +14,6 @@ public class Persone {
 
     String Empresa_cif; // varchar 50
 
-    //String passwd;
-
     // --------------------------//
 
 

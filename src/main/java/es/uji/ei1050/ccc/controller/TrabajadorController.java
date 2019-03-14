@@ -43,7 +43,7 @@ public class TrabajadorController {
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
             model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(username));
-            return "trabajador/informacion :: list";
+            return "trabajador/informacion";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:" + session.getAttribute("url");
@@ -68,10 +68,13 @@ public class TrabajadorController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
+        String cif = (String) session.getAttribute("CIF");
 
         if(tipo.equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("templates/trabajador", new Trabajador());
-            return "trabajador/add";
+            Trabajador trabajador = new Trabajador();
+            trabajador.setEmpresa_cif(cif);
+            model.addAttribute("templates/trabajador", trabajador);
+            return "trabajador/añadir";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:/" + session.getAttribute("url");
@@ -84,7 +87,7 @@ public class TrabajadorController {
      * @param bindingResult
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/añadir", method = RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("templates/trabajador") Trabajador trabajador,
                                    BindingResult bindingResult) {
 
@@ -92,7 +95,7 @@ public class TrabajadorController {
         //alumnoValidator.validate(alumno, bindingResult);
 
         if (bindingResult.hasErrors())
-            return "alumno/add";
+            return "trabajador/añadir";
         trabajadorDao.addTrabajador(trabajador);
         return "redirect:list.html :: list";
     }
@@ -111,7 +114,7 @@ public class TrabajadorController {
     //Métodos editar trabajador
 
     /**
-     * Vista para actualizar los datos de una alumno.
+     * Vista para actualizar los datos de un trabajador.
      * @param session
      * @param model
      * @return
@@ -127,10 +130,10 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
-            String dni = user.getEmail();
-            System.out.println(dni);
-            model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(dni));
-            return "trabajador/update";
+            String email = user.getEmail();
+            //System.out.println(dni);
+            model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(email));
+            return "trabajador/editar";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:" + session.getAttribute("url");
@@ -150,7 +153,7 @@ public class TrabajadorController {
                                       @ModelAttribute("templates/trabajador") Trabajador trabajador,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "trabajador/update";
+            return "trabajador/editar";
 
 
         Usuario user = (Usuario) session.getAttribute("usuario");

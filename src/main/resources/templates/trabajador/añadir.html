@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"><!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Añadir trabajador</title>
+
+    </head>
+<body>
+
+
+<form  th:object="${trabajador}" method="post">
+
+
+    <table>
+        <tr>
+            <td><label>Nombre</label></td>
+            <td><input type="text" th:field="*{nombre}"/></td>
+        </tr>
+        <tr>
+            <td><label>Apellidos</label></td>
+            <td><input type="text" th:field="*{apellidos}"/></td>
+        </tr>
+        <tr>
+            <td><label>DNI</label></td>
+            <td><input type="text" th:field="*{dni}"/></td>
+        </tr>
+        <tr>
+            <td><label>Domicilio</label></td>
+            <td><input type="text" th:field="*{domicilio}"/></td>
+        </tr>
+        <tr>
+            <td><label>Teléfono</label></td>
+            <td><input type="number" th:field="*{telefono}"/></td>
+        </tr>
+        <tr>
+            <td><label>Email</label></td>
+            <td><input type="text" th:field="*{email}"/></td>
+        </tr>
+        <tr>
+            <td><label>Cuenta bancaria</label></td>
+            <td><input type="text" th:field="*{cuentaBancaria}"/></td>
+        </tr>
+        <tr>
+            <td><label>Disponibilidad</label></td>
+            <td><select id="disponibilidad_trabjador" class="form_control" type="text"  >
+                <option value="" th:text="*{turno}"></option>
+                <option value="Mañana" th:if="*{turno} != Mañana" >Mañana</option>
+                <option value="Tarde" th:if="*{turno} != Tarde" >Tarde</option>
+                <option value="Noche" th:if="*{turno} != Noche" >Noche</option>
+                <option value="Madrugada" th:if="*{turno} != Madrugada" >Madrugada</option>
+            </select>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Añadir" colspan="2"/></td>
+        </tr>
+    </table>
+
+
+</form>
+
+</body>
+</html>
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>

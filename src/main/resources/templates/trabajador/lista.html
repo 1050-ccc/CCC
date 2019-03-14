@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista trabajadores</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+</head>
+<body>
+<h1>Lista de trabajadores</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre </th>
+        <th>Apellidos </th>
+        <th>DNI </th>
+        <th>Domicilio </th>
+        <th>Teléfono </th>
+        <th>Email </th>
+        <th>Cuenta Bancaria </th>
+        <th>Disponibilidad </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="trabajador: ${trabajadores}">
+        <td th:text="${trabajador.nombre}"></td>
+        <td th:text="${trabajador.apellidos}"></td>
+        <td th:text="${trabajador.dni}"></td>
+        <td th:text="${trabajador.domicilio}"></td>
+        <td th:text="${trabajador.telefono}"></td>
+        <td th:text="${trabajador.email}"></td>
+        <td th:text="${trabajador.cuentaBancaria}"></td>
+        <td th:text="${trabajador.turno}"></td>
+        <td><a th:href="@{/trabajador/editar/{email}(email=${trabajador.email})}">Editar</a>
+        </td>
+        <td><a th:href="@{/trabajaor/borrar/{email}(email=${trabajador.email})}">Despedir</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="añadir.html">Añadir</a>
+</body>
+</html>

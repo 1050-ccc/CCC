@@ -171,7 +171,6 @@ public class TrabajadorDAO {
         return false;
     }
 
-    //REVISAR ESTE DAO
     /**
      * Method that list an <code>Alumno</code> by its <b>username</b>.
      * @param username <code>String</code> that indicates the <code>Alumno</code>'s <b>username</b>.
@@ -181,8 +180,8 @@ public class TrabajadorDAO {
     public Trabajador getTrabajadorByUsername(String username) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select a.dni, a.nombre, a.username, a.semestre_inicio_estancia, a.itinerario, i.nombre " +
-                            "from persone p join trabajador t on (a.itinerario = i.id) where upper(email)=?",
+                    "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
+                            "from persone p join trabajador t on (p.dni = t.Persone_dni) where upper(email)=?",
                     new Object[]{username}, new TrabajadorMapper());
         } catch (Exception e) {
             e.printStackTrace();

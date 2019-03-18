@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Información Trabajador</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
 <body>
-    <a>Hola</a>
+<h2>Información Trabajador</h2>
+<form th:object="${trabajador}">
+    <table>
+        <tr>
+            <td><label>Nombre</label></td>
+            <td th:text="${trabajador.nombre}"></td>
+        </tr>
+        <tr>
+            <td><label>Apellidos</label></td>
+            <td th:text="${trabajador.apellidos}"></td>
+        </tr>
+        <tr>
+            <td><label>DNI</label></td>
+            <td th:text="${trabajador.dni}"></td>
+        </tr>
+        <tr>
+            <td><label>Domicilio</label></td>
+            <td th:text="${trabajador.domicilio}"></td>
+        </tr>
+        <tr>
+            <td><label>Teléfono</label></td>
+            <td th:text="${trabajador.telefono}"></td>
+        </tr>
+        <tr>
+            <td><label>Email</label></td>
+            <td th:text="${trabajador.email}"></td>
+        </tr>
+        <tr>
+            <td><label>Cuenta bancaria</label></td>
+            <td th:text="${trabajador.cuentaBancaria}"></td>
+        </tr>
+        <tr>
+            <td><label>Disponibilidad</label></td>
+            <td th:text="${trabajador.turno}"></td>
+        </tr>
+        <tr>
+        </tr>
+    </table>
+
+</form>
 
 </body>
 </html>

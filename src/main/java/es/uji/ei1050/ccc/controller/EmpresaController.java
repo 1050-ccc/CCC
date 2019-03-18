@@ -54,7 +54,7 @@ public class EmpresaController {
         }
     }
 
-    //Métodos editar trabajador
+    //Métodos editar empresa
 
     /**
      * Vista para actualizar los datos de una empresa.

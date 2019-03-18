@@ -1,11 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Información Empresa</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
 <body>
-    <a>Hola</a>
+<h2>Información Empresa</h2>
+<form th:object="${empresa}">
+    <table>
+        <tr>
+            <td><label>CIF</label></td>
+            <td th:text="${empresa.cif}"></td>
+        </tr>
+        <tr>
+            <td><label>Nombre</label></td>
+            <td th:text="${empresa.nombre}"></td>
+        </tr>
+        <tr>
+            <td><label>Nombre Comercial</label></td>
+            <td th:text="${empresa.nombreComercial}"></td>
+        </tr>
+        <tr>
+            <td><label>Domicilio Fiscal</label></td>
+            <td th:text="${empresa.domicilioFiscal}"></td>
+        </tr>
+        <tr>
+            <td><label>Cuenta Bancaria</label></td>
+            <td th:text="${empresa.cuentaBancaria}"></td>
+        </tr>
+        <tr>
+            <td><label>Persona Juridica</label></td>
+            <td th:text="${empresa.personaJuridica}"></td>
+        </tr>
+        <tr>
+            <td><label>Persona Fiscal</label></td>
+            <td th:text="${empresa.personaFiscal}"></td>
+        </tr>
+        <tr>
+            <td><label>Email</label></td>
+            <td th:text="${empresa.email}"></td>
+        </tr>
+        <tr>
+            <td><label>Teléfono</label></td>
+            <td th:text="${empresa.telefono}"></td>
+        </tr>
+        <tr>
+        </tr>
+    </table>
+
+</form>
 
 </body>
 </html>

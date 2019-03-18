@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Información Jefe</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
 <body>
+<h2>Información Jefe</h2>
+<form th:object="${jefe}">
+    <table>
+        <tr>
+            <td><label>Nombre</label></td>
+            <td th:text="${jefe.nombre}"></td>
+        </tr>
+        <tr>
+            <td><label>Apellidos</label></td>
+            <td th:text="${jefe.apellidos}"></td>
+        </tr>
+        <tr>
+            <td><label>DNI</label></td>
+            <td th:text="${jefe.dni}"></td>
+        </tr>
+        <tr>
+            <td><label>Domicilio</label></td>
+            <td th:text="${jefe.domicilio}"></td>
+        </tr>
+        <tr>
+            <td><label>Teléfono</label></td>
+            <td th:text="${jefe.telefono}"></td>
+        </tr>
+        <tr>
+            <td><label>Email</label></td>
+            <td th:text="${jefe.email}"></td>
+        </tr>
+        <tr>
+            <td><label>Cuenta bancaria</label></td>
+            <td th:text="${jefe.cuentaBancaria}"></td>
+        </tr>
+        <tr>
+        </tr>
+    </table>
+
+</form>
 
 </body>
 </html>

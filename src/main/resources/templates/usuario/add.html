@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html layout:decorate="~{fragments/base}">
+<head>
+<link rel="stylesheet" type="text/css"  
+      href="/css/main.css" 
+      th:href="@{/css/main.css}"/>
+<title>Nuevo Usuario</title>
+<meta charset="UTF-8"/>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+</head>
+<body>
+	<div layout:fragment="content">
+	<h2>Nuevo usuario</h2>
+	<form action="#" th:action="@{/usuario/add}" th:object="${usuario}"
+		method="post">
+		<table>
+			<tr>
+				<td><label>Usuario</label></td>
+				<td><input type="text" th:field="*{usuario}"
+					th:required="required" class="form-control" /></td>
+			</tr>
+			<tr>
+				<td><label>Contraseña</label></td>
+				<td><input type="password" th:field="*{password}"
+					th:required="required" class="form-control" /></td>
+			</tr>
+			<tr>
+				<td><label>Tipo</label></td>
+				<td><select class="form_control" th:field="*{tipo}">
+						<option
+							th:each="tipo : ${T(es.uji.ei1027.SAPE.model.Perfiles).values()}"
+							th:value="${tipo}" th:text="${tipo.descripcion}"></option>
+				</select></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class="btn btn-success"
+					value="Crear usuario" /></td>
+			</tr>
+		</table>
+	</form>
+			<p>
+			<a href="javascript:history.back()" class="btn btn-dark">Atrás</a>
+		</p>
+</body>
+</html>

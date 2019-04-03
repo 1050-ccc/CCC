@@ -1,22 +1,35 @@
+
 <!DOCTYPE html>
-<html layout:decorate="~{fragments/base}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" type="text/css"  
-      href="/css/main.css" 
-      th:href="@{/css/main.css}"/>
-<title>Nuevo Usuario</title>
-<meta charset="UTF-8"/>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+	<!-- Required meta tags -->
+	<meta charset="UTF-8" />
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet"
+		  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		  crossorigin="anonymous" />
+
+	<link rel="stylesheet" type="text/css" href="/css/util.css"
+		  th:href="@{/css/util.css}" />
+	<link rel="stylesheet" type="text/css" href="/css/main.css"
+		  th:href="@{/css/main.css}" />
+
+	<title>Nuevo usuario</title>
 </head>
+
 <body>
-	<div layout:fragment="content">
+	<div class="content">
 	<h2>Nuevo usuario</h2>
 	<form action="#" th:action="@{/usuario/add}" th:object="${usuario}"
 		method="post">
 		<table>
 			<tr>
-				<td><label>Usuario</label></td>
-				<td><input type="text" th:field="*{usuario}"
+				<td><label>Email</label></td>
+				<td><input type="email" th:field="*{email}"
 					th:required="required" class="form-control" /></td>
 			</tr>
 			<tr>
@@ -28,7 +41,7 @@
 				<td><label>Tipo</label></td>
 				<td><select class="form_control" th:field="*{tipo}">
 						<option
-							th:each="tipo : ${T(es.uji.ei1027.SAPE.model.Perfiles).values()}"
+							th:each="tipo : ${T(es.uji.ei1050.ccc.model.Perfiles).values()}"
 							th:value="${tipo}" th:text="${tipo.descripcion}"></option>
 				</select></td>
 			</tr>

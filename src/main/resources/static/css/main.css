@@ -463,10 +463,22 @@ p {
 	display: inline-block;
 }
 
+<<<<<<< HEAD
+/* footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 70px;
+	background-color: white;
+	width: 100%;
+} */
+=======
+
 footer {
 	width : 100%;
     display: inline-block;
 }
+>>>>>>> 4479ce3309c7dd61e9c23a609b9f0c8f3deee3ae
 
 .container {
 	position: relative;

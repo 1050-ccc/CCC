@@ -32,12 +32,12 @@
 
 
                 <div class="wrap-input100 validate-input m-b-16"
-                     data-validate="Usuario requerido">
+                     data-validate="Email requerido">
                     <input class="input100" type="text" name="username"
-                           placeholder="Usuario" th:field="*{usuario}" th:required="required" /> <span
+                           placeholder="Email" th:field="*{email}" th:required="required" /> <span
                         class="focus-input100"></span>
-                    <div class="error" th:if="${#fields.hasErrors('usuario')}"
-                         th:errors="*{usuario}"></div>
+                    <div class="error" th:if="${#fields.hasErrors('email')}"
+                         th:errors="*{email}"></div>
                 </div>
 
 

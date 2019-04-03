@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"><!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Crear contrato</title>
+
+    </head>
+<body>
+
+<h2>Crear Contrato</h2>
+
+<form  th:object="${contrato}" method="post">
+
+
+    <table>
+        <tr>
+            <td><label>Sueldo base</label></td>
+            <td><input type="number" th:field="*{sueldoBase}"/></td>
+        </tr>
+        <tr>
+            <td><label>Dias de vacaciones</label></td>
+            <td><input type="number" th:field="*{diasVacaciones}"/></td>
+        </tr>
+        <tr>
+            <td><label>Tipo de contrato</label></td>
+            <td><input type="text" th:field="*{tipoContrato}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Añadir" colspan="2"/></td>
+        </tr>
+    </table>
+
+
+</form>
+
+</body>
+</html>

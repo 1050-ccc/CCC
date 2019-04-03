@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Información Contrato</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2>Información Contrato</h2>
+<form th:object="${contrato}">
+    <table>
+        <tr>
+            <td><label>Sueldo base</label></td>
+            <td th:text="${contrato.sueldoBase}"></td>
+        </tr>
+        <tr>
+            <td><label>Dias de vacaciones</label></td>
+            <td th:text="${contrato.diasVacaciones}"></td>
+        </tr>
+        <tr>
+            <td><label>Tipo de contrato</label></td>
+            <td th:text="${contrato.tipoContrato}"></td>
+        </tr>
+        <tr>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>

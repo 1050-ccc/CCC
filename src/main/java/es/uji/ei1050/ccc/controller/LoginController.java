@@ -172,7 +172,7 @@ public class LoginController {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario == null) {
             model.addAttribute("usuario", new Usuario());
-            return "usuario/login";
+            return "usuario/add";
         }
         if (((Usuario) session.getAttribute("usuario")).getEmail().equals("admin")) {
             model.addAttribute("usuario", new Usuario());

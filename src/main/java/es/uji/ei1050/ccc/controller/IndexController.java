@@ -4,7 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Usuario;
-import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

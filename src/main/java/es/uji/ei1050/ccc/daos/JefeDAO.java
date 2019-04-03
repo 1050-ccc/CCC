@@ -114,7 +114,7 @@ public class JefeDAO {
      */
 
     //REVISAR DAO
-    public boolean updateTrabajador(Jefe jefe) {
+    public boolean updateJefe(Jefe jefe) {
         try {
             if(this.jdbcTemplate.update(
                     "update persone set telefono=?, domicilio=?, cuentaBancaria=?, telefono=? where upper(cif) = ?",

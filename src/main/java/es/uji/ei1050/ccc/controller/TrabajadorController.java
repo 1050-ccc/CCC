@@ -1,8 +1,8 @@
 package es.uji.ei1050.ccc.controller;
 
 import es.uji.ei1050.ccc.daos.TrabajadorDAO;
-import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Trabajador;
+import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +42,7 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
-            model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(username));
+            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByUsername(username));
             return "trabajador/informacion";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");

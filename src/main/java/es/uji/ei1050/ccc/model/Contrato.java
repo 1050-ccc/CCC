@@ -5,6 +5,7 @@ public class Contrato {
     int sueldoBase; // int
     int diasVacaciones; // int
     ETipoContrato tipoContrato; // varchar 10
+    String Persone_dni; // varchar 9
 
     // --------------------------//
 
@@ -12,10 +13,11 @@ public class Contrato {
         super();
     }
 
-    public Contrato(int sueldoBase, int diasVacaciones, ETipoContrato tipoContrato) {
+    public Contrato(int sueldoBase, int diasVacaciones, ETipoContrato tipoContrato, String Persone_dni) {
         this.sueldoBase = sueldoBase;
         this.diasVacaciones = diasVacaciones;
         this.tipoContrato = tipoContrato;
+        this.Persone_dni = Persone_dni;
     }
 
     public int getSueldoBase() {
@@ -40,6 +42,14 @@ public class Contrato {
 
     public void setTipoContrato(ETipoContrato tipoContrato) {
         this.tipoContrato = tipoContrato;
+    }
+
+    public String getPersone_dni() {
+        return Persone_dni;
+    }
+
+    public void setPersone_dni(String persone_dni) {
+        Persone_dni = persone_dni;
     }
 
     @Override

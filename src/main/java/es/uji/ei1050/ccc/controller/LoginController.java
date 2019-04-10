@@ -4,11 +4,9 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpSession;
 
-import es.uji.ei1050.ccc.daos.EmpresaDAO;
-import es.uji.ei1050.ccc.daos.JefeDAO;
-import es.uji.ei1050.ccc.daos.TrabajadorDAO;
-import es.uji.ei1050.ccc.daos.UsuarioDAO;
+import es.uji.ei1050.ccc.daos.*;
 import es.uji.ei1050.ccc.model.Perfiles;
+import es.uji.ei1050.ccc.model.Persone;
 import es.uji.ei1050.ccc.model.Usuario;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +47,7 @@ public class LoginController {
     private EmpresaDAO empresaDAO;
     private TrabajadorDAO trabajadorDAO;
     private JefeDAO jefeDAO;
+    private PersoneDAO personeDAO;
 
     /**
      * @param usuarioDAO
@@ -81,6 +80,14 @@ public class LoginController {
     public void setJefeDAO(JefeDAO jefeDAO) {
         this.jefeDAO = jefeDAO;
     }
+
+    /**
+     * @param personeDAO
+     */
+    @Autowired
+    public void setPersoneDAO(PersoneDAO personeDAO) {
+        this.personeDAO = personeDAO;
+    }
     //
 
     /**
@@ -94,10 +101,12 @@ public class LoginController {
         // COMPROBACION DE USUARIO LOGEADO
         if (session.getAttribute("usuario") != null) {
             model.addAttribute("usuario", new Usuario());
+            model.addAttribute("persone", new Persone());
             return "redirect:/";
         }
         //
         model.addAttribute("usuario", new Usuario());
+        model.addAttribute("persone", new Persone());
         return "usuario/login";
     }
 
@@ -170,12 +179,15 @@ public class LoginController {
     @RequestMapping(value = "/add")
     public String addUsuario(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Persone persone = (Persone) session.getAttribute("persone");
         if (usuario == null) {
             model.addAttribute("usuario", new Usuario());
+            model.addAttribute("persone", new Persone());
             return "usuario/add";
         }
         if (((Usuario) session.getAttribute("usuario")).getEmail().equals("admin")) {
             model.addAttribute("usuario", new Usuario());
+            model.addAttribute("persone", new Persone());
             return "usuario/add";
         }
         return "redirect:/";
@@ -189,7 +201,7 @@ public class LoginController {
      * @throws NoSuchAlgorithmException
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("usuario") Usuario usuario, BindingResult bindingResult)
+    public String processAddSubmit(@ModelAttribute("usuario") Usuario usuario, @ModelAttribute("persone") Persone persone, BindingResult bindingResult)
             throws NoSuchAlgorithmException {
         UserValidator userValidator = new UserValidator();
         userValidator.validate(usuario, bindingResult);
@@ -200,7 +212,10 @@ public class LoginController {
         String pass = passwordEncryptor.encryptPassword(usuario.getPassword());
         usuario.setPassword(pass);
         //
+
         usuarioDAO.addUsuario(usuario);
+        persone.setEmail(usuario.getEmail());
+        personeDAO.addPersone(persone);
         return "redirect:/";
     }
 

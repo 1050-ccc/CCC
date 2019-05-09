@@ -84,27 +84,11 @@ public class JefeDAO {
 
     /**
      * Method that adds an <code>Alumno</code> to the database.
-     * @param jefe <code>Alumno</code> object to be added.
-     * @return A <code>boolean</code> value indicating if the operation was successful or not.
+     * @param dni <code>Alumno</code> object to be added.
      */
-    public boolean addJefe(Jefe jefe) {
-        try {
-            BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-            String pass = passwordEncryptor.encryptPassword(jefe.getDni());
-            if (this.jdbcTemplate.update("insert into usuarios(username, passwd, tipo) values(?, ?, ?)",
-                    jefe.getEmail(), pass, Perfiles.JF.getDescripcion()) == 1)
-                if(this.jdbcTemplate.update(
-                        "insert into persone(nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria) values(?, ?, ?, ?, ?, ?, ?)",
-                        jefe.getNombre(), jefe.getApellidos(), jefe.getDni(), jefe.getTelefono(), jefe.getDomicilio(), jefe.getEmail(), jefe.getCuentaBancaria()) == 1)
-
-                    if (this.jdbcTemplate.update("insert into jefe(Persone_dni) values(?)",
-                            jefe.getDni()) == 1)
-                        return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
+    public void addJefe(String dni) {
+        String sql = "INSERT INTO Jefe(Persone_dni) " + "VALUES(?);";
+        this.jdbcTemplate.update(sql, dni);
     }
 
     /**

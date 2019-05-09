@@ -111,26 +111,10 @@ public class TrabajadorDAO {
     /**
      * Method that adds an <code>Alumno</code> to the database.
      * @param trabajador <code>Alumno</code> object to be added.
-     * @return A <code>boolean</code> value indicating if the operation was successful or not.
      */
-    public boolean addTrabajador(Trabajador trabajador) {
-        try {
-            BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-            String pass = passwordEncryptor.encryptPassword(trabajador.getDni());
-            if (this.jdbcTemplate.update("insert into usuarios(username, passwd, tipo) values(?, ?, ?)",
-                    trabajador.getEmail(), pass, Perfiles.TR.getDescripcion()) == 1)
-                if(this.jdbcTemplate.update(
-                        "insert into persone(nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria, Empresa_cif) values(?, ?, ?, ?, ?, ?, ?, ?)",
-                        trabajador.getNombre(), trabajador.getApellidos(), trabajador.getDni(), trabajador.getTelefono(), trabajador.getDomicilio(), trabajador.getEmail(), trabajador.getCuentaBancaria(), trabajador.getEmpresa_cif()) == 1)
-
-                    if (this.jdbcTemplate.update("insert into trabajador(Persone_dni, puestoTrabajo, turno) values(?, ?, ?)",
-                            trabajador.getDni(), trabajador.getPuestoTrabajo(), trabajador.getTurno()) == 1)
-                        return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
+    public void addTrabajador(Trabajador trabajador) {
+        String sql = "INSERT INTO Jefe(Persone_dni, puestoTrabajo, turno) " + "VALUES(?,?,?);";
+        this.jdbcTemplate.update(sql, trabajador.getDni(), trabajador.getPuestoTrabajo(), trabajador.getTurno());
     }
 
     //REVISAR ESTE DAO

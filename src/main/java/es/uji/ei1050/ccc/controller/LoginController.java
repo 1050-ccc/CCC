@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpSession;
 
 import es.uji.ei1050.ccc.daos.*;
+import es.uji.ei1050.ccc.model.Jefe;
 import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Persone;
 import es.uji.ei1050.ccc.model.Usuario;
@@ -213,9 +214,13 @@ public class LoginController {
         usuario.setPassword(pass);
         //
 
-        usuarioDAO.addUsuario(usuario);
         persone.setEmail(usuario.getEmail());
         personeDAO.addPersone(persone);
+        usuarioDAO.addUsuario(usuario);
+
+        if(usuario.getTipo().toString().equals("JF")) {
+            jefeDAO.addJefe(persone.getDni());
+        }
         return "redirect:/";
     }
 

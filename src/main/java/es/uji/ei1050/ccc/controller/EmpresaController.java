@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/templates/empresa")
+@RequestMapping("/empresa")
 public class EmpresaController {
 
     private EmpresaDAO empresaDao;
@@ -34,7 +34,7 @@ public class EmpresaController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/informacion", method = RequestMethod.GET)
     public String verInformacionTrabajador(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null) {
             model.addAttribute("usuario", new Usuario());
@@ -46,7 +46,7 @@ public class EmpresaController {
         if (tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
             String cif = (String) session.getAttribute("CIF");
-            model.addAttribute("templates/empresa", empresaDao.getEmpresa(cif));
+            model.addAttribute("empresa", empresaDao.getEmpresa(cif));
             return "empresa/informacion";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -65,16 +65,16 @@ public class EmpresaController {
      */
     @RequestMapping(value = "/update/{cif}", method = RequestMethod.GET)
     public String updateTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null) {
-            model.addAttribute("user", new Usuario());
+        if (session.getAttribute("usuario") == null) {
+            model.addAttribute("usuario", new Usuario());
             return "login";
         }
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         if (tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String cif = (String) session.getAttribute("CIF");
-            model.addAttribute("templates/empresa", empresaDao.getEmpresa(cif));
+            model.addAttribute("empresa", empresaDao.getEmpresa(cif));
             return "trabajador/update";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -98,8 +98,8 @@ public class EmpresaController {
             return "empresa/update";
 
 
-        Usuario user = (Usuario) session.getAttribute("user");
-        String cif = (String) session.getAttribute("CIF");
+        Usuario user = (Usuario) session.getAttribute("usuario");
+        String cif = (String) session.getAttribute("usuario");
         empresa = empresaDao.getEmpresa(cif);
         Perfiles tipo = user.getTipo();
 

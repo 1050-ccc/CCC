@@ -42,29 +42,7 @@ public class JefeController {
             return "redirect:" + url;
         }
     }
-    /*
-    @RequestMapping(value = "/perfiljefe", method = RequestMethod.GET)
-    public String verPerfilJefe(HttpSession session, Model model) {
 
-        if (session.getAttribute("usuario") == null) {
-            System.out.println("Chocho");
-
-            model.addAttribute("usuario", new Usuario());
-            return "login";
-        }
-
-
-        Usuario user = (Usuario) session.getAttribute("usuario");
-        Perfiles tipo = user.getTipo();
-        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
-            String username = user.getEmail();
-            model.addAttribute("jefe", jefeDao.getJefeByEmail(username));
-            return "/jefe/perfiljefe";
-        } else {
-            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
-            return "redirect:" + session.getAttribute("url");
-        }
-    }*/
 
     @RequestMapping(value = "/informacion", method = RequestMethod.GET)
     public String verInformacionJefe(HttpSession session, Model model) {

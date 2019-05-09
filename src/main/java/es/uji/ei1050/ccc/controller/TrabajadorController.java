@@ -24,6 +24,28 @@ public class TrabajadorController {
     }
 
 
+    @RequestMapping("") //load the template
+    public String load_template(HttpSession session, Model model) {
+        if (session.getAttribute("usuario") == null)
+        {
+            model.addAttribute("usuario", new Usuario());
+            return "index";
+        }
+        String url = (String) session.getAttribute("url");
+        Usuario user = (Usuario) session.getAttribute("usuario");
+        Perfiles tipo = user.getTipo();
+
+        if(tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
+            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByEmail(user.getEmail()));
+
+            return "trabajador/principal";
+        } else {
+            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
+            return "redirect:" + url;
+        }
+    }
+
+
     /**
      * Vista para ver los datos de un trabajador.
      * @param session

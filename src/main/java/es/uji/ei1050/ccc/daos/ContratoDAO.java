@@ -38,7 +38,7 @@ public class ContratoDAO {
          * Method that maps database objects to <code>Alumno</code> objects.
          * @param rs Database result.
          * @param rowNum Number of rows in Database result <code>rs</code>.
-         * @return An <code>Alumno</code> object.
+         * @return An <code>Contrato</code> object.
          * @throws SQLException If something goes wrong.
          */
         public Contrato mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -125,9 +125,9 @@ public class LoginController {
         UserValidator userValidator = new UserValidator();
         userValidator.validate(usuario, bindingResult);
 
-        if (bindingResult.hasErrors()) {
+        /*if (bindingResult.hasErrors()) {
             return "usuario/login";
-        }
+        }*/
         // Comprova que el login siga correcte
         // intentant carregar les dades de l'usuari
         usuario = usuarioDAO.loadUserByUsername(usuario.getEmail(), usuario.getPassword());
@@ -137,15 +137,17 @@ public class LoginController {
         }
         // Autenticats correctament.
         String email = usuario.getEmail();
-        String empresaCIF = empresaDAO.getEmpresaByUsername(email).getCIF();
+        String empresaCIF = "";
         String personeDNI = "0";
 
         if (usuario.getTipo().equals(Perfiles.JF)) {
             personeDNI = jefeDAO.getJefeByEmail(email).getDni();
+            empresaCIF = jefeDAO.getJefeByEmail(email).getEmpresa_cif();
         }
 
         if (usuario.getTipo().equals(Perfiles.TR)) {
             personeDNI = trabajadorDAO.getTrabajadorByEmail(email).getDni();
+            empresaCIF = trabajadorDAO.getTrabajadorByEmail(email).getEmpresa_cif();
         }
 
 
@@ -154,6 +156,10 @@ public class LoginController {
         session.setAttribute("usuario", usuario);
         session.setAttribute("CIF", empresaCIF);
         session.setAttribute("DNI", personeDNI);
+
+        /*if(usuario.getTipo()==Perfiles.JF){
+            return "ree"
+        }*/
 
         // Torna a la pàgina principal
         return "redirect:/";

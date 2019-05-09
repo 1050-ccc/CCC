@@ -49,6 +49,7 @@ public class JefeDAO {
             jefe.setDomicilio(rs.getString("domicilio"));
             jefe.setEmail(rs.getString("email"));
             jefe.setCuentaBancaria(rs.getString("cuentaBancaria"));
+            jefe.setEmpresa_cif(rs.getString("Empresa_cif"));
             return jefe;
         }
     }
@@ -56,9 +57,9 @@ public class JefeDAO {
     public Jefe getJefeByEmail(String email) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select  nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria, puestoTrabajo, turno " +
+                    "select  nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria, Empresa_cif " +
                             "from persone where upper(email)=?",
-                    new Object[]{email}, new JefeMapper());
+                    new Object[]{email.toUpperCase()}, new JefeMapper());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -72,9 +73,9 @@ public class JefeDAO {
     public Jefe getJefeByDNI(String dni) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select  nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria, puestoTrabajo, turno " +
+                    "select  nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria " +
                             "from persone where upper(dni)=?",
-                    new Object[]{dni}, new JefeMapper());
+                    new Object[]{dni.toUpperCase()}, new JefeMapper());
         } catch (Exception e) {
             e.printStackTrace();
             return null;

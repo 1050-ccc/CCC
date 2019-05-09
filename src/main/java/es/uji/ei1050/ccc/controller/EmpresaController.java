@@ -36,14 +36,14 @@ public class EmpresaController {
      */
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String verInformacionTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null) {
-            model.addAttribute("user", new Usuario());
+        if (session.getAttribute("usuario") == null) {
+            model.addAttribute("usuario", new Usuario());
             return "login";
         }
 
-        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if (tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
+        if (tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
             String cif = (String) session.getAttribute("CIF");
             model.addAttribute("templates/empresa", empresaDao.getEmpresa(cif));
@@ -72,7 +72,7 @@ public class EmpresaController {
 
         Usuario user = (Usuario) session.getAttribute("user");
         Perfiles tipo = user.getTipo();
-        if (tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
+        if (tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String cif = (String) session.getAttribute("CIF");
             model.addAttribute("templates/empresa", empresaDao.getEmpresa(cif));
             return "trabajador/update";
@@ -104,7 +104,7 @@ public class EmpresaController {
         Perfiles tipo = user.getTipo();
 
 
-        if (tipo.equals(Perfiles.JF.getDescripcion())) {
+        if (tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             empresaDao.updateEmpresa(empresa);
             return "empresa/informacion";
         } else {

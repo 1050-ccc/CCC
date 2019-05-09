@@ -40,7 +40,7 @@ public class TrabajadorController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
             model.addAttribute("trabajador", trabajadorDao.getTrabajadorByUsername(username));
             return "trabajador/informacion";
@@ -70,7 +70,7 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         String cif = (String) session.getAttribute("CIF");
 
-        if(tipo.equals(Perfiles.JF.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             Trabajador trabajador = new Trabajador();
             trabajador.setEmpresa_cif(cif);
             model.addAttribute("templates/trabajador", trabajador);
@@ -129,7 +129,7 @@ public class TrabajadorController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String email = user.getEmail();
             //System.out.println(dni);
             model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(email));
@@ -162,7 +162,7 @@ public class TrabajadorController {
         String dni = trabajador.getDni();
 
 
-        if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             trabajadorDao.updateTrabajador(trabajador);
             return "trabajador/informacion";
         } else {
@@ -187,7 +187,7 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         String cif = (String) session.getAttribute("CIF");
-        if(tipo.equals(Perfiles.JF.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("trabajadores", trabajadorDao.getTrabajadoresEmpresa(cif));
             return "trabajador/lista";
 
@@ -214,7 +214,7 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         String cif = (String) session.getAttribute("CIF");
-        if(tipo.equals(Perfiles.JF.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("trabajadores", trabajadorDao.getDisponibilidadTrabajadores(cif));
             return "trabajador/listDisponibilidad";
 
@@ -244,7 +244,7 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         String cif = (String) session.getAttribute("CIF");
 
-        if(tipo.equals(Perfiles.JF.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("trabajadores", trabajadorDao.getEmailTrabajadores(cif));
             return "trabajador/listaemails";
 
@@ -270,7 +270,7 @@ public class TrabajadorController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
             model.addAttribute("templates/trabajador", trabajadorDao.getDisponibilidadTrabajador(username));
             return "trabajador/disponibilidadTrabajador";

@@ -1,6 +1,8 @@
 package es.uji.ei1050.ccc.controller;
 
+import es.uji.ei1050.ccc.daos.PersoneDAO;
 import es.uji.ei1050.ccc.daos.TrabajadorDAO;
+import es.uji.ei1050.ccc.daos.UsuarioDAO;
 import es.uji.ei1050.ccc.model.Trabajador;
 import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Usuario;
@@ -16,7 +18,20 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/trabajador")
 public class TrabajadorController {
 
+    private UsuarioDAO usuarioDAO;
+    private PersoneDAO personeDAO;
     private TrabajadorDAO trabajadorDao;
+
+
+    @Autowired
+    public void setUsuariosDAO(UsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
+    }
+
+    @Autowired
+    public void setPersoneDao(PersoneDAO personeDAO) {
+        this.personeDAO = personeDAO;
+    }
 
     @Autowired
     public void setTrabajdoroDao(TrabajadorDAO trabajadorDao) {
@@ -80,11 +95,12 @@ public class TrabajadorController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/add")
+    @RequestMapping(value = "/añadir")
     public String añadirTrabajador(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null)
         {
             model.addAttribute("usuario", new Usuario());
+            model.addAttribute("trabajador", new Trabajador());
             return "login";
         }
 
@@ -95,7 +111,7 @@ public class TrabajadorController {
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             Trabajador trabajador = new Trabajador();
             trabajador.setEmpresa_cif(cif);
-            model.addAttribute("templates/trabajador", trabajador);
+            model.addAttribute("trabajador", trabajador);
             return "trabajador/añadir";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -110,20 +126,21 @@ public class TrabajadorController {
      * @return
      */
     @RequestMapping(value = "/añadir", method = RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("templates/trabajador") Trabajador trabajador,
+    public String processAddSubmit(@ModelAttribute("usuario") Usuario usuario, @ModelAttribute("trabajador") Trabajador trabajador,
                                    BindingResult bindingResult) {
 
-        //AlumnoValidator alumnoValidator = new AlumnoValidator();
-        //alumnoValidator.validate(alumno, bindingResult);
 
         if (bindingResult.hasErrors())
             return "trabajador/añadir";
+
+        usuarioDAO.addUsuario(usuario);
+        personeDAO.addPersone(trabajador);
         trabajadorDao.addTrabajador(trabajador);
-        return "redirect:list.html :: list";
+        return "jefe/principal";
     }
 
     /**
-     * Método que borra un alumno
+     * Método que borra un trabajador
      * @param dni
      * @return
      */
@@ -154,7 +171,7 @@ public class TrabajadorController {
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String email = user.getEmail();
             //System.out.println(dni);
-            model.addAttribute("templates/trabajador", trabajadorDao.getTrabajadorByUsername(email));
+            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByUsername(email));
             return "trabajador/editar";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -172,7 +189,7 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/editar", method = RequestMethod.POST)
     public String processUpdateSubmit(@RequestBody String data, HttpSession session,
-                                      @ModelAttribute("templates/trabajador") Trabajador trabajador,
+                                      @ModelAttribute("trabajador") Trabajador trabajador,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "trabajador/editar";
@@ -225,7 +242,7 @@ public class TrabajadorController {
      * @param model
      * @return
      */
-    @RequestMapping("/listDisponibilidad")
+    @RequestMapping("/listaDisponibilidad")
     public String listDisponibilidadTrabajadoresEmpresa(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null)
         {
@@ -238,7 +255,7 @@ public class TrabajadorController {
         String cif = (String) session.getAttribute("CIF");
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("trabajadores", trabajadorDao.getDisponibilidadTrabajadores(cif));
-            return "trabajador/listDisponibilidad";
+            return "trabajador/listaDisponibilidad";
 
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -294,7 +311,7 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
-            model.addAttribute("templates/trabajador", trabajadorDao.getDisponibilidadTrabajador(username));
+            model.addAttribute("trabajador", trabajadorDao.getDisponibilidadTrabajador(username));
             return "trabajador/disponibilidadTrabajador";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");

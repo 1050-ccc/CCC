@@ -1,71 +1,99 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"><!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>Añadir trabajador</title>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    </head>
-<body>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous" />
 
+    <link rel="stylesheet" type="text/css" href="/css/util.css"
+          th:href="@{/css/util.css}" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css"
+          th:href="@{/css/main.css}" />
 
-<form  th:object="${trabajador}" method="post">
-
-
-    <table>
-        <tr>
-            <td><label>Nombre</label></td>
-            <td><input type="text" th:field="*{nombre}"/></td>
-        </tr>
-        <tr>
-            <td><label>Apellidos</label></td>
-            <td><input type="text" th:field="*{apellidos}"/></td>
-        </tr>
-        <tr>
-            <td><label>DNI</label></td>
-            <td><input type="text" th:field="*{dni}"/></td>
-        </tr>
-        <tr>
-            <td><label>Domicilio</label></td>
-            <td><input type="text" th:field="*{domicilio}"/></td>
-        </tr>
-        <tr>
-            <td><label>Teléfono</label></td>
-            <td><input type="number" th:field="*{telefono}"/></td>
-        </tr>
-        <tr>
-            <td><label>Email</label></td>
-            <td><input type="text" th:field="*{email}"/></td>
-        </tr>
-        <tr>
-            <td><label>Cuenta bancaria</label></td>
-            <td><input type="text" th:field="*{cuentaBancaria}"/></td>
-        </tr>
-        <tr>
-            <td><label>Disponibilidad</label></td>
-            <td><select id="disponibilidad_trabjador" class="form_control" type="text"  >
-                <option value="" th:text="*{turno}"></option>
-                <option value="Mañana" th:if="*{turno} != Mañana" >Mañana</option>
-                <option value="Tarde" th:if="*{turno} != Tarde" >Tarde</option>
-                <option value="Noche" th:if="*{turno} != Noche" >Noche</option>
-                <option value="Madrugada" th:if="*{turno} != Madrugada" >Madrugada</option>
-            </select>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Añadir" colspan="2"/></td>
-        </tr>
-    </table>
-
-
-</form>
-
-</body>
-</html>
-    <title>Title</title>
+    <title>Nuevo Trabajador</title>
 </head>
-<body>
 
+<body>
+<div class="content">
+    <h2>Nuevo Trabajador</h2>
+    <form th:object="${trabajador}" method="post">
+        <table>
+            <tr>
+                <td><label>Nombre</label></td>
+                <td><input type="text" th:field="${trabajador.nombre}"
+                           th:required="required" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td><label>Apellidos</label></td>
+                <td><input type="text" th:field="${trabajador.apellidos}"
+                           th:required="required" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td><label>DNI</label></td>
+                <td><input type="text" th:field="${trabajador.dni}" class="form-control" size="10"  maxlength="9" name="nif" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" title="Introduzca el dni"  value="<?php echo $row['NIF'];?>" th:required="required" /></td>
+            </tr>
+            <tr>
+                <td><label>Domicilio</label></td>
+                <td><input type="text" th:field="${trabajador.domicilio}"
+                           th:required="required" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td><label>Telefono</label></td>
+                <td><input type="tel" th:field="${trabajador.telefono}" pattern="[0-9]{9}"
+                           th:required="required" class="form-control" /><span>Format: 923452678</span>
+                </td>
+            </tr>
+            <!--Hacer bien cuenta bancaria check-->
+            <tr>
+                <td><label>Cuenta Bancaria</label></td>
+                <td><input type="text" th:field="${trabajador.cuentaBancaria}"
+                           th:required="required" class="form-control" /></td>
+            </tr>
+
+            <tr>
+                <td><label>Disponibilidad</label></td>
+                <td><select id="disponibilidad_trabjador" class="form_control" type="text"  >
+                    <option value="" th:text="*{turno}"></option>
+                    <option value="Mañana" th:if="*{turno} != Mañana" >Mañana</option>
+                    <option value="Tarde" th:if="*{turno} != Tarde" >Tarde</option>
+                    <option value="Noche" th:if="*{turno} != Noche" >Noche</option>
+                    <option value="Madrugada" th:if="*{turno} != Madrugada" >Madrugada</option>
+                </select>
+            </tr>
+
+            <tr>
+                <td><label>Email</label></td>
+                <td><input type="email" th:field="${usuario.email}"
+                           th:required="required" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td><label>Contraseña</label></td>
+                <td><input type="password" th:field="${usuario.password}"
+                           th:required="required" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td><label>Tipo</label></td>
+                <td><select class="form_control" th:field="${usuario.tipo}">
+                    <option value="Trabajador" th:if="*{tipo} != Trabajador" >Trabajador</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" class="btn btn-success"
+                           value="Crear usuario" /></td>
+            </tr>
+        </table>
+    </form>
+    <p>
+        <a href="javascript:history.back()" class="btn btn-dark">Atrás</a>
+    </p>
 </body>
 </html>

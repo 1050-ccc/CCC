@@ -227,6 +227,7 @@ public class LoginController {
         if(usuario.getTipo().toString().equals("JF")) {
             jefeDAO.addJefe(persone.getDni());
         }
+
         return "redirect:/";
     }
 

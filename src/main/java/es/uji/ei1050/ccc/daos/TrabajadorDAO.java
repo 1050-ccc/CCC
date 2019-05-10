@@ -113,7 +113,7 @@ public class TrabajadorDAO {
      * @param trabajador <code>Alumno</code> object to be added.
      */
     public void addTrabajador(Trabajador trabajador) {
-        String sql = "INSERT INTO Jefe(Persone_dni, puestoTrabajo, turno) " + "VALUES(?,?,?);";
+        String sql = "INSERT INTO Trabajador(Persone_dni, puestoTrabajo, turno) " + "VALUES(?,?,?);";
         this.jdbcTemplate.update(sql, trabajador.getDni(), trabajador.getPuestoTrabajo(), trabajador.getTurno());
     }
 

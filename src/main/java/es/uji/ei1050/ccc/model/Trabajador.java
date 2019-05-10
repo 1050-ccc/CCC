@@ -3,7 +3,7 @@ package es.uji.ei1050.ccc.model;
 public class Trabajador extends Persone{
 
     String puestoTrabajo; // varchar 20
-    ETurnos turno; //varchar 10
+    String turno; //varchar 10
 
     // --------------------------//
 
@@ -11,7 +11,7 @@ public class Trabajador extends Persone{
         super();
     }
 
-    public Trabajador(String puestoTrabajo, ETurnos turno) {
+    public Trabajador(String puestoTrabajo, String turno) {
         this.puestoTrabajo = puestoTrabajo;
         this.turno = turno;
     }
@@ -24,11 +24,11 @@ public class Trabajador extends Persone{
         this.puestoTrabajo = puestoTrabajo;
     }
 
-    public ETurnos getTurno() {
+    public String getTurno() {
         return turno;
     }
 
-    public void setTurno(ETurnos turno) {
+    public void setTurno(String turno) {
         this.turno = turno;
     }
 

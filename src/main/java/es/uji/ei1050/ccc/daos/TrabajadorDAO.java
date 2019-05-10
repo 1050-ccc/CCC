@@ -56,7 +56,7 @@ public class TrabajadorDAO {
             trabajador.setEmail(rs.getString("email"));
             trabajador.setCuentaBancaria(rs.getString("cuentaBancaria"));
             trabajador.setPuestoTrabajo(rs.getString("puestoTrabajo"));
-            trabajador.setTurno(ETurnos.getEstado(rs.getString("turno")));
+            trabajador.setTurno((rs.getString("turno")));
             return trabajador;
         }
     }

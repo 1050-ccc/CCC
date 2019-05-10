@@ -6,6 +6,7 @@ import es.uji.ei1050.ccc.daos.UsuarioDAO;
 import es.uji.ei1050.ccc.model.Trabajador;
 import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Usuario;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -110,7 +111,7 @@ public class TrabajadorController {
 
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             Trabajador trabajador = new Trabajador();
-            trabajador.setEmpresa_cif(cif);
+            model.addAttribute("usuario", new Usuario());
             model.addAttribute("trabajador", trabajador);
             return "trabajador/añadir";
         } else {
@@ -133,9 +134,18 @@ public class TrabajadorController {
         if (bindingResult.hasErrors())
             return "trabajador/añadir";
 
-        usuarioDAO.addUsuario(usuario);
+
+        BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+        String pass = passwordEncryptor.encryptPassword(usuario.getPassword());
+        usuario.setPassword(pass);
+
+        usuario.setTipo(Perfiles.TR);
+        trabajador.setEmail(usuario.getEmail());
+
         personeDAO.addPersone(trabajador);
         trabajadorDao.addTrabajador(trabajador);
+        usuarioDAO.addUsuario(usuario);
+
         return "jefe/principal";
     }
 

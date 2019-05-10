@@ -59,14 +59,26 @@
             </tr>
 
             <tr>
-                <td><label>Disponibilidad</label></td>
-                <td><select id="disponibilidad_trabjador" class="form_control" type="text"  >
-                    <option value="" th:text="*{turno}"></option>
-                    <option value="Mañana" th:if="*{turno} != Mañana" >Mañana</option>
-                    <option value="Tarde" th:if="*{turno} != Tarde" >Tarde</option>
-                    <option value="Noche" th:if="*{turno} != Noche" >Noche</option>
-                    <option value="Madrugada" th:if="*{turno} != Madrugada" >Madrugada</option>
+                <td><label>Turno</label></td>
+                <td><select class="form_control" type="text" th:field="*{turno}" >
+                    <option value="---">---</option>
+                    <option value="Mañana">Mañana</option>
+                    <option value="Tarde">Tarde</option>
+                    <option value="Noche">Noche</option>
                 </select>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td><label>Empresa CIF</label></td>
+                <td><input type="text" th:field="${trabajador.Empresa_cif}"
+                           th:required="required" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td><label>Puesto de trabajo</label></td>
+                <td><input type="text" th:field="${trabajador.puestoTrabajo}"
+                           th:required="required" class="form-control" /></td>
             </tr>
 
             <tr>
@@ -78,12 +90,6 @@
                 <td><label>Contraseña</label></td>
                 <td><input type="password" th:field="${usuario.password}"
                            th:required="required" class="form-control" /></td>
-            </tr>
-            <tr>
-                <td><label>Tipo</label></td>
-                <td><select class="form_control" th:field="${usuario.tipo}">
-                    <option value="Trabajador" th:if="*{tipo} != Trabajador" >Trabajador</option>
-                </select></td>
             </tr>
             <tr>
                 <td></td>

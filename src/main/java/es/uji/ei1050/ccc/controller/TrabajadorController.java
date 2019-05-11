@@ -153,10 +153,14 @@ public class TrabajadorController {
      * @param dni
      * @return
      */
-    @RequestMapping(value = "/borrar/{dni}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/borrar/{dni}")
     public String processDelete(@PathVariable String dni) {
+        Trabajador trabajador = trabajadorDao.getTrabajadorByDNI(dni);
+        String email = trabajador.getEmail();
+        usuarioDAO.deleteUsuarios(email);
         trabajadorDao.deleteTrabajador(dni);
-        return "redirect:../list";
+        personeDAO.deletePersone(dni);
+        return "redirect:../lista";
     }
 
     //Métodos editar trabajador
@@ -178,8 +182,6 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
-            //String email = user.getEmail();
-            System.out.println("DNI del usuario "+dni);
             model.addAttribute("trabajador", trabajadorDao.getTrabajadorByDNI(dni));
             return "trabajador/editar";
         } else {

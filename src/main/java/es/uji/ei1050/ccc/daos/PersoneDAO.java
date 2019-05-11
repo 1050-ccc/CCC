@@ -77,6 +77,11 @@ public class PersoneDAO {
         this.jdbcTemplate.update(sql, persone.getNombre(), persone.getApellidos(), persone.getDni(), persone.getDomicilio(), persone.getTelefono(), persone.getEmail(), persone.getCuentaBancaria(), persone.getEmpresa_cif());
     }
 
+    /**
+     * edita un usuario de la base de datos
+     *
+     * @param persone
+     */
     public boolean updatePersone(Persone persone) {
         try {
             if(this.jdbcTemplate.update(
@@ -88,6 +93,22 @@ public class PersoneDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * Method that removes <code>Persone</code>s in a database.
+     * @param dni <code>String</code> that indicates what <code>Persone</code>s to remove from database.
+     * @return A <code>boolean</code> value indicating either the operation was successful or not.
+     */
+    public boolean deletePersone(String dni) {
+        try {
+            if(this.jdbcTemplate.update("delete from persone where upper(dni) = ?", dni) > 0)
+                return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
     }
 
 }

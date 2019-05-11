@@ -138,16 +138,14 @@ public class TrabajadorDAO {
     }
 
     /**
-     * Method that removes <code>Alumno</code>s in a database.
-     * @param dni <code>String</code> that indicates what <code>Alumno</code>s to remove from database.
+     * Method that removes <code>Persone</code>s in a database.
+     * @param dni <code>String</code> that indicates what <code>Persone</code>s to remove from database.
      * @return A <code>boolean</code> value indicating either the operation was successful or not.
      */
     public boolean deleteTrabajador(String dni) {
         try {
-            Trabajador a = getTrabajadorByDNI(dni);
-            if(this.jdbcTemplate.update("delete from trabajador where upper(dni) = ?", dni.toUpperCase()) > 0)
-                if(this.jdbcTemplate.update("delete from usuarios where upper(username) = ?", a.getEmail()) > 0)
-                    return true;
+            if(this.jdbcTemplate.update("delete from trabajador where upper(Persone_dni) = ?", dni) > 0)
+                return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

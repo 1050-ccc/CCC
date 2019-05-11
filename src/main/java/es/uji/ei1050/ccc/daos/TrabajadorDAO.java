@@ -55,6 +55,7 @@ public class TrabajadorDAO {
             trabajador.setDomicilio(rs.getString("domicilio"));
             trabajador.setEmail(rs.getString("email"));
             trabajador.setCuentaBancaria(rs.getString("cuentaBancaria"));
+            trabajador.setEmpresa_cif(rs.getString("Empresa_cif"));
             trabajador.setPuestoTrabajo(rs.getString("puestoTrabajo"));
             trabajador.setTurno((rs.getString("turno")));
             return trabajador;
@@ -66,7 +67,7 @@ public class TrabajadorDAO {
      * @return An <code>ArrayList</code> of <code>Alumno</code>s or <code>null</code> if an error occurs while accessing database.
      */
     public List<Trabajador> getTrabajadoresEmpresa(String cif) {
-        String sql = "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
+        String sql = "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, p.Empresa_cif, t.puestoTrabajo, t.turno " +
                 "from persone p join trabajador t on (p.dni = t.Persone_dni)  where upper(p.Empresa_cif)=?";
 
         try {
@@ -80,7 +81,7 @@ public class TrabajadorDAO {
     public Trabajador getTrabajadorByEmail(String email) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
+                    "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, p.Empresa_cif, t.puestoTrabajo, t.turno " +
                             "from persone p join trabajador t on (p.dni = t.Persone_dni) where upper(email)=?",
                     new Object[]{email.toUpperCase()}, new TrabajadorMapper());
         } catch (Exception e) {
@@ -172,7 +173,7 @@ public class TrabajadorDAO {
             return null;
         }
     }
-
+    /*
     public Trabajador getDisponibilidadTrabajador(String dni){
         try {
             return this.jdbcTemplate.queryForObject(
@@ -184,6 +185,8 @@ public class TrabajadorDAO {
             return null;
         }
     }
+
+
 
     public List<Trabajador> getDisponibilidadTrabajadores(String cif) {
         try {
@@ -205,7 +208,7 @@ public class TrabajadorDAO {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
 }
 

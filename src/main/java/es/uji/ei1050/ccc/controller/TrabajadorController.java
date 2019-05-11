@@ -53,7 +53,6 @@ public class TrabajadorController {
 
         if(tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             model.addAttribute("trabajador", trabajadorDao.getTrabajadorByEmail(user.getEmail()));
-
             return "trabajador/principal";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -78,9 +77,9 @@ public class TrabajadorController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
-            String username = user.getEmail();
-            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByUsername(username));
+        if( tipo.getDescripcion().equals(Perfiles.TR.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) ) {
+            String email = user.getEmail();
+            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByEmail(email));
             return "trabajador/informacion";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -168,7 +167,7 @@ public class TrabajadorController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/editar/{dni}", method = RequestMethod.GET)
+    @RequestMapping(value = "/editar/{email}", method = RequestMethod.GET)
     public String updateTrabajador(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null)
         {
@@ -180,7 +179,6 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String email = user.getEmail();
-            //System.out.println(dni);
             model.addAttribute("trabajador", trabajadorDao.getTrabajadorByUsername(email));
             return "trabajador/editar";
         } else {
@@ -252,7 +250,7 @@ public class TrabajadorController {
      * @param model
      * @return
      */
-    @RequestMapping("/listaDisponibilidad")
+    @RequestMapping("/listadisponibilidad")
     public String listDisponibilidadTrabajadoresEmpresa(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null)
         {
@@ -264,8 +262,8 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         String cif = (String) session.getAttribute("CIF");
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("trabajadores", trabajadorDao.getDisponibilidadTrabajadores(cif));
-            return "trabajador/listaDisponibilidad";
+            model.addAttribute("trabajadores", trabajadorDao.getTrabajadoresEmpresa(cif));
+            return "trabajador/listadisponibilidad";
 
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -294,7 +292,7 @@ public class TrabajadorController {
         String cif = (String) session.getAttribute("CIF");
 
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("trabajadores", trabajadorDao.getEmailTrabajadores(cif));
+            model.addAttribute("trabajadores", trabajadorDao.getTrabajadoresEmpresa(cif));
             return "trabajador/listaemails";
 
         } else {
@@ -303,13 +301,9 @@ public class TrabajadorController {
         }
     }
 
-    /**
-     * Vista para ver los datos de un trabajador.
-     * @param session
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
+
+    /*
+    @RequestMapping(value = "/disponibilidad", method = RequestMethod.GET)
     public String verDisponibilidadTrabajador(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null)
         {
@@ -321,12 +315,12 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String username = user.getEmail();
-            model.addAttribute("trabajador", trabajadorDao.getDisponibilidadTrabajador(username));
+            model.addAttribute("trabajador", trabajadorDao.getTrabajadoresEmpresa(cif));
             return "trabajador/disponibilidadTrabajador";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:" + session.getAttribute("url");
         }
-    }
+    }*/
 
 }

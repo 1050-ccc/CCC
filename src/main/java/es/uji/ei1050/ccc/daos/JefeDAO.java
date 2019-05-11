@@ -73,7 +73,7 @@ public class JefeDAO {
     public Jefe getJefeByDNI(String dni) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select  nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria " +
+                    "select  nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria, Empresa_cif " +
                             "from persone where upper(dni)=?",
                     new Object[]{dni.toUpperCase()}, new JefeMapper());
         } catch (Exception e) {
@@ -98,7 +98,6 @@ public class JefeDAO {
      * @return A <code>boolean</code> value indicating either the operation was successful or not.
      */
 
-    //REVISAR DAO
     public boolean updateJefe(Jefe jefe) {
         try {
             if(this.jdbcTemplate.update(

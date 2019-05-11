@@ -167,8 +167,8 @@ public class TrabajadorController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/editar/{email}", method = RequestMethod.GET)
-    public String updateTrabajador(HttpSession session, Model model) {
+    @RequestMapping(value = "/editar/{dni}", method = RequestMethod.GET)
+    public String updateTrabajador(HttpSession session, Model model, @PathVariable String dni) {
         if (session.getAttribute("usuario") == null)
         {
             model.addAttribute("usuario", new Usuario());
@@ -178,8 +178,9 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
-            String email = user.getEmail();
-            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByUsername(email));
+            //String email = user.getEmail();
+            System.out.println("DNI del usuario "+dni);
+            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByDNI(dni));
             return "trabajador/editar";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -195,7 +196,7 @@ public class TrabajadorController {
      * @param bindingResult
      * @return
      */
-    @RequestMapping(value = "/editar", method = RequestMethod.POST)
+    @RequestMapping(value = "/editar/{dni}", method = RequestMethod.POST)
     public String processUpdateSubmit(@RequestBody String data, HttpSession session,
                                       @ModelAttribute("trabajador") Trabajador trabajador,
                                       BindingResult bindingResult) {
@@ -204,17 +205,21 @@ public class TrabajadorController {
 
 
         Usuario user = (Usuario) session.getAttribute("usuario");
-        trabajador = trabajadorDao.getTrabajadorByUsername(user.getEmail());
         Perfiles tipo = user.getTipo();
-        String dni = trabajador.getDni();
 
+        personeDAO.updatePersone(trabajador);
+        trabajadorDao.updateTrabajador(trabajador);
 
-        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
-            trabajadorDao.updateTrabajador(trabajador);
-            return "trabajador/informacion";
-        } else {
-            return "redirect:" + session.getAttribute("url");
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())){
+            return "redirect:../lista";
+        }else{
+            if(tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())){
+                return "trabajador/informacion";
+            }else{
+                return "redirect:" + session.getAttribute("url");
+            }
         }
+
     }
 
     /**

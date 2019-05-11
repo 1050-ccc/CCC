@@ -98,7 +98,7 @@ public class TrabajadorDAO {
     public Trabajador getTrabajadorByDNI(String dni) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, t.puestoTrabajo, t.turno " +
+                    "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, p.Empresa_cif, t.puestoTrabajo, t.turno " +
                             "from persone p join trabajador t on (p.dni = t.Persone_dni) where upper(dni)=?",
                     new Object[]{dni.toUpperCase()}, new TrabajadorMapper());
         } catch (Exception e) {
@@ -118,7 +118,6 @@ public class TrabajadorDAO {
         this.jdbcTemplate.update(sql, trabajador.getDni(), trabajador.getPuestoTrabajo(), trabajador.getTurno());
     }
 
-    //REVISAR ESTE DAO
     /**
      * Method the updates an <code>Alumno</code> object in database.
      * @param trabajador <code>Alumno</code> object that will be updated.
@@ -128,8 +127,8 @@ public class TrabajadorDAO {
     public boolean updateTrabajador(Trabajador trabajador) {
         try {
             if(this.jdbcTemplate.update(
-                    "update persone set telefono=?, domicilio=?, cuentaBancaria=?, telefono=? where upper(dni) = ?",
-                    trabajador.getTelefono(), trabajador.getDomicilio(), trabajador.getCuentaBancaria(), trabajador.getTelefono(), trabajador.getDni() ) > 0);
+                    "update trabajador set puestoTrabajo=?, turno=? where upper(Persone_dni) = ?",
+                    trabajador.getPuestoTrabajo(), trabajador.getTurno(), trabajador.getDni() ) > 0);
                 return true;
 
         } catch (Exception e) {

@@ -40,20 +40,24 @@
             <td><input type="text" th:field="*{cuentaBancaria}"/></td>
         </tr>
         <tr>
-            <td><label>Disponibilidad</label></td>
-            <td><select id="disponibilidad_trabjador" class="form_control" type="text"  >
-                <option value="" th:text="*{turno}"></option>
-                <option value="Mañana" th:if="*{turno} != Mañana" >Mañana</option>
-                <option value="Tarde" th:if="*{turno} != Tarde" >Tarde</option>
-                <option value="Noche" th:if="*{turno} != Noche" >Noche</option>
-                <option value="Madrugada" th:if="*{turno} != Madrugada" >Madrugada</option>
+            <td><label>Puesto de trabajo</label></td>
+            <td><input type="text" th:field="*{puestoTrabajo}"/></td>
+        </tr>
+        <tr>
+            <td><label>Turno</label></td>
+            <td><select class="form_control" type="text" th:field="*{turno}" >
+                <option value="Mañana">Mañana</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noche">Noche</option>
             </select>
+            </td>
+
         </tr>
         <tr>
             <td><input type="submit" value="Guardar" colspan="2"/></td>
         </tr>
     </table>
-
+    <a href="/">Atrás</a></form>
 </form>
 
 </body>

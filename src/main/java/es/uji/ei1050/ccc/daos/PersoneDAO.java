@@ -1,6 +1,7 @@
 package es.uji.ei1050.ccc.daos;
 
 import es.uji.ei1050.ccc.model.Persone;
+import es.uji.ei1050.ccc.model.Trabajador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -74,6 +75,19 @@ public class PersoneDAO {
     public void addPersone(Persone persone) {
         String sql = "INSERT INTO persone(nombre, apellidos, dni, domicilio, telefono, email, cuentaBancaria, Empresa_cif) " + "VALUES(?,?,?, ?, ?, ? ,?, ?);";
         this.jdbcTemplate.update(sql, persone.getNombre(), persone.getApellidos(), persone.getDni(), persone.getDomicilio(), persone.getTelefono(), persone.getEmail(), persone.getCuentaBancaria(), persone.getEmpresa_cif());
+    }
+
+    public boolean updatePersone(Persone persone) {
+        try {
+            if(this.jdbcTemplate.update(
+                    "update persone set telefono=?, domicilio=?, cuentaBancaria=? where upper(dni) = ?",
+                    persone.getTelefono(), persone.getDomicilio(), persone.getCuentaBancaria(), persone.getDni() ) > 0);
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

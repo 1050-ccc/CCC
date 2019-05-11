@@ -18,6 +18,7 @@
         <th>Teléfono </th>
         <th>Email </th>
         <th>Cuenta Bancaria </th>
+        <th>Puesto de trabajo </th>
         <th>Disponibilidad </th>
 
     </tr>
@@ -31,14 +32,14 @@
         <td th:text="${trabajador.telefono}"></td>
         <td th:text="${trabajador.email}"></td>
         <td th:text="${trabajador.cuentaBancaria}"></td>
+        <td th:text="${trabajador.puestoTrabajo}"></td>
         <td th:text="${trabajador.turno}"></td>
-        <td><a th:href="@{/trabajador/editar/{email}(email=${trabajador.email})}">Editar</a>
+        <td><a th:href="@{/trabajador/editar/{dni}(dni=${trabajador.dni})}">Editar</a>
         </td>
-        <td><a th:href="@{/trabajaor/borrar/{email}(email=${trabajador.email})}">Despedir</a>
+        <td><a th:href="@{/trabajaor/borrar/{dni}(dni=${trabajador.dni})}">Despedir</a>
         </td>
     </tr>
     </tbody>
 </table>
-<a href="/jefe/principal">Atrás</a>
-</body>
+<a href="/">Atrás</a></body>
 </html>

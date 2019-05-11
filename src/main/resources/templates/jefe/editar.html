@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Jefe</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2>Editar Jefe</h2>
+<form action="#" th:action="@{/jefe/editar/{dni}(dni=${jefe.dni})}"
+      th:object="${jefe}" method="post">
+    <table>
+        <tr>
+            <td><label>Nombre</label></td>
+            <td><input type="text" th:field="*{nombre}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td><label>Apellidos</label></td>
+            <td><input type="text" th:field="*{apellidos}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td><label>DNI</label></td>
+            <td><input type="text" th:field="*{dni}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td><label>Domicilio</label></td>
+            <td><input type="text" th:field="*{domicilio}"/></td>
+        </tr>
+        <tr>
+            <td><label>Teléfono</label></td>
+            <td><input type="number" th:field="*{telefono}"/></td>
+        </tr>
+        <tr>
+            <td><label>Email</label></td>
+            <td><input type="text" th:field="*{email}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td><label>Cuenta bancaria</label></td>
+            <td><input type="text" th:field="*{cuentaBancaria}"/></td>
+        </tr>
+        <tr>
+        <tr>
+            <td><input type="submit" value="Guardar" colspan="2"/></td>
+        </tr>
+    </table>
+    <a href="/">Atrás</a></form>
+</form>
+</body>
+</html>

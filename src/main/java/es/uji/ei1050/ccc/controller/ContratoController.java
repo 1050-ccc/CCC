@@ -60,7 +60,7 @@ public class ContratoController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/añadir")
+    @RequestMapping(value = "/añadir") //TODO arreglar
     public String añadirTrabajador(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null)
         {

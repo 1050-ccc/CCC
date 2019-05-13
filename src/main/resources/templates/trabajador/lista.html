@@ -107,6 +107,7 @@
             </ol>
 
             <a href="/trabajador/añadir" class="btn btn-info" >Añadir Trabajador</a>
+            <a href="/contrato/añadir" class="btn btn-info" >Añadir Contrato</a>
             <p>
 
             <!-- DataTables Example -->
@@ -156,7 +157,9 @@
                                 <td th:text="${trabajador.cuentaBancaria}"></td>
                                 <td th:text="${trabajador.puestoTrabajo}"></td>
                                 <td th:text="${trabajador.turno}"></td>
-                                <td><a class="btn btn-primary btn-sm" th:href="@{/trabajador/editar/{dni}(dni=${trabajador.dni})}">Editar</a>
+                                <td><a class="btn btn-primary btn-sm" th:href="@{/trabajador/editar/{dni}(dni=${trabajador.dni})}">Editar trabajador</a>
+                                </td>
+                                <td><a class="btn btn-primary btn-sm" th:href="@{/contrato/editar/{dni}(dni=${trabajador.dni})}">Ver contrato</a>
                                 </td>
                                 <td><a class="btn btn-danger btn-sm" th:href="@{/trabajador/borrar/{dni}(dni=${trabajador.dni})}">Borrar</a>
                                 </td>

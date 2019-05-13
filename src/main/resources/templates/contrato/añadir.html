@@ -26,7 +26,7 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="index.html"><span th:text="${session.empresa}"></span></a>
+    <a class="navbar-brand mr-1" href="/empresa/informacion"><span th:text="${session.empresa}"></span></a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -101,7 +101,7 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="/">Inicio</a>
+                    <a href="/trabajador/añadir">Añadir trabajador</a>
                 </li>
                 <li class="breadcrumb-item active">Crear contrato</li>
             </ol>
@@ -113,15 +113,20 @@
                 <table>
                     <tr>
                         <td><label>Sueldo base</label></td>
-                        <td><input type="number" th:field="*{sueldoBase}"/></td>
+                        <td><input type="text" th:field="*{sueldoBase}" th:required="required"/></td>
                     </tr>
                     <tr>
-                        <td><label>Dias de vacaciones</label></td>
-                        <td><input type="number" th:field="*{diasVacaciones}"/></td>
+                        <td><label>DNI trabajador</label></td>
+                        <td><input type="text" th:field="*{Persone_dni}" th:required="required"/></td>
                     </tr>
                     <tr>
-                        <td><label>Tipo de contrato</label></td>
-                        <td><input type="text" th:field="*{tipoContrato}"/></td>
+                        <td><label>Turno</label></td>
+                        <td><select class="form_control" type="text" th:field="*{tipoContrato}" >
+                            <option value="Temporal">Temporal</option>
+                            <option value="Indefinido">Indefinido</option>
+                        </select>
+                        </td>
+
                     </tr>
                     <tr>
                         <td><input type="submit" value="Añadir" colspan="2"/></td>

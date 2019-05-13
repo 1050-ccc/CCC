@@ -4,7 +4,7 @@ public class Contrato {
 
     int sueldoBase; // int
     int diasVacaciones; // int
-    ETipoContrato tipoContrato; // varchar 10
+    String tipoContrato; // varchar 10
     String Persone_dni; // varchar 9
 
     // --------------------------//
@@ -13,7 +13,7 @@ public class Contrato {
         super();
     }
 
-    public Contrato(int sueldoBase, int diasVacaciones, ETipoContrato tipoContrato, String Persone_dni) {
+    public Contrato(int sueldoBase, int diasVacaciones, String tipoContrato, String Persone_dni) {
         this.sueldoBase = sueldoBase;
         this.diasVacaciones = diasVacaciones;
         this.tipoContrato = tipoContrato;
@@ -36,11 +36,11 @@ public class Contrato {
         this.diasVacaciones = diasVacaciones;
     }
 
-    public ETipoContrato getTipoContrato() {
+    public String getTipoContrato() {
         return tipoContrato;
     }
 
-    public void setTipoContrato(ETipoContrato tipoContrato) {
+    public void setTipoContrato(String tipoContrato) {
         this.tipoContrato = tipoContrato;
     }
 

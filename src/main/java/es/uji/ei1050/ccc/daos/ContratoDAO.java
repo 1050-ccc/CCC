@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Repository("contrato")
+@Repository("contratoDao")
 public class ContratoDAO {
 
 
@@ -45,7 +45,7 @@ public class ContratoDAO {
             Contrato contrato = new Contrato();
             contrato.setSueldoBase(rs.getInt("sueldoBase"));
             contrato.setDiasVacaciones(rs.getInt("diasVacaciones"));
-            contrato.setTipoContrato(ETipoContrato.getEstado(rs.getString("tipoContrato")));
+            contrato.setTipoContrato(rs.getString("tipoContrato"));
             contrato.setPersone_dni(rs.getString("Persone_dni"));
             return contrato;
         }
@@ -56,7 +56,7 @@ public class ContratoDAO {
     public Contrato getSueldoBase(String dni) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select  p.nombre, p.apellidos, c.sueldoBase" +
+                    "select  p.nombre, p.apellidos, c.sueldoBase " +
                             "from persone p join contrato c on (p.dni = c.Persone_dni) where upper(dni)=?",
                     new Object[]{dni}, new ContratoMapper());
         } catch (Exception e) {
@@ -70,7 +70,7 @@ public class ContratoDAO {
     public Contrato getDiasVacaciones(String dni) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select  p.nombre, p.apellidos, c.diasVacaciones" +
+                    "select  p.nombre, p.apellidos, c.diasVacaciones " +
                             "from persone p join contrato c on (p.dni = c.Persone_dni) where upper(dni)=?",
                     new Object[]{dni}, new ContratoMapper());
         } catch (Exception e) {
@@ -84,9 +84,9 @@ public class ContratoDAO {
     public Contrato getContrato(String dni) {
         try {
             return this.jdbcTemplate.queryForObject(
-                    "select  p.nombre, p.apellidos, c.sueldoBase, c.diasVacaciones, c.tipoContrato" +
-                            "from persone p join contrato c on (p.dni = c.Persone_dni) where upper(dni)=?",
-                    new Object[]{dni}, new ContratoMapper());
+                    "select  c.sueldoBase, c.diasVacaciones, c.tipoContrato, c.Persone_dni " +
+                            "from persone p join contrato c on (p.dni = c.Persone_dni) where upper(Persone_dni)=?",
+                    new Object[]{dni.toUpperCase()}, new ContratoMapper());
         } catch (Exception e) {
             e.printStackTrace();
             return null;

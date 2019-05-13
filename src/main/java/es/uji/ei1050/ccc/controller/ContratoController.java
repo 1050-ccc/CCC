@@ -42,7 +42,7 @@ public class ContratoController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String dni = (String) session.getAttribute("DNI");
             model.addAttribute("contrato", contratoDao.getContrato(dni));
             return "contrato/informacion";
@@ -55,26 +55,28 @@ public class ContratoController {
     //Métodos añadir un contrato
 
     /**
-     * Vista para añadir una trabajador.
+     * Vista para añadir un contrato.
      * @param session
      * @param model
      * @return
      */
     @RequestMapping(value = "/añadir") //TODO arreglar
-    public String añadirTrabajador(HttpSession session, Model model) {
+    public String añadirContrato(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null)
         {
             model.addAttribute("usuario", new Usuario());
+            model.addAttribute("contrato", new Contrato());
+
             return "login";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        String dni = (String) session.getAttribute("DNI");
+        //String dni = (String) session.getAttribute("DNI");
 
-        if(tipo.equals(Perfiles.JF.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             Contrato contrato = new Contrato();
-            contrato.setPersone_dni(dni);
+            //contrato.setPersone_dni(dni);
             model.addAttribute("contrato", contrato);
             return "contrato/añadir";
         } else {
@@ -84,7 +86,7 @@ public class ContratoController {
     }
 
     /**
-     * Método que añade el trabajador.
+     * Método que añade el contrato.
      * @param contrato
      * @param bindingResult
      * @return
@@ -95,11 +97,12 @@ public class ContratoController {
 
         //AlumnoValidator alumnoValidator = new AlumnoValidator();
         //alumnoValidator.validate(alumno, bindingResult);
-
+        //contrato.setPersone_dni(dni);
+        contrato.setDiasVacaciones(30);
         if (bindingResult.hasErrors())
             return "contrato/añadir";
         contratoDao.addContrato(contrato);
-        return "redirect:list.html :: list";
+        return "trabajador/lista";
     }
 
     /**
@@ -122,7 +125,7 @@ public class ContratoController {
      * @return
      */
     @RequestMapping(value = "/editar/{dni}", method = RequestMethod.GET)
-    public String updateTrabajador(HttpSession session, Model model) {
+    public String updateTrabajador(HttpSession session, Model model, @PathVariable String dni) {
         if (session.getAttribute("usuario") == null)
         {
             model.addAttribute("usuario", new Usuario());
@@ -131,8 +134,7 @@ public class ContratoController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if(tipo.equals(Perfiles.JF.getDescripcion())) {
-            String dni = (String) session.getAttribute("DNI");
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("contrato", contratoDao.getContrato(dni));
             return "contrato/editar";
         } else {
@@ -149,20 +151,20 @@ public class ContratoController {
      * @param bindingResult
      * @return
      */
-    @RequestMapping(value = "/editar", method = RequestMethod.POST)
+    @RequestMapping(value = "/editar/{dni}", method = RequestMethod.POST)
     public String processUpdateSubmit(@RequestBody String data, HttpSession session,
-                                      @ModelAttribute("contrato") Contrato contrato,
+                                      @ModelAttribute("contrato") Contrato contrato, @PathVariable String dni,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "contrato/editar";
 
 
         Usuario user = (Usuario) session.getAttribute("usuario");
-        String dni = (String) session.getAttribute("DNI");
-        contrato = contratoDao.getContrato(dni);
         Perfiles tipo = user.getTipo();
 
-        if(tipo.equals(Perfiles.JF.getDescripcion()) || tipo.equals(Perfiles.TR.getDescripcion())) {
+
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
+            contrato.setPersone_dni(dni);
             contratoDao.updateContrato(contrato);
             return "contrato/informacion";
         } else {

@@ -3,6 +3,7 @@ package es.uji.ei1050.ccc.controller;
 import es.uji.ei1050.ccc.daos.PersoneDAO;
 import es.uji.ei1050.ccc.daos.TrabajadorDAO;
 import es.uji.ei1050.ccc.daos.UsuarioDAO;
+import es.uji.ei1050.ccc.model.Contrato;
 import es.uji.ei1050.ccc.model.Trabajador;
 import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Usuario;
@@ -110,6 +111,7 @@ public class TrabajadorController {
 
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             Trabajador trabajador = new Trabajador();
+            Contrato contrato = new Contrato();
             model.addAttribute("usuario", new Usuario());
             model.addAttribute("trabajador", trabajador);
             return "trabajador/añadir";

@@ -48,7 +48,7 @@ public class EmpresaDAO {
             empresa.setDomicilioFiscal(rs.getString("domicilioFiscal"));
             empresa.setCuentaBancaria(rs.getString("cuentaBancaria"));
             empresa.setPersonaJuridica(rs.getString("personaJuridica"));
-            empresa.setCuentaBancaria(rs.getString("personaFiscal"));
+            empresa.setPersonaFiscal(rs.getString("personaFiscal"));
             empresa.setEmail(rs.getString("email"));
             empresa.setTelefono(rs.getInt("telefono"));
             return empresa;

@@ -26,7 +26,7 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href=""><span th:text="${session.empresa}"></span></a>
+    <a class="navbar-brand mr-1" href="/empresa/informacion"><span th:text="${session.empresa}"></span></a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -139,8 +139,8 @@
                     </tr>
                     <tr>
                     </tr>
-                    <!--<td><a th:href="@{/jefe/editar/{dni}(dni=${jefe.dni})}">Editar</a>-->
-                    <!--</td>-->
+                    <td><a th:href="@{/jefe/editar/{dni}(dni=${jefe.dni})}">Editar</a>
+                    </td>
                 </table>
 
             </form>

@@ -126,7 +126,7 @@ public class TrabajadorController {
      * @return
      */
     @RequestMapping(value = "/añadir", method = RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("usuario") Usuario usuario, @ModelAttribute("trabajador") Trabajador trabajador,
+    public String processAddSubmit(HttpSession session, @ModelAttribute("usuario") Usuario usuario, @ModelAttribute("trabajador") Trabajador trabajador,
                                    BindingResult bindingResult) {
 
 
@@ -141,11 +141,12 @@ public class TrabajadorController {
         usuario.setTipo(Perfiles.TR);
         trabajador.setEmail(usuario.getEmail());
 
+        trabajador.setEmpresa_cif(String.valueOf(session.getAttribute("CIF")));
         personeDAO.addPersone(trabajador);
         trabajadorDao.addTrabajador(trabajador);
         usuarioDAO.addUsuario(usuario);
 
-        return "jefe/principal";
+        return "jefe/index";
     }
 
     /**

@@ -153,6 +153,7 @@ public class LoginController {
 
         // Guardem les dades de l'usuari autenticat a la sessió
         usuario.setPassword(null);
+        session.setAttribute("empresa", empresaDAO.getEmpresa(empresaCIF).getNombre());
         session.setAttribute("usuario", usuario);
         session.setAttribute("CIF", empresaCIF);
         session.setAttribute("DNI", personeDNI);

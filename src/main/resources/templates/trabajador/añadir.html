@@ -1,105 +1,233 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
-    <!-- Required meta tags -->
-    <meta charset="UTF-8" />
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <link rel="stylesheet" type="text/css" href="/css/util.css"
-          th:href="@{/css/util.css}" />
-    <link rel="stylesheet" type="text/css" href="/css/main.css"
-          th:href="@{/css/main.css}" />
+    <title>CCC - Añadir trabajador</title>
 
-    <title>Nuevo Trabajador</title>
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="/vendor/datatables/dataTables.bootstrap4.css" th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" th:href="@{/css/sb-admin.css}" rel="stylesheet">
+
 </head>
 
-<body>
-<div class="content">
-    <h2>Nuevo Trabajador</h2>
-    <form th:object="${trabajador}" method="post">
-        <table>
-            <tr>
-                <td><label>Nombre</label></td>
-                <td><input type="text" th:field="${trabajador.nombre}"
-                           th:required="required" class="form-control" /></td>
-            </tr>
-            <tr>
-                <td><label>Apellidos</label></td>
-                <td><input type="text" th:field="${trabajador.apellidos}"
-                           th:required="required" class="form-control" /></td>
-            </tr>
-            <tr>
-                <td><label>DNI</label></td>
-                <td><input type="text" th:field="${trabajador.dni}" class="form-control" size="10"  maxlength="9" name="nif" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" title="Introduzca el dni"  value="<?php echo $row['NIF'];?>" th:required="required" /></td>
-            </tr>
-            <tr>
-                <td><label>Domicilio</label></td>
-                <td><input type="text" th:field="${trabajador.domicilio}"
-                           th:required="required" class="form-control" /></td>
-            </tr>
-            <tr>
-                <td><label>Telefono</label></td>
-                <td><input type="tel" th:field="${trabajador.telefono}" pattern="[0-9]{9}"
-                           th:required="required" class="form-control" /><span>Format: 923452678</span>
-                </td>
-            </tr>
-            <!--Hacer bien cuenta bancaria check-->
-            <tr>
-                <td><label>Cuenta Bancaria</label></td>
-                <td><input type="text" th:field="${trabajador.cuentaBancaria}"
-                           th:required="required" class="form-control" /></td>
-            </tr>
+<body id="page-top">
 
-            <tr>
-                <td><label>Turno</label></td>
-                <td><select class="form_control" type="text" th:field="*{turno}" >
-                    <option value="---">---</option>
-                    <option value="Mañana">Mañana</option>
-                    <option value="Tarde">Tarde</option>
-                    <option value="Noche">Noche</option>
-                </select>
-                </td>
+<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-            </tr>
+    <a class="navbar-brand mr-1" href="index.html"><span th:text="${session.empresa}"></span></a>
 
-            <tr>
-                <td><label>Empresa CIF</label></td>
-                <td><input type="text" th:field="${trabajador.Empresa_cif}"
-                           th:required="required" class="form-control" /></td>
-            </tr>
-            <tr>
-                <td><label>Puesto de trabajo</label></td>
-                <td><input type="text" th:field="${trabajador.puestoTrabajo}"
-                           th:required="required" class="form-control" /></td>
-            </tr>
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+    </button>
 
-            <tr>
-                <td><label>Email</label></td>
-                <td><input type="email" th:field="${usuario.email}"
-                           th:required="required" class="form-control" /></td>
-            </tr>
-            <tr>
-                <td><label>Contraseña</label></td>
-                <td><input type="password" th:field="${usuario.password}"
-                           th:required="required" class="form-control" /></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" class="btn btn-success"
-                           value="Crear usuario" /></td>
-            </tr>
-        </table>
+    <!-- Navbar Search -->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
     </form>
-    <p>
-        <a href="javascript:history.back()" class="btn btn-dark">Atrás</a>
-    </p>
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <!--<span class="badge badge-danger">9+</span>-->
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user-circle fa-fw"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="/jefe/informacion">Información</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+            </div>
+        </li>
+    </ul>
+
+</nav>
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/jefe/">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="charts.html">
+                <i class="fa fa-calendar"></i>
+                <span>Calendario</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/trabajador/lista">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Trabajadores</span></a>
+        </li>
+    </ul>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/trabajador/lista">Trabajadores</a>
+                </li>
+                <li class="breadcrumb-item active">Añadir Trabajador</li>
+            </ol>
+
+            <!-- Page Content -->
+            <form th:object="${trabajador}" method="post">
+                <table>
+                    <tr>
+                        <td><label>Nombre</label></td>
+                        <td><input type="text" th:field="${trabajador.nombre}"
+                                   th:required="required" class="form-control" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Apellidos</label></td>
+                        <td><input type="text" th:field="${trabajador.apellidos}"
+                                   th:required="required" class="form-control" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>DNI</label></td>
+                        <td><input type="text" th:field="${trabajador.dni}" class="form-control" size="10"  maxlength="9" name="nif" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" title="Introduzca el dni"  value="" th:required="required" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Domicilio</label></td>
+                        <td><input type="text" th:field="${trabajador.domicilio}"
+                                   th:required="required" class="form-control" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Telefono</label></td>
+                        <td><input type="tel" th:field="${trabajador.telefono}" pattern="[0-9]{9}"
+                                   th:required="required" class="form-control" /><span>Format: 923452678</span>
+                        </td>
+                    </tr>
+                    <!--Hacer bien cuenta bancaria check-->
+                    <tr>
+                        <td><label>Cuenta Bancaria</label></td>
+                        <td><input type="text" th:field="${trabajador.cuentaBancaria}"
+                                   th:required="required" class="form-control" /></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Turno</label></td>
+                        <td><select class="form_control" type="text" th:field="*{turno}" >
+                            <option value="---">---</option>
+                            <option value="Mañana">Mañana</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Noche">Noche</option>
+                        </select>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td><label>Puesto de trabajo</label></td>
+                        <td><input type="text" th:field="${trabajador.puestoTrabajo}"
+                                   th:required="required" class="form-control" /></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Email</label></td>
+                        <td><input type="email" th:field="${usuario.email}"
+                                   th:required="required" class="form-control" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Contraseña</label></td>
+                        <td><input type="password" th:field="${usuario.password}"
+                                   th:required="required" class="form-control" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" class="btn btn-success"
+                                   value="Añadir trabajador" /></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright © CCC 2019</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="/usuario/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin.min.js"></script>
+
 </body>
+
 </html>

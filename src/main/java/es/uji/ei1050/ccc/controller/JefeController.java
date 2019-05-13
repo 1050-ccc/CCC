@@ -27,7 +27,7 @@ public class JefeController {
     }
 
     @Autowired
-    public void setJefeoDao(JefeDAO jefeDao) {
+    public void setJefeDao(JefeDAO jefeDao) {
         this.jefeDao = jefeDao;
     }
 
@@ -45,7 +45,7 @@ public class JefeController {
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("jefe", jefeDao.getJefeByEmail(user.getEmail()));
 
-            return "jefe/principal";
+            return "jefe/index";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:" + url;

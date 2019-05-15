@@ -52,6 +52,31 @@ public class ContratoController {
         }
     }
 
+    /**
+     * Vista para ver los datos del contrato de un trabajador.
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/informacion/{dni}", method = RequestMethod.GET)
+    public String verContratoTrabajador(HttpSession session, Model model,  @PathVariable String dni) {
+
+        if (session.getAttribute("usuario") == null) {
+            model.addAttribute("usuario", new Usuario());
+            return "login";
+        }
+
+        Usuario user = (Usuario) session.getAttribute("usuario");
+        Perfiles tipo = user.getTipo();
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
+            model.addAttribute("contrato", contratoDao.getContrato(dni));
+            return "contrato/informacion";
+        } else {
+            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
+            return "redirect:" + session.getAttribute("url");
+        }
+    }
+
     //Métodos añadir un contrato
 
     /**

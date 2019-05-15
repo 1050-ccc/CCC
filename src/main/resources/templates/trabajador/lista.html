@@ -159,7 +159,7 @@
                                 <td th:text="${trabajador.turno}"></td>
                                 <td><a class="btn btn-primary btn-sm" th:href="@{/trabajador/editar/{dni}(dni=${trabajador.dni})}">Editar trabajador</a>
                                 </td>
-                                <td><a class="btn btn-primary btn-sm" th:href="@{/contrato/editar/{dni}(dni=${trabajador.dni})}">Ver contrato</a>
+                                <td><a class="btn btn-primary btn-sm" th:href="@{/contrato/informacion/{dni}(dni=${trabajador.dni})}">Ver contrato</a>
                                 </td>
                                 <td><a class="btn btn-danger btn-sm" th:href="@{/trabajador/borrar/{dni}(dni=${trabajador.dni})}">Borrar</a>
                                 </td>

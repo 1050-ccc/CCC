@@ -5,9 +5,11 @@ import java.util.Date;
 public class Notificacion {
 
     Date fechaHora; // date
-    String asunto; // varchar 200
+    String Asunto; // varchar 200
+    String Persone_dni;
 
-    // --------------------------//
+
+// --------------------------//
 
 
     public Notificacion() {
@@ -16,7 +18,7 @@ public class Notificacion {
 
     public Notificacion(Date fechaHora, String asunto) {
         this.fechaHora = fechaHora;
-        this.asunto = asunto;
+        this.Asunto = asunto;
     }
 
     public Date getFechaHora() {
@@ -28,18 +30,26 @@ public class Notificacion {
     }
 
     public String getAsunto() {
-        return asunto;
+        return Asunto;
     }
 
     public void setAsunto(String asunto) {
-        this.asunto = asunto;
+        this.Asunto = asunto;
+    }
+
+    public String getPersone_dni() {
+        return Persone_dni;
+    }
+
+    public void setPersone_dni(String persone_dni) {
+        Persone_dni = persone_dni;
     }
 
     @Override
     public String toString() {
         return "Notificacion{" +
                 "fechaHora=" + fechaHora +
-                ", asunto='" + asunto + '\'' +
+                ", asunto='" + Asunto + '\'' +
                 '}';
     }
 }

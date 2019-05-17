@@ -82,6 +82,18 @@ public class JefeDAO {
         }
     }
 
+    public Jefe getJefeByCif(String cif) {
+        try {
+            return this.jdbcTemplate.queryForObject(
+                    "select  nombre, apellidos, dni, telefono, domicilio, email, cuentaBancaria, Empresa_cif " +
+                            "from persone p join jefe j on (p.dni = j.Persone_dni) where upper(Empresa_cif)=?",
+                    new Object[]{cif}, new JefeMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     /**
      * Method that adds an <code>Alumno</code> to the database.

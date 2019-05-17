@@ -110,8 +110,8 @@ public class TrabajadorDAO {
 
 
     /**
-     * Method that adds an <code>Alumno</code> to the database.
-     * @param trabajador <code>Alumno</code> object to be added.
+     * Method that adds an <code>Trabajador</code> to the database.
+     * @param trabajador <code>Trabajador</code> object to be added.
      */
     public void addTrabajador(Trabajador trabajador) {
         String sql = "INSERT INTO Trabajador(Persone_dni, puestoTrabajo, turno) " + "VALUES(?,?,?);";

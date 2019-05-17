@@ -1,12 +1,7 @@
 package es.uji.ei1050.ccc.controller;
 
-import es.uji.ei1050.ccc.daos.PersoneDAO;
-import es.uji.ei1050.ccc.daos.TrabajadorDAO;
-import es.uji.ei1050.ccc.daos.UsuarioDAO;
-import es.uji.ei1050.ccc.model.Contrato;
-import es.uji.ei1050.ccc.model.Trabajador;
-import es.uji.ei1050.ccc.model.Perfiles;
-import es.uji.ei1050.ccc.model.Usuario;
+import es.uji.ei1050.ccc.daos.*;
+import es.uji.ei1050.ccc.model.*;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +18,9 @@ public class TrabajadorController {
     private UsuarioDAO usuarioDAO;
     private PersoneDAO personeDAO;
     private TrabajadorDAO trabajadorDao;
+    private NotificacionDAO notificacionDAO;
+    private JefeDAO jefeDao;
+    private ContratoDAO contratoDao;
 
 
     @Autowired
@@ -39,6 +37,22 @@ public class TrabajadorController {
     public void setTrabajdoroDao(TrabajadorDAO trabajadorDao) {
         this.trabajadorDao = trabajadorDao;
     }
+
+    @Autowired
+    public void setNotificacionDAO(NotificacionDAO notificacionDAO) {
+        this.notificacionDAO = notificacionDAO;
+    }
+
+    @Autowired
+    public void setJefeDao(JefeDAO jefeDao) {
+        this.jefeDao = jefeDao;
+    }
+
+    @Autowired
+    public void setContratoDAO(ContratoDAO contratoDao) {
+        this.contratoDao = contratoDao;
+    }
+
 
 
     @RequestMapping("") //load the template
@@ -157,13 +171,28 @@ public class TrabajadorController {
      * @return
      */
     @RequestMapping(value = "/borrar/{dni}")
-    public String processDelete(@PathVariable String dni) {
+    public String processDelete(HttpSession session, @PathVariable String dni) {
         Trabajador trabajador = trabajadorDao.getTrabajadorByDNI(dni);
         String email = trabajador.getEmail();
         usuarioDAO.deleteUsuarios(email);
         trabajadorDao.deleteTrabajador(dni);
-        personeDAO.deletePersone(dni);
-        return "redirect:../lista";
+        contratoDao.deleteContrato(dni);
+
+
+        Usuario user = (Usuario) session.getAttribute("usuario");
+        Perfiles tipo = user.getTipo();
+
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
+            personeDAO.deletePersone(dni);
+            return "redirect:../lista";
+        }else{
+            //CONSEGUIR DNI DEL JEFE
+            Persone jefe =jefeDao.getJefeByCif(trabajador.getEmpresa_cif());
+            notificacionDAO.addNotificacionDimision(trabajador,jefe.getDni());
+            personeDAO.deletePersone(dni);
+            session.invalidate();
+            return "usuario/login";
+        }
     }
 
     //Métodos editar trabajador

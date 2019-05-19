@@ -3,8 +3,7 @@ package es.uji.ei1050.ccc.model;
 public enum ETurnos {
     Mañana("Mañana"),
     Tarde("Tarde"),
-    Noche("Noche"),
-    Madrugada("Madrugada");
+    Noche("Noche");
 
     private final String descripcion;
 

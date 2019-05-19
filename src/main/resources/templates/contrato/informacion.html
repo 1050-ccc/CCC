@@ -123,7 +123,11 @@
                     </tr>
                     <tr>
                     </tr>
-                    <td><a class="btn btn-primary btn-sm" th:href="@{/contrato/editar/{dni}(dni=${contrato.Persone_dni})}">Editar contrato</a></td>
+                    <div th:object="${session}" style="color: white;">
+                        <td th:if="*{(usuario.tipo == 'Jefe')}">
+                            <td><a class="btn btn-primary btn-sm" th:href="@{/contrato/editar/{dni}(dni=${contrato.Persone_dni})}">Editar contrato</a></td>
+                        </td>
+                    </div>
 
                 </table>
 

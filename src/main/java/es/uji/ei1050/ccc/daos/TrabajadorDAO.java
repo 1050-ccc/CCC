@@ -68,7 +68,7 @@ public class TrabajadorDAO {
      */
     public List<Trabajador> getTrabajadoresEmpresa(String cif) {
         String sql = "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, p.Empresa_cif, t.puestoTrabajo, t.turno " +
-                "from persone p join trabajador t on (p.dni = t.Persone_dni)  where upper(p.Empresa_cif)=?";
+                "from persone p join trabajador t on (p.dni = t.Persone_dni)  where upper(p.Empresa_cif)=? ORDER BY p.apellidos ASC, t.turno ASC ";
 
         try {
             return this.jdbcTemplate.query(sql, new Object[]{cif}, new TrabajadorMapper());
@@ -170,6 +170,21 @@ public class TrabajadorDAO {
             return null;
         }
     }
+
+
+    public List<Trabajador> getDisponibilidadTrabajadores(String cif) {
+        String sql = "select  p.nombre, p.apellidos, p.dni, p.telefono, p.domicilio, p.email, p.cuentaBancaria, p.Empresa_cif, t.puestoTrabajo, t.turno " +
+                "from persone p join trabajador t on (p.dni = t.Persone_dni)  where upper(p.Empresa_cif)=? ORDER BY p.apellidos ASC, t.turno ASC ";
+
+        try {
+            return this.jdbcTemplate.query(sql, new Object[]{cif}, new TrabajadorMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     /*
     public Trabajador getDisponibilidadTrabajador(String dni){
         try {

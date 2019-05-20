@@ -301,7 +301,7 @@ public class TrabajadorController {
         Perfiles tipo = user.getTipo();
         String cif = (String) session.getAttribute("CIF");
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("trabajadores", trabajadorDao.getTrabajadoresEmpresa(cif));
+            model.addAttribute("trabajadores", trabajadorDao.getDisponibilidadTrabajadores(cif));
             return "trabajador/listadisponibilidad";
 
         } else {

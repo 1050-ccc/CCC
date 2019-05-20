@@ -43,14 +43,24 @@ public class EmpresaController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if (tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
-            String username = user.getEmail();
-            String cif = (String) session.getAttribute("CIF");
+
+        String username = user.getEmail();
+        String cif = (String) session.getAttribute("CIF");
+
+        if (tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("empresa", empresaDao.getEmpresa(cif));
-            return "empresa/informacion";
+            return "empresa/informacionparajefe";
         } else {
-            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
-            return "redirect:" + session.getAttribute("url");
+
+            if (tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
+                model.addAttribute("empresa", empresaDao.getEmpresa(cif));
+                return "empresa/informacionparatrabajador";
+            }else{
+                model.addAttribute("error", "No tienes permiso para acceder a este sitio");
+                return "redirect:" + session.getAttribute("url");
+            }
+
+
         }
     }
 
@@ -106,7 +116,7 @@ public class EmpresaController {
 
         if (tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             empresaDao.updateEmpresa(empresa);
-            return "empresa/informacion";
+            return "informacionparajefe";
         } else {
             return "redirect:" + session.getAttribute("url");
         }

@@ -42,10 +42,10 @@ public class ContratoController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             String dni = (String) session.getAttribute("DNI");
             model.addAttribute("contrato", contratoDao.getContrato(dni));
-            return "contrato/informacion";
+            return "contrato/informacionparatrabajador";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:" + session.getAttribute("url");
@@ -68,12 +68,14 @@ public class ContratoController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("contrato", contratoDao.getContrato(dni));
-            return "contrato/informacion";
-        } else {
+            return "contrato/informacionparajefe";
+
+        }else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:" + session.getAttribute("url");
+
         }
     }
 
@@ -191,7 +193,7 @@ public class ContratoController {
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             contrato.setPersone_dni(dni);
             contratoDao.updateContrato(contrato);
-            return "contrato/informacion";
+            return "informacionparatrabajador";
         } else {
             return "redirect:" + session.getAttribute("url");
         }

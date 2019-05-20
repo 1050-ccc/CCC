@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>CCC - Información contrato</title>
+    <title>CCC - Información empresa</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
@@ -87,20 +87,20 @@
                 <i class="fa fa-calendar"></i>
                 <span>Calendario</span></a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/trabajador/lista">
+        <li class="nav-item">
+            <a class="nav-link" href="/contrato/informacion">
                 <i class="fas fa-fw fa-table"></i>
-                <span>Trabajadores</span></a>
+                <span>Contrato</span></a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/notificacion/lista">
+        <li class="nav-item">
+            <a class="nav-link" href="/horario/listahoras">
                 <i class="fas fa-fw fa-table"></i>
-                <span>Notificaciones</span></a>
+                <span>Horas</span></a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/trabajador/listadisponibilidad">
+        <li class="nav-item">
+            <a class="nav-link" href="/horario/jornada">
                 <i class="fas fa-fw fa-table"></i>
-                <span>Horarios trabajadores</span></a>
+                <span>Horario</span></a>
         </li>
     </ul>
 
@@ -113,36 +113,53 @@
                 <li class="breadcrumb-item">
                     <a href="/">Inicio</a>
                 </li>
-                <li class="breadcrumb-item active">Información contrato</li>
+                <li class="breadcrumb-item active">Información empresa</li>
             </ol>
 
             <!-- Page Content -->
-            <form th:object="${contrato}">
+            <form th:object="${empresa}">
                 <table>
                     <tr>
-                        <td><label>Sueldo base</label></td>
-                        <td th:text="${contrato.sueldoBase}"></td>
+                        <td><label>CIF</label></td>
+                        <td th:text="${empresa.CIF}"></td>
                     </tr>
                     <tr>
-                        <td><label>Dias de vacaciones</label></td>
-                        <td th:text="${contrato.diasVacaciones}"></td>
+                        <td><label>Nombre</label></td>
+                        <td th:text="${empresa.nombre}"></td>
                     </tr>
                     <tr>
-                        <td><label>Tipo de contrato</label></td>
-                        <td th:text="${contrato.tipoContrato}"></td>
+                        <td><label>Nombre Comercial</label></td>
+                        <td th:text="${empresa.nombreComercial}"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Domicilio Fiscal</label></td>
+                        <td th:text="${empresa.domicilioFiscal}"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Cuenta Bancaria</label></td>
+                        <td th:text="${empresa.cuentaBancaria}"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Persona Juridica</label></td>
+                        <td th:text="${empresa.personaJuridica}"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Persona Fiscal</label></td>
+                        <td th:text="${empresa.personaFiscal}"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Email</label></td>
+                        <td th:text="${empresa.email}"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Teléfono</label></td>
+                        <td th:text="${empresa.telefono}"></td>
                     </tr>
                     <tr>
                     </tr>
-                    <div th:object="${session}" style="color: white;">
-                        <td th:if="*{(usuario.tipo == 'Jefe')}">
-                            <td><a class="btn btn-primary btn-sm" th:href="@{/contrato/editar/{dni}(dni=${contrato.Persone_dni})}">Editar contrato</a></td>
-                        </td>
-                    </div>
-
                 </table>
 
             </form>
-
         </div>
         <!-- /.container-fluid -->
 

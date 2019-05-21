@@ -57,7 +57,7 @@ public class HorarioController {
 
         if(tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
             model.addAttribute("horarios", horarioDao.getHorasTrabajadas(dni, (mes + 1), año));
-            return "horario/listahoras";
+            return "horario/listahorasparatrabajador";
 
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
@@ -90,7 +90,7 @@ public class HorarioController {
 
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("horarios", horarioDao.getHorasTrabajadas(dni, (mes + 1), año));
-            return "horario/listahoras";
+            return "horario/listahorasparajefe";
 
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");

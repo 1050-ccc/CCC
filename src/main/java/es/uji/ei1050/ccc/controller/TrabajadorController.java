@@ -213,12 +213,20 @@ public class TrabajadorController {
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
+        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             model.addAttribute("trabajador", trabajadorDao.getTrabajadorByDNI(dni));
-            return "trabajador/editar";
+            return "trabajador/editarparajefe";
         } else {
-            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
-            return "redirect:" + session.getAttribute("url");
+
+            if(tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())){
+                model.addAttribute("trabajador", trabajadorDao.getTrabajadorByDNI(dni));
+                return "trabajador/editarparatrabajador";
+            }
+            else{
+                model.addAttribute("error", "No tienes permiso para acceder a este sitio");
+                return "redirect:" + session.getAttribute("url");
+            }
+
         }
     }
 
@@ -235,7 +243,7 @@ public class TrabajadorController {
                                       @ModelAttribute("trabajador") Trabajador trabajador,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "trabajador/editar";
+            return "editarparajefe";
 
 
         Usuario user = (Usuario) session.getAttribute("usuario");

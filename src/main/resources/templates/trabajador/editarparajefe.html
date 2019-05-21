@@ -92,6 +92,16 @@
                 <i class="fas fa-fw fa-table"></i>
                 <span>Trabajadores</span></a>
         </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/notificacion/lista">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Notificaciones</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/trabajador/listadisponibilidad">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Horarios trabajadores</span></a>
+        </li>
     </ul>
 
     <div id="content-wrapper">
@@ -124,11 +134,11 @@
                     </tr>
                     <tr>
                         <td><label>Domicilio</label></td>
-                        <td><input type="text" th:field="*{domicilio}"/></td>
+                        <td><input type="text" th:field="*{domicilio}" readonly="readonly"/></td>
                     </tr>
                     <tr>
                         <td><label>Teléfono</label></td>
-                        <td><input type="number" th:field="*{telefono}"/></td>
+                        <td><input type="number" th:field="*{telefono}" readonly="readonly"/></td>
                     </tr>
                     <tr>
                         <td><label>Email</label></td>
@@ -136,7 +146,7 @@
                     </tr>
                     <tr>
                         <td><label>Cuenta bancaria</label></td>
-                        <td><input type="text" th:field="*{cuentaBancaria}"/></td>
+                        <td><input type="text" th:field="*{cuentaBancaria}" readonly="readonly"/></td>
                     </tr>
                     <tr>
                         <td><label>Puesto de trabajo</label></td>
@@ -144,11 +154,7 @@
                     </tr>
                     <tr>
                         <td><label>Turno</label></td>
-                        <td><select class="form_control" type="text" th:field="*{turno}" >
-                            <option value="Mañana">Mañana</option>
-                            <option value="Tarde">Tarde</option>
-                            <option value="Noche">Noche</option>
-                        </select>
+                        <td><input type="text" th:field="*{turno}" readonly="readonly"/></td>
                         </td>
 
                     </tr>

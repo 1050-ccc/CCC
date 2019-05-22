@@ -122,9 +122,7 @@ public class ContratoController {
     public String processAddSubmit(@ModelAttribute("contrato") Contrato contrato,
                                    BindingResult bindingResult) {
 
-        //AlumnoValidator alumnoValidator = new AlumnoValidator();
-        //alumnoValidator.validate(alumno, bindingResult);
-        //contrato.setPersone_dni(dni);
+
         contrato.setDiasVacaciones(30);
         if (bindingResult.hasErrors())
             return "contrato/añadir";

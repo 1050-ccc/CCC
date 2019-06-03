@@ -103,7 +103,6 @@ public class ContratoController {
 
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             Contrato contrato = new Contrato();
-            //contrato.setPersone_dni(dni);
             model.addAttribute("contrato", contrato);
             return "contrato/añadir";
         } else {
@@ -127,7 +126,7 @@ public class ContratoController {
         if (bindingResult.hasErrors())
             return "contrato/añadir";
         contratoDao.addContrato(contrato);
-        return "trabajador/lista";
+        return "redirect:/trabajador/lista";
     }
 
     /**
@@ -169,7 +168,7 @@ public class ContratoController {
     }
 
     /**
-     * Método que actualiza los datos del trabajador.
+     * Método que actualiza los datos del contrato de un trabajador.
      * @param session
 
      * @param contrato
@@ -191,7 +190,7 @@ public class ContratoController {
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             contrato.setPersone_dni(dni);
             contratoDao.updateContrato(contrato);
-            return "informacionparatrabajador";
+            return "redirect:/trabajador/lista";
         } else {
             return "redirect:" + session.getAttribute("url");
         }

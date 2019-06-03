@@ -2,6 +2,7 @@ package es.uji.ei1050.ccc.controller;
 
 import es.uji.ei1050.ccc.daos.JefeDAO;
 import es.uji.ei1050.ccc.daos.PersoneDAO;
+import es.uji.ei1050.ccc.daos.TrabajadorDAO;
 import es.uji.ei1050.ccc.model.Jefe;
 import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Trabajador;
@@ -20,6 +21,7 @@ public class JefeController {
 
     private JefeDAO jefeDao;
     private PersoneDAO personeDAO;
+    private TrabajadorDAO trabajadorDao;
 
     @Autowired
     public void setPersoneDao(PersoneDAO personeDAO) {
@@ -31,6 +33,11 @@ public class JefeController {
         this.jefeDao = jefeDao;
     }
 
+    @Autowired
+    public void setTrabajadorDAODao(TrabajadorDAO trabajadorDao) {
+        this.trabajadorDao = trabajadorDao;
+    }
+
     @RequestMapping("") //load the template
     public String load_template(HttpSession session, Model model) {
         if (session.getAttribute("usuario") == null)
@@ -38,17 +45,17 @@ public class JefeController {
             model.addAttribute("usuario", new Usuario());
             return "index";
         }
-        String url = (String) session.getAttribute("url");
+
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
-
+        String cif = (String) session.getAttribute("CIF");
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("jefe", jefeDao.getJefeByEmail(user.getEmail()));
+            model.addAttribute("trabajadores", trabajadorDao.getTrabajadoresEmpresa(cif));
+            return "trabajador/lista";
 
-            return "jefe/index";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
-            return "redirect:" + url;
+            return "redirect:/trabajador";
         }
     }
 

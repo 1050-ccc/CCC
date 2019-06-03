@@ -57,9 +57,7 @@ public class NotificacionDAO {
 
 
         Calendar fecha = Calendar.getInstance();
-        System.out.println("Fecha: "+fecha);
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
-        System.out.println("Dia: "+dia);
         int mes = fecha.get(Calendar.MONTH);
         int año = fecha.get(Calendar.YEAR);
 
@@ -75,8 +73,6 @@ public class NotificacionDAO {
 
         String sql = "INSERT INTO Notificacion(fechaHora, Asunto, Persone_dni) " + "VALUES(?,?,?);";
         this.jdbcTemplate.update(sql, fecha, asunto, dniJefe);
-
-        System.out.println("notificación añadida ");
 
     }
 

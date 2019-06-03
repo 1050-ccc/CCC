@@ -57,8 +57,8 @@ public class TrabajadorController {
 
     @RequestMapping("") //load the template
     public String load_template(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
+
+        if (session.getAttribute("usuario") == null) {
             model.addAttribute("usuario", new Usuario());
             return "index";
         }
@@ -66,13 +66,29 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
 
+
         if(tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
-            model.addAttribute("trabajador", trabajadorDao.getTrabajadorByEmail(user.getEmail()));
-            return "trabajador/principal";
+
+            String dni = (String) session.getAttribute("DNI");
+
+            Trabajador trabajador = trabajadorDao.getTrabajadorByDNI(dni);
+
+            if(trabajador.getTurno().equals("Mañana")){
+                return "horario/mañana";
+            }
+
+            if(trabajador.getTurno().equals("Tarde")){
+                return "horario/tarde";
+            }
+
+            if(trabajador.getTurno().equals("Noche")){
+                return "horario/noche";
+            }
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:" + url;
         }
+        return "";
     }
 
 
@@ -143,7 +159,7 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/añadir", method = RequestMethod.POST)
     public String processAddSubmit(HttpSession session, @ModelAttribute("usuario") Usuario usuario, @ModelAttribute("trabajador") Trabajador trabajador,
-                                   BindingResult bindingResult) {
+                                 BindingResult bindingResult) {
 
 
         if (bindingResult.hasErrors())
@@ -162,7 +178,7 @@ public class TrabajadorController {
         trabajadorDao.addTrabajador(trabajador);
         usuarioDAO.addUsuario(usuario);
 
-        return "jefe/index";
+        return "redirect:/trabajador/lista";
     }
 
     /**
@@ -186,12 +202,11 @@ public class TrabajadorController {
             personeDAO.deletePersone(dni);
             return "redirect:../lista";
         }else{
-            //CONSEGUIR DNI DEL JEFE
             Persone jefe =jefeDao.getJefeByCif(trabajador.getEmpresa_cif());
             notificacionDAO.addNotificacionDimision(trabajador,jefe.getDni());
             personeDAO.deletePersone(dni);
             session.invalidate();
-            return "usuario/login";
+            return "redirect:/";
         }
     }
 
@@ -281,8 +296,12 @@ public class TrabajadorController {
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
         String cif = (String) session.getAttribute("CIF");
+
+
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
+
             model.addAttribute("trabajadores", trabajadorDao.getTrabajadoresEmpresa(cif));
+
             return "trabajador/lista";
 
         } else {
@@ -348,26 +367,5 @@ public class TrabajadorController {
         }
     }
 
-
-    /*
-    @RequestMapping(value = "/disponibilidad", method = RequestMethod.GET)
-    public String verDisponibilidadTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
-        }
-
-        Usuario user = (Usuario) session.getAttribute("usuario");
-        Perfiles tipo = user.getTipo();
-        if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion()) || tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
-            String username = user.getEmail();
-            model.addAttribute("trabajador", trabajadorDao.getTrabajadoresEmpresa(cif));
-            return "trabajador/disponibilidadTrabajador";
-        } else {
-            model.addAttribute("error", "No tienes permiso para acceder a este sitio");
-            return "redirect:" + session.getAttribute("url");
-        }
-    }*/
 
 }

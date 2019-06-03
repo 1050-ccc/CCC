@@ -131,7 +131,6 @@ public class HorarioController {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:/trabajador";
         }
-        System.out.println("Espero que no llegue aquí");
         return "";
     }
 

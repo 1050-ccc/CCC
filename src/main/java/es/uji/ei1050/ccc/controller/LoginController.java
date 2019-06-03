@@ -158,9 +158,7 @@ public class LoginController {
         session.setAttribute("CIF", empresaCIF);
         session.setAttribute("DNI", personeDNI);
 
-        /*if(usuario.getTipo()==Perfiles.JF){
-            return "ree"
-        }*/
+
 
         // Torna a la pàgina principal
         return "redirect:/";

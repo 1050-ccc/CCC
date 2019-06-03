@@ -178,7 +178,9 @@ public class TrabajadorController {
         trabajadorDao.addTrabajador(trabajador);
         usuarioDAO.addUsuario(usuario);
 
-        return "redirect:/trabajador/lista";
+        String dni = trabajador.getDni();
+
+        return "redirect:/contrato/anadir/"+dni;
     }
 
     /**

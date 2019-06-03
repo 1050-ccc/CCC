@@ -87,8 +87,8 @@ public class ContratoController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/añadir") //TODO arreglar
-    public String añadirContrato(HttpSession session, Model model) {
+    @RequestMapping(value = "/anadir/{dni}", method = RequestMethod.GET)
+    public String añadirContrato(HttpSession session, Model model, @PathVariable String dni) {
         if (session.getAttribute("usuario") == null)
         {
             model.addAttribute("usuario", new Usuario());
@@ -104,7 +104,7 @@ public class ContratoController {
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
             Contrato contrato = new Contrato();
             model.addAttribute("contrato", contrato);
-            return "contrato/añadir";
+            return "contrato/anadir";
         } else {
             model.addAttribute("error", "No tienes permiso para acceder a este sitio");
             return "redirect:/" + session.getAttribute("url");
@@ -117,14 +117,17 @@ public class ContratoController {
      * @param bindingResult
      * @return
      */
-    @RequestMapping(value = "/añadir", method = RequestMethod.POST)
+    @RequestMapping(value = "/anadir/{dni}", method = RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("contrato") Contrato contrato,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult, @PathVariable String dni) {
 
 
         contrato.setDiasVacaciones(30);
+        contrato.setPersone_dni(dni);
+
         if (bindingResult.hasErrors())
-            return "contrato/añadir";
+            return "anadir";
+
         contratoDao.addContrato(contrato);
         return "redirect:/trabajador/lista";
     }

@@ -32,6 +32,31 @@ public class HorarioController {
         this.trabajadorDao = trabajadorDao;
     }
 
+
+    @RequestMapping("") //load the template
+    public String load_template(HttpSession session, Model model, String[][] cal) {
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
+        }
+
+//        List<Horario> calendario = horarioDao.getHorarioTrabajadores((String) session.getAttribute("CIF"));
+//        String[] calAux = new String[calendario.size()];
+//        for (int i = 0; i < calendario.size(); i++) {
+//            Horario horarioAux = calendario.get(i);
+//            String[] dia = horarioAux.getDia().toString().split("-");
+//            //año, mes, dia, horaInicio, horaFin, nombre
+//            String aux = new StringBuilder().append(dia[0]).append(dia[1]).append(dia[2]).append(horarioAux.getHoraInicio().toString().split(":")[0]).append(horarioAux.getHoraFin().toString().split(":")[0]).append(horarioAux.getPersoneNombre()).toString();
+//            calAux[i]=aux;
+//        }
+//
+//        model.addAttribute("calendario", calAux);
+        return "horario/horario";
+    }
+
     /**
      * Lista horas trabajadas.
      * @param session

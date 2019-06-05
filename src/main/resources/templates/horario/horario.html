@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>CCC - Calendario</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="/vendor/datatables/dataTables.bootstrap4.css" th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" th:href="@{/css/sb-admin.css}" rel="stylesheet">
+
+    <!-- DayPilot library -->
+    <script src="js/daypilot/daypilot-all.min.js"></script>
+</head>
+
+<body id="page-top">
+<div th:insert="fragments/base :: nav"></div>
+
+<div id="wrapper">
+
+    <div th:insert="fragments/base :: sidebar"></div>
+
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <!--Contenido pagina-->
+            <div class="main">
+                <div id="dp"></div>
+            </div>
+
+            <script>
+                var dp = new DayPilot.Calendar("dp", {
+                    locale: "es-es",
+                    viewType: "Days",
+                    days: 14,
+                    startDate: DayPilot.Date.today().firstDayOfWeek(),
+                    headerDateFormat: "ddd M/d/yyyy",
+                    cellHeight: 30,
+                    crosshairType: "Full",
+                    eventArrangement: "SideBySide",
+                    allowEventOverlap: false,
+                    timeRangeSelectedHandling: "Disabled",
+                    eventDeleteHandling: "Disabled",
+                    eventMoveHandling: "Disabled",
+                    eventResizeHandling: "Disabled",
+                    eventClickHandling: "Disabled",
+                    eventHoverHandling: "Disabled",
+                });
+
+
+
+                dp.events.list = [
+                    {
+                        id: "1",
+                        start: DayPilot.Date.fromYearMonthDay(2019,6,4).addHours(10),
+                        end: DayPilot.Date.fromYearMonthDay(2019,6,4).addHours(10),
+                        text: "Event 1"
+                    }
+                ];
+                dp.init();
+            </script>
+
+        </div>
+        <div th:replace="fragments/base :: footer"></div>
+    </div>
+</div>
+<!-- /#wrapper -->
+
+<div th:replace="fragments/base :: modal"></div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin.min.js"></script>
+
+
+</body>
+
+</html>

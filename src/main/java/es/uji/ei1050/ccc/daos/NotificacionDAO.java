@@ -45,6 +45,7 @@ public class NotificacionDAO {
          */
         public Notificacion mapRow(ResultSet rs, int rowNum) throws SQLException {
             Notificacion notificacion = new Notificacion();
+            notificacion.setIdNotificacion(rs.getInt("idNotificacion"));
             notificacion.setFechaHora(rs.getDate("fechaHora"));
             notificacion.setAsunto(rs.getString("Asunto"));
             notificacion.setPersone_dni(rs.getString("Persone_dni"));
@@ -96,4 +97,14 @@ public class NotificacionDAO {
         }
     }
 
+    public boolean deleteNotificacion(int idNotificacion) {
+        try {
+            if(this.jdbcTemplate.update("delete from notificacion where idNotificacion = ?", idNotificacion) > 0)
+                return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
 }

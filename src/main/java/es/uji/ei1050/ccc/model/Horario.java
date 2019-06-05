@@ -8,23 +8,20 @@ public class Horario {
     Time horaInicio;
     Time horaFin;
     int horasTrabajadas;
-
-    public int getHorasTrabajadas() {
-        return horasTrabajadas;
-    }
-
-    public void setHorasTrabajadas(int horasTrabajadas) {
-        this.horasTrabajadas = horasTrabajadas;
-    }
+    String personeDNI;
+    String personeNombre;
 
     public Horario() {
         super();
     }
 
-    public Horario(Date dia, Time horaInicio, Time horaFin) {
+    public Horario(Date dia, Time horaInicio, Time horaFin, int horasTrabajadas, String personeDNI, String personeNombre) {
         this.dia = dia;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
+        this.horasTrabajadas = horasTrabajadas;
+        this.personeDNI = personeDNI;
+        this.personeNombre = personeNombre;
     }
 
     public Date getDia() {
@@ -51,4 +48,39 @@ public class Horario {
         this.horaFin = horaFin;
     }
 
+    public int getHorasTrabajadas() {
+        return horasTrabajadas;
+    }
+
+    public void setHorasTrabajadas(int horasTrabajadas) {
+        this.horasTrabajadas = horasTrabajadas;
+    }
+
+    public String getPersoneDNI() {
+        return personeDNI;
+    }
+
+    public void setPersoneDNI(String personeDNI) {
+        this.personeDNI = personeDNI;
+    }
+
+    public String getPersoneNombre() {
+        return personeNombre;
+    }
+
+    public void setPersoneNombre(String personeNombre) {
+        this.personeNombre = personeNombre;
+    }
+
+    @Override
+    public String toString() {
+        return "Horario{" +
+                "dia=" + dia +
+                ", horaInicio=" + horaInicio +
+                ", horaFin=" + horaFin +
+                ", horasTrabajadas=" + horasTrabajadas +
+                ", personeDNI='" + personeDNI + '\'' +
+                ", personeNombre='" + personeNombre + '\'' +
+                '}';
+    }
 }

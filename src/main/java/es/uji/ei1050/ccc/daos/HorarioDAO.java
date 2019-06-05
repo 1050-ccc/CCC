@@ -29,6 +29,8 @@ public class HorarioDAO {
             horario.setDia(rs.getDate("dia"));
             horario.setHoraInicio(rs.getTime("horaInicio"));
             horario.setHoraFin(rs.getTime("horaFin"));
+            horario.setPersoneDNI(rs.getString("dni"));
+            horario.setPersoneNombre(rs.getString("nombre"));
             horario.setHorasTrabajadas(8);
             return horario;
         }
@@ -41,6 +43,16 @@ public class HorarioDAO {
                 "AND EXTRACT(month FROM dia) = ?  order by dia DESC;";
         try {
             return this.jdbcTemplate.query(sql, new Object[]{dni,mes}, new HorarioMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Horario> getHorarioTrabajadores(String cif){
+        String sql = "select h.*, p.dni, p.nombre from horario AS h JOIN contrato AS c ON h.contrato_idcontrato = c.idcontrato JOIN persone AS p On c.persone_dni = p.dni where p.empresa_cif = ?";
+        try {
+            return this.jdbcTemplate.query(sql, new Object[]{cif}, new HorarioMapper());
         } catch (Exception e) {
             e.printStackTrace();
             return null;

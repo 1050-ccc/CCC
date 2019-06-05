@@ -50,20 +50,26 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
-                                <th>Fecha </th>
-                                <th>Asunto </th>
+                                <th style="width: 10%">Fecha </th>
+                                <th style="width: 70%">Asunto </th>
+                                <th style="width: 10%">Notificador </th>
+                                <th style="width: 10%">Acción </th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Fecha </th>
-                                <th>Asunto </th>
+                                <th style="width: 10%">Fecha </th>
+                                <th style="width: 70%">Asunto </th>
+                                <th style="width: 10%">Notificador </th>
+                                <th style="width: 10%">Acción </th>
                             </tr>
                             </tfoot>
                             <tbody>
                             <tr th:each="notificacion: ${notificaciones}">
                                 <td th:text="${notificacion.fechaHora}"></td>
                                 <td th:text="${notificacion.Asunto}"></td>
+                                <td th:text="${notificacion.Persone_dni}"></td>
+                                <td><a class="btn btn-danger btn-sm" th:href="@{/notificacion/borrar/{idNotificacion}(idNotificacion=${notificacion.idNotificacion})}">Borrar notificación</a>
                             </tr>
                             </tbody>
                         </table>

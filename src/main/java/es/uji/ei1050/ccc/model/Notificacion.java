@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Notificacion {
 
+    int idNotificacion;
     Date fechaHora; // date
     String Asunto; // varchar 200
     String Persone_dni;
@@ -16,9 +17,19 @@ public class Notificacion {
         super();
     }
 
-    public Notificacion(Date fechaHora, String asunto) {
+    public Notificacion(int idNotificacion, Date fechaHora, String asunto, String persone_dni) {
+        this.idNotificacion = idNotificacion;
         this.fechaHora = fechaHora;
-        this.Asunto = asunto;
+        Asunto = asunto;
+        Persone_dni = persone_dni;
+    }
+
+    public int getIdNotificacion() {
+        return idNotificacion;
+    }
+
+    public void setIdNotificacion(int idNotificacion) {
+        this.idNotificacion = idNotificacion;
     }
 
     public Date getFechaHora() {
@@ -34,7 +45,7 @@ public class Notificacion {
     }
 
     public void setAsunto(String asunto) {
-        this.Asunto = asunto;
+        Asunto = asunto;
     }
 
     public String getPersone_dni() {
@@ -48,8 +59,10 @@ public class Notificacion {
     @Override
     public String toString() {
         return "Notificacion{" +
-                "fechaHora=" + fechaHora +
-                ", asunto='" + Asunto + '\'' +
+                "idNotificacion=" + idNotificacion +
+                ", fechaHora=" + fechaHora +
+                ", Asunto='" + Asunto + '\'' +
+                ", Persone_dni='" + Persone_dni + '\'' +
                 '}';
     }
 }

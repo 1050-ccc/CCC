@@ -8,6 +8,7 @@ import es.uji.ei1050.ccc.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -56,6 +57,20 @@ public class NotificacionController {
         }
     }
 
+    @RequestMapping(value = "/borrar/{idNotificacion}")
+    public String processDelete(HttpSession session, @PathVariable int idNotificacion) {
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
+        }
+
+        notificacionDao.deleteNotificacion(idNotificacion);
+
+        return "notificacion/lista";
+    }
 
 
 }

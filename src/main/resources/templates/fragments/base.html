@@ -39,7 +39,7 @@
                 <a class="nav-link dropdown-toggle" href="/notificacion/lista" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-bell fa-fw"></i>
                     <!--NUMERO NOTIFICACIONES-->
-                    <span th:if="${session.numNotificaciones != '0'}" class="badge badge-danger" th:text="${session.numNotificaciones}"></span>
+                    <span th:if="${session.numNotificaciones > 0}" class="badge badge-danger" th:text="${session.numNotificaciones}"></span>
                 </a>
                 <!--&lt;!&ndash;FOR EACH NOTIFICACION&ndash;&gt;-->
                 <!--<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">-->
@@ -81,7 +81,7 @@
                 <span>Notificaciones</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="/trabajador/listadisponibilidad">
+            <a class="nav-link" href="/horario">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Horarios trabajadores</span></a>
         </li>
@@ -96,14 +96,14 @@
                 <span>Contrato</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/horario/listahoras">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Horas</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/horario/jornada">
+            <a class="nav-link" href="/horario">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Horario</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/notificacion/notificar">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Notificar</span></a>
         </li>
     </ul>
 

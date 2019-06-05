@@ -2,6 +2,7 @@ package es.uji.ei1050.ccc.controller;
 
 import es.uji.ei1050.ccc.daos.HorarioDAO;
 import es.uji.ei1050.ccc.daos.TrabajadorDAO;
+import es.uji.ei1050.ccc.model.Horario;
 import es.uji.ei1050.ccc.model.Perfiles;
 import es.uji.ei1050.ccc.model.Trabajador;
 import es.uji.ei1050.ccc.model.Usuario;
@@ -13,18 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.Calendar;
+import java.util.List;
 
 @Controller
 @RequestMapping("/horario")
 public class HorarioController {
 
-    private HorarioDAO horarioDao;
+    private HorarioDAO horarioDAO;
     private TrabajadorDAO trabajadorDao;
 
 
     @Autowired
-    public void setHorarioDao(HorarioDAO horarioDao) {
-        this.horarioDao = horarioDao;
+    public void setHorarioDAO(HorarioDAO horarioDAO) {
+        this.horarioDAO = horarioDAO;
     }
 
     @Autowired
@@ -34,27 +36,45 @@ public class HorarioController {
 
 
     @RequestMapping("") //load the template
-    public String load_template(HttpSession session, Model model, String[][] cal) {
+    public String load_template(HttpSession session, Model model) {
         // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
         if (session.getAttribute("usuario") == null) {
             return "redirect:/usuario/login";
         }
-        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
-            return "redirect:/";
+        if (((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+
+            List<Horario> calendario = horarioDAO.getHorarioTrabajadores((String) session.getAttribute("CIF"));
+            String[][] calAux = new String[calendario.size()][];
+            for (int i = 0; i < calendario.size(); i++) {
+                Horario horarioAux = calendario.get(i);
+                String[] dia = horarioAux.getDia().toString().split("-");
+                //año, mes, dia, horaInicio, horaFin, nombre
+                String aux = new StringBuilder().append(dia[0]).append("#").append(dia[1]).append("#").append(dia[2]).append("#").append(horarioAux.getHoraInicio().toString().split(":")[0]).append("#").append(horarioAux.getHoraFin().toString().split(":")[0]).append("#").append(horarioAux.getPersoneNombre()).toString();
+                calAux[i] = aux.split("#");
+            }
+
+            model.addAttribute("calendario", calAux);
+            return "horario/horario";
         }
 
-//        List<Horario> calendario = horarioDao.getHorarioTrabajadores((String) session.getAttribute("CIF"));
-//        String[] calAux = new String[calendario.size()];
-//        for (int i = 0; i < calendario.size(); i++) {
-//            Horario horarioAux = calendario.get(i);
-//            String[] dia = horarioAux.getDia().toString().split("-");
-//            //año, mes, dia, horaInicio, horaFin, nombre
-//            String aux = new StringBuilder().append(dia[0]).append(dia[1]).append(dia[2]).append(horarioAux.getHoraInicio().toString().split(":")[0]).append(horarioAux.getHoraFin().toString().split(":")[0]).append(horarioAux.getPersoneNombre()).toString();
-//            calAux[i]=aux;
-//        }
-//
-//        model.addAttribute("calendario", calAux);
-        return "horario/horario";
+        if (((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.TR)) {
+
+            List<Horario> calendario = horarioDAO.getHorarioTrabajador((String) session.getAttribute("DNI"));
+            String[][] calAux = new String[calendario.size()][];
+            for (int i = 0; i < calendario.size(); i++) {
+                Horario horarioAux = calendario.get(i);
+                String[] dia = horarioAux.getDia().toString().split("-");
+                //año, mes, dia, horaInicio, horaFin, nombre
+                String aux = new StringBuilder().append(dia[0]).append("#").append(dia[1]).append("#").append(dia[2]).append("#").append(horarioAux.getHoraInicio().toString().split(":")[0]).append("#").append(horarioAux.getHoraFin().toString().split(":")[0]).append("#").append(horarioAux.getPersoneNombre()).toString();
+                calAux[i] = aux.split("#");
+            }
+
+            model.addAttribute("calendario", calAux);
+            return "horario/horario";
+        }
+
+        return "redirect:/";
+
     }
 
     /**
@@ -83,7 +103,7 @@ public class HorarioController {
 
 
         if(tipo.getDescripcion().equals(Perfiles.TR.getDescripcion())) {
-            model.addAttribute("horarios", horarioDao.getHorasTrabajadas(dni, (mes + 1), año));
+            model.addAttribute("horarios", horarioDAO.getHorasTrabajadas(dni, (mes + 1), año));
             return "horario/listahorasparatrabajador";
 
         } else {
@@ -118,7 +138,7 @@ public class HorarioController {
 
 
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("horarios", horarioDao.getHorasTrabajadas(dni, (mes + 1), año));
+            model.addAttribute("horarios", horarioDAO.getHorasTrabajadas(dni, (mes + 1), año));
             return "horario/listahorasparajefe";
 
         } else {

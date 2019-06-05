@@ -37,17 +37,48 @@
         <div class="container-fluid">
 
             <!--Contenido pagina-->
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+
+                <li class="breadcrumb-item active">Horarios trabajadores</li>
+            </ol>
+
+            <table>
+                <tr>
+                    <th>Turno</th>
+                    <th>Horas</th>
+                    <th>Días</th>
+                </tr>
+                <tr>
+                    <td>Mañana    </td>
+                    <td>De 07:00h a 15:00h    </td>
+                    <td>De lunes  viernes    </td>
+                </tr>
+                <tr>
+                    <td>Tarde    </td>
+                    <td>De 15:00h a 23:00h    </td>
+                    <td>De lunes  viernes    </td>
+                </tr>
+                <tr>
+                    <td>Noche    </td>
+                    <td>De 23:00h a 07:00h    </td>
+                    <td>De lunes  viernes    </td>
+                </tr>
+                <tr></tr>
+            </table>
+            <p>
             <div class="main">
                 <div id="dp"></div>
             </div>
 
-            <script>
+            <script th:inline="javascript">
+                /*<![CDATA[*/
                 var dp = new DayPilot.Calendar("dp", {
                     locale: "es-es",
                     viewType: "Days",
                     days: 14,
                     startDate: DayPilot.Date.today().firstDayOfWeek(),
-                    headerDateFormat: "ddd M/d/yyyy",
+                    headerDateFormat: "ddd d/M/yyyy",
                     cellHeight: 30,
                     crosshairType: "Full",
                     eventArrangement: "SideBySide",
@@ -60,17 +91,20 @@
                     eventHoverHandling: "Disabled",
                 });
 
+                var calendario = /*[[${calendario}]]*/;
 
+                for (var i=0; i < calendario.length; i++){
+                    var ev = new DayPilot.Event({
+                        id: i,
+                        start: new DayPilot.Date.fromYearMonthDay(calendario[i][0],calendario[i][1],calendario[i][2]).addHours(calendario[i][3]),
+                        end: new DayPilot.Date.fromYearMonthDay(calendario[i][0],calendario[i][1],calendario[i][2]).addHours(calendario[i][4]),
+                        text: calendario[i][5]
+                    });
+                    dp.events.add(ev);
+                }
 
-                dp.events.list = [
-                    {
-                        id: "1",
-                        start: DayPilot.Date.fromYearMonthDay(2019,6,4).addHours(10),
-                        end: DayPilot.Date.fromYearMonthDay(2019,6,4).addHours(10),
-                        text: "Event 1"
-                    }
-                ];
                 dp.init();
+                /*]]>*/
             </script>
 
         </div>

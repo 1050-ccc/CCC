@@ -36,10 +36,10 @@ public class IndexController implements ErrorController {
 
         //Redirigir si eres JEFE a tu menú correspondiente
         if (((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF))
-            return "redirect:/jefe";
+            return "redirect:/horario";
         //Redirigir si eres TRABAJADOR a tu menú correspondiente
         if (((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.TR))
-            return "redirect:/trabajador";
+            return "redirect:/horario";
         //
 
         return "index.html";

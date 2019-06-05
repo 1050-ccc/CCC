@@ -31,6 +31,7 @@ public class NotificacionDAO {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+
     /**
      * Inner class that maps database objects to <code>Alumno</code> objects.
      */
@@ -77,6 +78,16 @@ public class NotificacionDAO {
 
     }
 
+    public void sendNotificacion(Notificacion notificacion, String dni_jefe) {
+        Calendar fecha = Calendar.getInstance();
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH);
+        int año = fecha.get(Calendar.YEAR);
+
+        String sql = "Insert into notificacion(fechaHora, Asunto, Persone_dni)" + "VALUES(?,?,?)";
+        this.jdbcTemplate.update(sql, fecha, notificacion.getAsunto(), dni_jefe);
+    }
+
     public List<Notificacion> getNotificaciones(String cif) {
         String sql = "SELECT n.* FROM notificacion AS n JOIN persone AS p ON n.persone_dni=p.dni WHERE p.empresa_cif=? ORDER BY n.fechaHora DESC";
         try {
@@ -88,7 +99,7 @@ public class NotificacionDAO {
     }
 
     public int getNumeroNotificaciones(String cif){
-        String sql = "SELECT COUNT(n.*) FROM notificacion AS n JOIN persone AS p ON n.persone_dni=p.dni WHERE p.empresa_cif=? GROUP BY n.fechaHora ORDER BY n.fechaHora DESC";
+        String sql = "SELECT COUNT(n) FROM notificacion AS n JOIN persone AS p ON n.persone_dni=p.dni WHERE p.empresa_cif=?";
         try {
             return this.jdbcTemplate.queryForObject(sql, new Object[]{cif}, Integer.class);
         } catch (Exception e) {

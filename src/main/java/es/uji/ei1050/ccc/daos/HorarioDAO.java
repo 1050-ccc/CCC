@@ -59,6 +59,16 @@ public class HorarioDAO {
         }
     }
 
+    public List<Horario> getHorarioTrabajador(String dni){
+        String sql = "select h.*, p.dni, p.nombre from horario AS h JOIN contrato AS c ON h.contrato_idcontrato = c.idcontrato JOIN persone AS p On c.persone_dni = p.dni where p.dni = ?";
+        try {
+            return this.jdbcTemplate.query(sql, new Object[]{dni}, new HorarioMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
 }

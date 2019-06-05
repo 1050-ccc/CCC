@@ -76,15 +76,23 @@ public class NotificacionDAO {
 
     }
 
-    public List<Notificacion> getNotificaciones(String dni) {
-        String sql = "select  n.fechaHora, n.Asunto, n.Persone_dni " +
-                "from persone p join notificacion n on (p.dni = n.Persone_dni)  where upper(n.Persone_dni)=? order by n.fechaHora DESC ";
-
+    public List<Notificacion> getNotificaciones(String cif) {
+        String sql = "SELECT n.* FROM notificacion AS n JOIN persone AS p ON n.persone_dni=p.dni WHERE p.empresa_cif=? ORDER BY n.fechaHora DESC";
         try {
-            return this.jdbcTemplate.query(sql, new Object[]{dni}, new NotificacionMapper());
+            return this.jdbcTemplate.query(sql, new Object[]{cif}, new NotificacionMapper());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public int getNumeroNotificaciones(String cif){
+        String sql = "SELECT COUNT(n.*) FROM notificacion AS n JOIN persone AS p ON n.persone_dni=p.dni WHERE p.empresa_cif=? GROUP BY n.fechaHora ORDER BY n.fechaHora DESC";
+        try {
+            return this.jdbcTemplate.queryForObject(sql, new Object[]{cif}, Integer.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 

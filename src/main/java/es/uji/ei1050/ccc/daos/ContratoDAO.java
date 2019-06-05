@@ -85,7 +85,7 @@ public class ContratoDAO {
         try {
             return this.jdbcTemplate.queryForObject(
                     "select  c.sueldoBase, c.diasVacaciones, c.tipoContrato, c.Persone_dni " +
-                            "from persone p join contrato c on (p.dni = c.Persone_dni) where upper(Persone_dni)=?",
+                            "from persone p join contrato c on (p.dni = c.Persone_dni) where upper(c.Persone_dni)=?",
                     new Object[]{dni.toUpperCase()}, new ContratoMapper());
         } catch (Exception e) {
             e.printStackTrace();

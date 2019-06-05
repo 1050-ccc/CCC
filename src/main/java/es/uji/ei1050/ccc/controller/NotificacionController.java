@@ -33,18 +33,21 @@ public class NotificacionController {
     @RequestMapping("/lista")
     public String listTrabajadoresEmpresa(HttpSession session, Model model) {
 
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
         if (session.getAttribute("usuario") == null) {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
 
-        String dni= (String) session.getAttribute("DNI");
+        String cif= (String) session.getAttribute("CIF");
 
         if(tipo.getDescripcion().equals(Perfiles.JF.getDescripcion())) {
-            model.addAttribute("notificaciones", notificacionDao.getNotificaciones(dni));
+            model.addAttribute("notificaciones", notificacionDao.getNotificaciones(cif));
             return "notificacion/lista";
 
         } else {

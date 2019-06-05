@@ -49,6 +49,7 @@ public class LoginController {
     private TrabajadorDAO trabajadorDAO;
     private JefeDAO jefeDAO;
     private PersoneDAO personeDAO;
+    private NotificacionDAO notificacionDAO;
 
     /**
      * @param usuarioDAO
@@ -89,6 +90,14 @@ public class LoginController {
     public void setPersoneDAO(PersoneDAO personeDAO) {
         this.personeDAO = personeDAO;
     }
+
+    /**
+     * @param notificacionDAO
+     */
+    @Autowired
+    public void setNotificacionDAO(NotificacionDAO notificacionDAO) {
+        this.notificacionDAO = notificacionDAO;
+    }
     //
 
     /**
@@ -101,8 +110,6 @@ public class LoginController {
     public String listaAsignacions(HttpSession session, Model model) {
         // COMPROBACION DE USUARIO LOGEADO
         if (session.getAttribute("usuario") != null) {
-            model.addAttribute("usuario", new Usuario());
-            model.addAttribute("persone", new Persone());
             return "redirect:/";
         }
         //
@@ -139,10 +146,12 @@ public class LoginController {
         String email = usuario.getEmail();
         String empresaCIF = "";
         String personeDNI = "0";
+        String tipoUsuario = usuario.getTipo().toString();
 
         if (usuario.getTipo().equals(Perfiles.JF)) {
             personeDNI = jefeDAO.getJefeByEmail(email).getDni();
             empresaCIF = jefeDAO.getJefeByEmail(email).getEmpresa_cif();
+            session.setAttribute("numNotificaciones", notificacionDAO.getNumeroNotificaciones(empresaCIF));
         }
 
         if (usuario.getTipo().equals(Perfiles.TR)) {
@@ -157,7 +166,7 @@ public class LoginController {
         session.setAttribute("usuario", usuario);
         session.setAttribute("CIF", empresaCIF);
         session.setAttribute("DNI", personeDNI);
-
+        session.setAttribute("tipo", tipoUsuario);
 
 
         // Torna a la pàgina principal

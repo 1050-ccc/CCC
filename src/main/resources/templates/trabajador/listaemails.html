@@ -1,28 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
-    <title>Lista trabajadores</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>CCC - Lista trabajadores</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="/vendor/datatables/dataTables.bootstrap4.css" th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin.css" th:href="@{/css/sb-admin.css}" rel="stylesheet">
+
 </head>
-<body>
-<h1>Lista emails de trabajadores</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Nombre </th>
-        <th>Apellidos </th>
-        <th>Email </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="trabajador: ${trabajadores}">
-        <td th:text="${trabajador.nombre}"></td>
-        <td th:text="${trabajador.apellidos}"></td>
-        <td th:text="${trabajador.email}"></td>
-    </tr>
-    </tbody>
-</table>
-<a href="/">Atrás</a></body>
+
+<body id="page-top">
+<div th:insert="fragments/base :: nav"></div>
+
+<div id="wrapper">
+
+    <div th:insert="fragments/base :: sidebar"></div>
+
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Lista de emails de trabajadores</li>
+            </ol>
+
+            <!-- Page Content -->
+            <table>
+                <thead>
+                <tr>
+                    <th>Nombre </th>
+                    <th>Apellidos </th>
+                    <th>Email </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="trabajador: ${trabajadores}">
+                    <td th:text="${trabajador.nombre}"></td>
+                    <td th:text="${trabajador.apellidos}"></td>
+                    <td th:text="${trabajador.email}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div th:replace="fragments/base :: footer"></div>
+    </div>
+</div>
+<!-- /#wrapper -->
+
+<div th:replace="fragments/base :: modal"></div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin.min.js"></script>
+
+</body>
+
 </html>

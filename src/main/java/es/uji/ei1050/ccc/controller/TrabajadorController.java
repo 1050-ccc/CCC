@@ -58,10 +58,14 @@ public class TrabajadorController {
     @RequestMapping("") //load the template
     public String load_template(HttpSession session, Model model) {
 
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
         if (session.getAttribute("usuario") == null) {
-            model.addAttribute("usuario", new Usuario());
-            return "index";
+            return "redirect:/usuario/login";
         }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.TR)) {
+            return "redirect:/";
+        }
+
         String url = (String) session.getAttribute("url");
         Usuario user = (Usuario) session.getAttribute("usuario");
         Perfiles tipo = user.getTipo();
@@ -100,10 +104,12 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/informacion", method = RequestMethod.GET)
     public String verInformacionTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.TR)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -128,11 +134,12 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/añadir")
     public String añadirTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            model.addAttribute("trabajador", new Trabajador());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -190,6 +197,13 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/borrar/{dni}")
     public String processDelete(HttpSession session, @PathVariable String dni) {
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
+        }
         Trabajador trabajador = trabajadorDao.getTrabajadorByDNI(dni);
         String email = trabajador.getEmail();
         usuarioDAO.deleteUsuarios(email);
@@ -222,10 +236,9 @@ public class TrabajadorController {
      */
     @RequestMapping(value = "/editar/{dni}", method = RequestMethod.GET)
     public String updateTrabajador(HttpSession session, Model model, @PathVariable String dni) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -289,10 +302,12 @@ public class TrabajadorController {
      */
     @RequestMapping("/lista")
     public String listTrabajadoresEmpresa(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -320,10 +335,12 @@ public class TrabajadorController {
      */
     @RequestMapping("/listadisponibilidad")
     public String listDisponibilidadTrabajadoresEmpresa(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -349,10 +366,12 @@ public class TrabajadorController {
      */
     @RequestMapping("/listaemails")
     public String listEmailsdTrabajadoresEmpresa(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");

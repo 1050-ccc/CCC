@@ -10656,7 +10656,7 @@ body {
 
 .navbar-nav .nav-item .nav-link .badge {
   position: absolute;
-  margin-left: 0.75rem;
+  margin-left: -2rem;
   top: 0.3rem;
   font-weight: 400;
   font-size: 0.5rem;

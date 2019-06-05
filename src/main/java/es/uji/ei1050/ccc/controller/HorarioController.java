@@ -40,10 +40,12 @@ public class HorarioController {
      */
     @RequestMapping("/listahoras")
     public String listaHorasTrabajadas(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.TR)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -73,10 +75,12 @@ public class HorarioController {
      */
     @RequestMapping("/listahoras/{dni}")
     public String listaHorasTrabajadasTrabajador(HttpSession session, Model model, @PathVariable String dni) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -100,9 +104,12 @@ public class HorarioController {
 
     @RequestMapping("/jornada")
     public String consultaJornadaTrababajo(HttpSession session, Model model) {
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
         if (session.getAttribute("usuario") == null) {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.TR)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -136,10 +143,12 @@ public class HorarioController {
 
     @RequestMapping("/consulta")
     public String consultaHorasTrabajadas(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.TR)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");

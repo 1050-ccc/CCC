@@ -34,10 +34,12 @@ public class ContratoController {
      */
     @RequestMapping(value = "/informacion", method = RequestMethod.GET)
     public String verInformacionTrabajador(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.TR)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -61,9 +63,12 @@ public class ContratoController {
     @RequestMapping(value = "/informacion/{dni}", method = RequestMethod.GET)
     public String verContratoTrabajador(HttpSession session, Model model,  @PathVariable String dni) {
 
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
         if (session.getAttribute("usuario") == null) {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -89,12 +94,12 @@ public class ContratoController {
      */
     @RequestMapping(value = "/anadir/{dni}", method = RequestMethod.GET)
     public String añadirContrato(HttpSession session, Model model, @PathVariable String dni) {
-        if (session.getAttribute("usuario") == null)
-        {
-            model.addAttribute("usuario", new Usuario());
-            model.addAttribute("contrato", new Contrato());
-
-            return "login";
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -138,7 +143,14 @@ public class ContratoController {
      * @return
      */
     @RequestMapping(value = "/borrar/{dni}", method = RequestMethod.DELETE)
-    public String processDelete(@PathVariable String dni) {
+    public String processDelete(HttpSession session, @PathVariable String dni) {
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
+        }
         contratoDao.deleteContrato(dni);
         return "redirect:../list";
     }
@@ -153,6 +165,13 @@ public class ContratoController {
      */
     @RequestMapping(value = "/editar/{dni}", method = RequestMethod.GET)
     public String updateTrabajador(HttpSession session, Model model, @PathVariable String dni) {
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
+        }
         if (session.getAttribute("usuario") == null)
         {
             model.addAttribute("usuario", new Usuario());

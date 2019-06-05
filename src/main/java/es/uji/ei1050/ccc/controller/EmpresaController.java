@@ -36,9 +36,9 @@ public class EmpresaController {
      */
     @RequestMapping(value = "/informacion", method = RequestMethod.GET)
     public String verInformacionTrabajador(HttpSession session, Model model) {
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
         if (session.getAttribute("usuario") == null) {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+            return "redirect:/usuario/login";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
@@ -75,9 +75,12 @@ public class EmpresaController {
      */
     @RequestMapping(value = "/update/{cif}", method = RequestMethod.GET)
     public String updateTrabajador(HttpSession session, Model model) {
+        // COMPROBACION DE USUARIO LOGEADO Y DEL USUARIO CORRECTO
         if (session.getAttribute("usuario") == null) {
-            model.addAttribute("usuario", new Usuario());
-            return "login";
+            return "redirect:/usuario/login";
+        }
+        if (!((Usuario) session.getAttribute("usuario")).getTipo().equals(Perfiles.JF)) {
+            return "redirect:/";
         }
 
         Usuario user = (Usuario) session.getAttribute("usuario");
